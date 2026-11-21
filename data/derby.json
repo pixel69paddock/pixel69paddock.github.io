@@ -7,6 +7,9 @@
     "date": "2026-11-23",
     "status": "open",
     "entrants": [
+      "0scardavis",
+      "malakhi_johnson",
+      "gs7ejey",
       "iamkaelmcdonald",
       "diaz_monkey_3",
       "_gl88k",
@@ -943,6 +946,24 @@
       "races": 1,
       "medals": [],
       "via": "like"
+    },
+    {
+      "handle": "0scardavis",
+      "joined": "2026-11-22",
+      "races": 0,
+      "medals": []
+    },
+    {
+      "handle": "malakhi_johnson",
+      "joined": "2026-11-22",
+      "races": 0,
+      "medals": []
+    },
+    {
+      "handle": "gs7ejey",
+      "joined": "2026-11-22",
+      "races": 0,
+      "medals": []
     }
   ],
   "sponsorSpots": [
@@ -1028,7 +1049,7 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-21T22:34:12Z",
+  "lastSync": "2026-11-21T23:07:51Z",
   "claims": [
     {
       "handle": "_gl88k",
