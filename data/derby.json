@@ -1570,6 +1570,11 @@
     "nameVoteAsOf": "2026-11-22T06:00:00Z",
     "nameLeaders": [
       {
+        "name": "The Fuck Stable",
+        "by": "_cooperp",
+        "likes": 2
+      },
+      {
         "name": "LeBron",
         "by": "word_to_bob",
         "likes": 1

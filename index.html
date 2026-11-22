@@ -705,7 +705,7 @@
     $("#barnFilled").textContent = filled.toLocaleString();
     $("#barnLeft").textContent = `· ${(TOTAL - filled).toLocaleString()} still empty`;
     $("#barnBar").style.width = Math.max(0.3, 100 * filled / TOTAL) + "%";
-    if (ST.name) $("#barnSign").textContent = ("THE " + ST.name + " STABLE").toUpperCase().replace(/^THE THE /, "THE ");
+    if (ST.name) { const nm = String(ST.name).toUpperCase().replace(/^THE\s+/, "").replace(/\s+STABLES?$/, ""); $("#barnSign").textContent = `THE ${nm} STABLE`; }
     const IGP = "https://www.instagram.com/" + IG + "/";
     $("#nameBtn").href = ST.reel || D.latestReel || IGP;
     $("#nameLeaders").innerHTML = (ST.nameLeaders || []).map(n => `<li><b>${esc(n.name)}</b> <small>@${esc(n.by)} · ${n.likes} like${n.likes === 1 ? "" : "s"}</small></li>`).join("") || `<li>No names yet. Be first.</li>`;
