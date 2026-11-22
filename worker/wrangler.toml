@@ -7,8 +7,8 @@ compatibility_date = "2025-06-01"
 crons = ["0 */12 * * *"]
 
 [vars]
-SITE_DATA = "https://parkinson-cyber.github.io/dailyderby/data/derby.json"
-ORIGINS = "https://parkinson-cyber.github.io,http://localhost:8765"
+SITE_DATA = "https://pixel69paddock.github.io/data/derby.json"
+ORIGINS = "https://pixel69paddock.github.io,http://localhost:8765"
 
 # Filled in by `npx wrangler kv namespace create DERBY` (see SETUP.md).
 [[kv_namespaces]]
