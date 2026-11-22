@@ -3048,8 +3048,24 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-22T20:36:04Z",
+  "lastSync": "2026-11-22T21:35:23Z",
   "claims": [
+    {
+      "handle": "sav.disimone",
+      "look": "2114",
+      "at": "2026-11-22T21:17:26Z",
+      "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
+      "status": "waiting",
+      "name": "Platinum"
+    },
+    {
+      "handle": "ocean__hooves",
+      "look": "4414",
+      "at": "2026-11-22T20:54:52Z",
+      "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
+      "status": "waiting",
+      "name": "Rhett"
+    },
     {
       "handle": "its_zzzuh",
       "look": "2222",
