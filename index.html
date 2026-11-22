@@ -253,6 +253,21 @@
   .name-vote li{margin:6px 0}
   .name-vote li small{color:var(--dim)}
   .chip.stallc{border-color:var(--gold);color:var(--gold)}
+
+  /* rankings: top 50 + show more + quick search; horse names */
+  .board-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .board-bar .tabs{margin-bottom:0}
+  .qsearch{display:flex;align-items:center;background:var(--panel);border:2px solid var(--line);border-radius:4px;padding:0 10px;min-width:220px;flex:0 1 280px}
+  .qsearch:focus-within{border-color:var(--cyan)}
+  .qsearch span{color:var(--dim);font-weight:700}
+  .qsearch input{flex:1;min-width:0;background:transparent;border:0;color:var(--ink);font:500 15px var(--sans);padding:9px 4px;outline:none}
+  .more-row{display:flex;justify-content:center;align-items:center;gap:14px;margin-top:14px;color:var(--dim);font-size:14px}
+  tr.me td{background:rgba(58,214,255,.12)}
+  .who .nm{display:flex;flex-direction:column;min-width:0;line-height:1.25}
+  .who .nm b{font-family:var(--px);font-size:11px;color:var(--gold);letter-spacing:.02em}
+  .who .nm small{color:var(--muted);font-size:13px}
+  .name-field{margin-top:10px}
+  .name-field .field span{font-size:14px}
 </style>
 </head>
 <body>
@@ -366,6 +381,7 @@
         <div class="stall">
           <div class="pen"><svg id="bPreview" viewBox="0 0 17 13" aria-label="Your horse"></svg></div>
           <div class="code" id="bCode">HORSE 1111</div>
+          <div class="code-note" id="bPetName" style="font-family:var(--px);font-size:12px;color:var(--gold);min-height:18px"></div>
           <p class="code-note" id="bName">Bay · Dark mane · Pink silks · Plain</p>
           <p class="taken-note" id="bTaken" aria-live="polite"></p>
         </div>
@@ -373,6 +389,7 @@
           <form class="finder" id="bForm" autocomplete="off">
             <label class="field" for="bHandle"><span>@</span><input id="bHandle" placeholder="yourhandle" autocapitalize="none" spellcheck="false" aria-label="Your Instagram handle"></label>
           </form>
+          <div class="finder name-field"><label class="field" for="bHorseName"><span>Name</span><input id="bHorseName" maxlength="18" placeholder="your horse's name (optional)" spellcheck="false" aria-label="Your horse's name, optional"></label></div>
           <div id="bParts"></div>
           <div class="save-row">
             <button class="btn btn-gold" id="bSave" type="button">Claim this horse</button>
@@ -382,7 +399,7 @@
           <div class="claim card" id="bClaim" aria-live="polite">
             <b>Almost yours. One step left:</b>
             <ol>
-              <li>Comment <b class="c" id="bClaimCode">HORSE 1111</b> on any of our reels (it's copied). That proves it's you, and it counts as your boost comment too.</li>
+              <li>Comment <b class="c" id="bClaimCode">HORSE 1111</b> on any of our reels (it's copied). That proves it's you, and it counts as your boost comment too. A name after the code becomes your horse's name on the board and in races.</li>
               <li>Come back and tap <b>Done</b>. Your horse switches to its new look right away, and everyone else sees it once we confirm your comment (we check every hour).</li>
             </ol>
             <div class="save-row"><a class="btn btn-neon" id="bReel" href="#" target="_blank" rel="noopener">Open the latest reel →</a><button class="btn btn-gold" id="bDone" type="button">Done, I commented ✓</button></div>
@@ -404,13 +421,17 @@
       <h2 class="px">The standings</h2>
       <p class="season-line" id="seasonLine" hidden></p>
       <p class="sub">Every race scores: <b>20</b> points for a win, 15 for 2nd, 12 for 3rd, then 10, 9, 8, 7, 6, 5 and 4 down to 10th. Every other finisher gets 2, and a banana DNF still gets 1. Ties go to more wins.</p>
+      <div class="board-bar">
       <div class="tabs" role="tablist">
         <button class="tab" role="tab" aria-selected="true" data-sort="points">Points</button>
         <button class="tab" role="tab" aria-selected="false" data-sort="medals">Medal table</button>
         <button class="tab" role="tab" aria-selected="false" data-sort="wins">Most wins</button>
         <button class="tab" role="tab" aria-selected="false" data-sort="races">Most races</button>
       </div>
+      <label class="qsearch" for="boardSearch"><span>@</span><input id="boardSearch" type="search" placeholder="find your horse" autocapitalize="none" spellcheck="false" aria-label="Search the standings by handle or horse name"></label>
+      </div>
       <div id="board"></div>
+      <div class="more-row" id="boardMore"></div>
     </div>
   </section>
 
@@ -559,6 +580,10 @@
     return sv.code;
   }
   const horseLook = h => pendingFor(h.handle) || (validLook(h.look) ? h.look : lookFor(h.handle));
+  // Horse names (owner 2026-11-22): comment "HORSE 3233 Slow Dancer"; the hourly sync copies the name to horses[].name
+  const cleanName = s => String(s || "").replace(/[^\p{L}\p{N} '.\-]/gu, "").replace(/\s+/g, " ").trim().slice(0, 18);
+  const horseName = h => { const sv = savedHorse(); return (sv.done && sv.handle === norm(h.handle) && sv.name) ? sv.name : (h.name || ""); };
+  const whoCell = (h, size = 30) => { const n = horseName(h); return `<span class="who">${spriteTag(horseLook(h), size)}${n ? `<span class="nm"><b>${esc(n.toUpperCase())}</b><small>@${esc(h.handle)}</small></span>` : `@${esc(h.handle)}`}</span>`; };
   let REBOARD = () => {};
   document.querySelectorAll("svg.sprite").forEach(s => sprite(s, s.dataset.colour));
 
@@ -658,8 +683,9 @@
     const sv = savedHorse();
     const me = norm($("#bHandle").value) || sv.handle;
     const code = ($("#bClaimCode").textContent.match(/[1-4]{4}/) || [])[0];
+    const nm = cleanName($("#bClaimCode").textContent.replace(/^HORSE\s*[1-4]{4}/i, ""));
     if (!me || !code) { toast("Type your handle and pick a look first."); return; }
-    try { localStorage.setItem("dd-horse", JSON.stringify({ handle: me, code, done: true, doneAt: new Date().toISOString() })); } catch {}
+    try { localStorage.setItem("dd-horse", JSON.stringify({ handle: me, code, name: nm, done: true, doneAt: new Date().toISOString() })); } catch {}
     $("#bClaim").classList.remove("show");
     if (LIVE) liveUpdate(LIVE);
     REBOARD(); myStatus(); redrawBuilder();
@@ -793,22 +819,37 @@
       wins: (a, b) => b.gold - a.gold || b.races - a.races,
       races: (a, b) => b.races - a.races || b.gold - a.gold
     };
+    let boardLimit = 50;
     function board(mode) {
-      const rows = horses.map(h => ({ h, ...stats(h) })).sort(sorters[mode]);
+      const all = horses.map(h => ({ h, ...stats(h) })).sort(sorters[mode]).map((r, i) => ({ ...r, rank: i + 1 }));
+      const q = norm($("#boardSearch").value);
+      const meH = norm(savedHorse().handle || "");
+      const rows = q ? all.filter(r => norm(r.h.handle).includes(q) || horseName(r.h).toLowerCase().includes(q)) : all.slice(0, boardLimit);
+      const more = $("#boardMore");
+      if (q) more.innerHTML = rows.length ? `<span>${rows.length} match${rows.length === 1 ? "" : "es"} of ${all.length}</span>` : "";
+      else if (all.length > boardLimit) more.innerHTML = `<span>Showing ${boardLimit} of ${all.length}</span><button class="btn btn-ghost" id="boardMoreBtn" type="button">Show ${Math.min(100, all.length - boardLimit)} more</button>`;
+      else more.innerHTML = all.length > 50 ? `<span>All ${all.length} horses</span>` : "";
+      const mb = $("#boardMoreBtn");
+      if (mb) mb.addEventListener("click", () => { boardLimit += 100; board(mode); });
+      if (q && !rows.length) {
+        $("#board").innerHTML = `<div class="empty"><strong>No horse matches "${esc(q)}".</strong> New horses join after their first race. Like a reel or follow to get one.</div>`;
+        return;
+      }
       if (!rows.length) {
         $("#board").innerHTML = `<div class="empty"><strong>The standings are empty until the first race.</strong> The first horses to enter will be the first names on this board.</div>`;
         return;
       }
       $("#board").innerHTML = `<div class="table-wrap"><table>
         <thead><tr><th>#</th><th>Horse</th><th class="num pts">Pts</th><th class="num" aria-label="Gold"><span class="m g"></span><span class="lbl">Gold</span></th><th class="num" aria-label="Silver"><span class="m s"></span><span class="lbl">Silver</span></th><th class="num" aria-label="Bronze"><span class="m b"></span><span class="lbl">Bronze</span></th><th class="num">Races</th></tr></thead>
-        <tbody>${rows.map((r, i) => `<tr><td class="rank">${i + 1}</td><td><span class="who">${spriteTag(horseLook(r.h), 30)}@${esc(r.h.handle)}</span></td><td class="num pts">${r.points}</td><td class="num">${r.gold}</td><td class="num">${r.silver}</td><td class="num">${r.bronze}</td><td class="num">${r.races}</td></tr>`).join("")}</tbody>
+        <tbody>${rows.map(r => `<tr${norm(r.h.handle) === meH ? ' class="me"' : ""}><td class="rank">${r.rank}</td><td>${whoCell(r.h)}</td><td class="num pts">${r.points}</td><td class="num">${r.gold}</td><td class="num">${r.silver}</td><td class="num">${r.bronze}</td><td class="num">${r.races}</td></tr>`).join("")}</tbody>
       </table></div>`;
     }
     document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => {
       document.querySelectorAll(".tab").forEach(x => x.setAttribute("aria-selected", x === t));
-      boardMode = t.dataset.sort; board(boardMode);
+      boardMode = t.dataset.sort; boardLimit = 50; board(boardMode);
     }));
     let boardMode = "points";
+    $("#boardSearch").addEventListener("input", () => board(boardMode));
     REBOARD = () => board(boardMode);
     board(boardMode);
 
@@ -818,7 +859,7 @@
       .sort((a, b) => b.gold - a.gold || b.silver - a.silver || b.bronze - a.bronze || a.h.handle.localeCompare(b.h.handle));
     $("#medalTable").innerHTML = medallists.length ? `<div class="table-wrap"><table>
       <thead><tr><th>#</th><th>Horse</th><th class="num" aria-label="Gold"><span class="m g"></span><span class="lbl">Gold</span></th><th class="num" aria-label="Silver"><span class="m s"></span><span class="lbl">Silver</span></th><th class="num" aria-label="Bronze"><span class="m b"></span><span class="lbl">Bronze</span></th><th class="num">Total</th></tr></thead>
-      <tbody>${medallists.map((r, i) => `<tr><td class="rank">${i + 1}</td><td><span class="who">${spriteTag(horseLook(r.h), 30)}@${esc(r.h.handle)}</span>
+      <tbody>${medallists.map((r, i) => `<tr><td class="rank">${i + 1}</td><td>${whoCell(r.h)}
         <div class="medal-days">${r.md.map(m => `<span><span class="m ${"gsb"[m.place - 1]}"></span>Day ${m.day}</span>`).join("")}</div></td>
         <td class="num">${r.gold}</td><td class="num">${r.silver}</td><td class="num">${r.bronze}</td><td class="num tot">${r.gold + r.silver + r.bronze}</td></tr>`).join("")}</tbody>
     </table></div>` : `<div class="empty"><strong>No medals yet.</strong> The first podium fills this table.</div>`;
@@ -911,7 +952,9 @@
       const code = pick.map(n => n + 1).join("");
       document.querySelectorAll(".opt").forEach(b => b.setAttribute("aria-pressed", pick[+b.dataset.p] === +b.dataset.o));
       sprite($("#bPreview"), code);
+      const pn = cleanName($("#bHorseName").value);
       $("#bCode").textContent = "HORSE " + code;
+      $("#bPetName").textContent = pn ? "“" + pn.toUpperCase() + "”" : "";
       $("#bName").textContent = LOOKS.map((p, i) => p.options[pick[i]].name + (i === 1 ? " mane" : i === 2 ? " silks" : "")).join(" · ");
       const me = norm(handleIn.value), who = OWNER[code];
       const pend = !who && pendingFor(me) === code;
@@ -923,6 +966,8 @@
     }
     handleIn.addEventListener("change", () => { setCode(startFor(norm(handleIn.value))); draw(); });
     handleIn.addEventListener("input", () => { draw(); myStatus(); });
+    $("#bHorseName").addEventListener("input", draw);
+    { const sv = savedHorse(); if (sv.name) $("#bHorseName").value = sv.name; }
     redrawBuilder = draw;
     $("#bForm").addEventListener("submit", e => { e.preventDefault(); setCode(startFor(norm(handleIn.value))); draw(); });
     $("#bRandom").addEventListener("click", () => {
@@ -933,11 +978,14 @@
       const me = norm(handleIn.value);
       if (!me) { handleIn.focus(); toast("Type your Instagram handle first."); return; }
       const code = pick.map(n => n + 1).join("");
-      try { localStorage.setItem("dd-horse", JSON.stringify({ handle: me, code })); } catch {}
-      $("#bClaimCode").textContent = "HORSE " + code;
+      const nm = cleanName($("#bHorseName").value);
+      $("#bHorseName").value = nm;
+      const msg = "HORSE " + code + (nm ? " " + nm : "");
+      try { localStorage.setItem("dd-horse", JSON.stringify({ handle: me, code, name: nm })); } catch {}
+      $("#bClaimCode").textContent = msg;
       $("#bClaim").classList.add("show");
       myStatus();
-      try { await navigator.clipboard.writeText("HORSE " + code); toast("Copied: HORSE " + code); } catch { toast("Comment HORSE " + code + " on the latest reel."); }
+      try { await navigator.clipboard.writeText(msg); toast("Copied: " + msg); } catch { toast("Comment " + msg + " on the latest reel."); }
     });
     draw();
   }

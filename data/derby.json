@@ -2770,7 +2770,8 @@
       "handle": "davidosky378",
       "joined": "2026-11-22",
       "races": 1,
-      "medals": []
+      "medals": [],
+      "name": "Dave"
     },
     {
       "handle": "team.suokkitaival",
@@ -2806,13 +2807,15 @@
       "handle": "thebigbigl",
       "joined": "2026-11-22",
       "races": 1,
-      "medals": []
+      "medals": [],
+      "name": "Bobby"
     },
     {
       "handle": "bentleym0urning",
       "joined": "2026-11-22",
       "races": 1,
-      "medals": []
+      "medals": [],
+      "name": "Slow Dancer"
     },
     {
       "handle": "republican_of_rovakia",
