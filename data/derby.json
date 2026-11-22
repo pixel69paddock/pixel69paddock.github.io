@@ -1049,8 +1049,15 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-22T01:33:56Z",
+  "lastSync": "2026-11-22T02:34:52Z",
   "claims": [
+    {
+      "handle": "denondefyrste",
+      "look": "1111",
+      "at": "2026-11-22T02:21:49Z",
+      "reel": "https://www.instagram.com/p/Df_u417pzfe/",
+      "status": "waiting"
+    },
     {
       "handle": "a.b_breezey",
       "look": "2341",
