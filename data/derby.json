@@ -2820,7 +2820,8 @@
       "handle": "captyeq",
       "joined": "2026-11-22",
       "races": 1,
-      "medals": []
+      "medals": [],
+      "name": "Dih Horse"
     },
     {
       "handle": "thebigbigl",
@@ -3190,10 +3191,59 @@
         "likes": 1
       },
       {
+        "name": "LeBron Raymone James",
+        "by": "balenqci_",
+        "likes": 1
+      },
+      {
+        "name": "Mentally Un",
+        "by": "0scardavis",
+        "likes": 1
+      },
+      {
         "name": "Little Pyongyang",
         "by": "e.superskyi",
         "likes": 0
+      },
+      {
+        "name": "Barty",
+        "by": "brookeis_cool1",
+        "likes": 0
+      },
+      {
+        "name": "Nutron Star",
+        "by": "kristiyan351",
+        "likes": 0
+      },
+      {
+        "name": "The Quarter of Hores",
+        "by": "ru._.pesh_",
+        "likes": 0
+      },
+      {
+        "name": "Me Gang",
+        "by": "republican_of_rovakia",
+        "likes": 0
+      },
+      {
+        "name": "Stable",
+        "by": "musicmogger6767",
+        "likes": 0
+      },
+      {
+        "name": "Jakob 66",
+        "by": "jakobniederdorfer",
+        "likes": 0
+      },
+      {
+        "name": "Neymar Rengtea",
+        "by": "remruatpuia_.10",
+        "likes": 0
       }
     ]
+  },
+  "pendingNames": {
+    "defnot_clover": "Cookie",
+    "trappfarbe": "Dumbledoor"
   }
 }
