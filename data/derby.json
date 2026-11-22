@@ -3047,8 +3047,16 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-22T13:34:37Z",
+  "lastSync": "2026-11-22T14:34:31Z",
   "claims": [
+    {
+      "handle": "ssamiyahhhh._",
+      "look": "2144",
+      "at": "2026-11-22T14:19:02Z",
+      "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
+      "status": "waiting",
+      "name": "Stormy"
+    },
     {
       "handle": "gs7ejey",
       "look": "3324",
