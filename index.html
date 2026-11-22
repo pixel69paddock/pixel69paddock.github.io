@@ -819,6 +819,24 @@
     }
     $("#stallFind").addEventListener("submit", e => { e.preventDefault(); findStall(norm($("#stallHandle").value)); });
     drawBarn(); stallCards();
+    // Live follower count from the claims server (Instagram's official API gives the count, not the names).
+    // Stalls beyond the synced name list light up as "new, name arriving within the hour".
+    const liveCount = n => {
+      if (!(n >= filled)) return;
+      $("#sStable").textContent = n.toLocaleString();
+      $("#barnFilled").textContent = n.toLocaleString();
+      $("#barnLeft").textContent = `· ${(TOTAL - n).toLocaleString()} still empty · live`;
+      $("#barnBar").style.width = Math.max(0.3, 100 * n / TOTAL) + "%";
+      for (let k = filled; k < n && k < COLS * COLS; k++) {
+        const x = (k % COLS) * CS, y = Math.floor(k / COLS) * CS;
+        cx.fillStyle = "#f5c242"; cx.fillRect(x + 1, y + 1, CS - 2, CS - 2);
+      }
+      if (n < COLS * COLS) { const x = (n % COLS) * CS, y = Math.floor(n / COLS) * CS; cx.fillStyle = "#ff3d6e"; cx.fillRect(x + 1, y + 1, CS - 2, CS - 2); }
+    };
+    if (D.claimsApi) {
+      const pull = () => fetch(D.claimsApi.replace(/\/$/, "") + "/followers").then(r => r.json()).then(j => liveCount(j.followers)).catch(() => {});
+      pull(); setInterval(pull, 60000);
+    }
 
     const named = races.find(r => r.track);
     $("#boardName").textContent = named ? named.track.toUpperCase() : "TRACK NAME ???";

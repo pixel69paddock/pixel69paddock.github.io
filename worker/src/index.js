@@ -7,6 +7,7 @@
 //
 //   GET /state                -> { lastSync, looks: {handle: code}, claims: [...] }  (rescans if older than 60s)
 //   GET /check?handle=name    -> fresh scan (at most one every 15s), then that handle's status
+//   GET /followers            -> { followers, at }  live follower count (cached 60s)
 //   cron (twice a day)        -> renews the Instagram access token every ~7 days
 //
 // Secrets / vars (wrangler.toml + `wrangler secret put IG_TOKEN`):
@@ -37,6 +38,20 @@ export default {
         if (!/^[a-z0-9._]{1,30}$/.test(handle)) return json({ error: "bad handle" }, cors, 0, 400);
         const st = await getState(env, true);
         return json({ ...handleStatus(st, handle), lastSync: st.lastSync }, cors, 0);
+      }
+      if (url.pathname === "/followers") {
+        // live follower count (the API gives the count, never the list); cached 60s for every visitor
+        const c = await env.DERBY.get("followers", "json");
+        if (c && Date.now() - c.t < 60_000) return json({ followers: c.n, at: new Date(c.t).toISOString() }, cors, 30);
+        const token = (await env.DERBY.get("token")) || env.IG_TOKEN;
+        const r = await fetch(`${API}/me?fields=followers_count&access_token=${enc(token)}`);
+        const j = await r.json();
+        if (!r.ok || typeof j.followers_count !== "number") {
+          if (c) return json({ followers: c.n, at: new Date(c.t).toISOString(), stale: true }, cors, 30);
+          throw new Error(j.error?.message || "no followers_count");
+        }
+        await env.DERBY.put("followers", JSON.stringify({ n: j.followers_count, t: Date.now() }));
+        return json({ followers: j.followers_count, at: new Date().toISOString() }, cors, 30);
       }
       if (url.pathname === "/" || url.pathname === "/health") {
         const st = await env.DERBY.get("state", "json");
