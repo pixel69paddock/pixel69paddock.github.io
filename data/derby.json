@@ -1147,8 +1147,15 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-22T04:09:51Z",
+  "lastSync": "2026-11-22T04:35:41Z",
   "claims": [
+    {
+      "handle": "this._girl_is_on._.fire",
+      "look": "4441",
+      "at": "2026-11-22T04:21:48Z",
+      "reel": "https://www.instagram.com/p/DgB079spXvZ/",
+      "status": "waiting"
+    },
     {
       "handle": "word_to_bob",
       "look": "3214",
