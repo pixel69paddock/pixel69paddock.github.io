@@ -16,6 +16,7 @@ Edit `data/derby.json`, then commit and push. GitHub Pages republishes within ab
 | `races[]` | Add one per race: `day`, `date`, `title`, `track`, `runners`, `reel`, `results: [{handle, place}]` |
 | `horses[]` | One per entrant: `handle`, `races` (count), `medals: [{day, place}]` for 1st–3rd, optional `status: "removed"` |
 | `sponsorSpots[]` | Set `status` to `taken` and `sponsor` to the brand name once a spot is agreed |
+| `stable` | The 10,000-stall stable. Stalls are followers from `nextRace.entrants` (horses without `via: "like"`), numbered in follow order. Set `name` once the stable is named; `nameLeaders[]` (`name`, `by`, `likes`) and `nameVoteAsOf` feed the "Name the stable" card |
 
 - **Removal requests:** set the horse's `status` to `"removed"`. It disappears from search, rankings and the stable count. Also remove the handle from `nextRace.entrants`.
 - **Handles:** always copy handles from the check-in logs (`shorts-pipeline/content/daily/roster.csv`). Never type them by hand.

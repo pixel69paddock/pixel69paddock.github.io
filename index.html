@@ -222,6 +222,37 @@
 
   footer{border-top:1px solid var(--line);padding:32px 0 48px;color:var(--dim);font-size:13px}
   footer p{margin:6px 0}
+
+  /* the stable: 10,000 stalls, one per follower */
+  .barn{position:relative;margin-top:8px;background:#3a2718;border:4px solid #000;border-radius:8px;box-shadow:0 0 0 2px var(--gold),0 20px 60px rgba(0,0,0,.45);overflow:hidden}
+  .barn-roof{background:repeating-linear-gradient(90deg,#5c3e26 0 22px,#4a311d 22px 24px);border-bottom:4px solid #000;padding:14px 12px 16px;text-align:center}
+  .barn-sign{display:inline-block;background:#1c120b;border:3px solid var(--gold);border-radius:4px;padding:10px 14px;font-family:var(--px);font-size:clamp(10px,2.4vw,15px);color:var(--gold);line-height:1.5;box-shadow:3px 3px 0 #000}
+  .barn-sign .q{color:var(--neon)}
+  .barn-count{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:center;gap:4px 12px;margin-top:12px;color:#e9d9bf;font-size:13px}
+  .barn-count b{font-family:var(--px);font-size:clamp(14px,3.6vw,22px);color:#fff}
+  .barn-bar{height:8px;background:#1c120b;border:2px solid #000;border-radius:3px;margin:10px auto 0;max-width:420px;overflow:hidden}
+  .barn-bar i{display:block;height:100%;background:var(--gold);min-width:3px}
+  .barn canvas{display:block;width:100%;height:auto;image-rendering:pixelated;cursor:crosshair;touch-action:manipulation}
+  .barn-tip{position:absolute;pointer-events:none;background:#000;color:#fff;font:600 12px/1.3 var(--sans);padding:6px 8px;border-radius:4px;white-space:nowrap;transform:translate(-50%,-120%);opacity:0;transition:opacity .1s;z-index:2}
+  .barn-tip.show{opacity:1}
+  .barn-legend{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--muted);font-size:13px;margin:12px 0 0}
+  .barn-legend span{display:inline-flex;align-items:center;gap:6px}
+  .barn-legend i{width:12px;height:12px;border:1px solid #000;display:inline-block}
+  .stable-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:24px;align-items:start}
+  @media (max-width:820px){.stable-grid{grid-template-columns:1fr}}
+  .sb-stalls{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px;margin-top:18px;max-height:440px;overflow:auto;padding:2px}
+  .sb{background:#3a2718;border:2px solid #000;border-radius:4px;padding:6px 6px 8px;text-align:center;min-width:0}
+  .sb .plate{background:#1c120b;color:var(--gold);font-family:var(--px);font-size:9px;padding:4px 2px;border-radius:2px}
+  .sb .nm{font-size:12px;color:#f4ecdf;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:4px}
+  .sb svg{display:block;margin:6px auto 0}
+  .sb.me{box-shadow:0 0 0 3px var(--cyan)}
+  .sb.open{background:#241a30;border-style:dashed;border-color:var(--gold);display:flex;flex-direction:column;justify-content:center;gap:6px;text-decoration:none;color:var(--ink)}
+  .sb.open .q{font-family:var(--px);font-size:22px;color:var(--gold)}
+  .name-vote h3{margin:0 0 6px;font-size:18px}
+  .name-vote ol{margin:12px 0 16px;padding-left:22px}
+  .name-vote li{margin:6px 0}
+  .name-vote li small{color:var(--dim)}
+  .chip.stallc{border-color:var(--gold);color:var(--gold)}
 </style>
 </head>
 <body>
@@ -234,6 +265,7 @@
     </a>
     <nav class="links" aria-label="Sections">
       <a href="#find">Find your horse</a>
+      <a href="#stable">Stable</a>
       <a href="#build">Build</a>
       <a href="#rankings">Rankings</a>
       <a href="#history">Races</a>
@@ -259,7 +291,7 @@
         <div class="status" aria-live="polite">
           <div class="stat"><div class="v" id="sDay">—</div><div class="k">Next race</div></div>
           <div class="stat"><div class="v" id="sEntered">—</div><div class="k">Locked in</div></div>
-          <div class="stat"><div class="v" id="sStable">—</div><div class="k">Horses in the stable</div></div>
+          <div class="stat"><div class="v" id="sStable">—</div><div class="k">Stalls filled</div></div>
         </div>
       </div>
       <div class="hero-art">
@@ -281,6 +313,47 @@
         <button class="btn btn-gold" type="submit">Find</button>
       </form>
       <div id="findResult" aria-live="polite"></div>
+    </div>
+  </section>
+
+
+  <section id="stable">
+    <div class="wrap">
+      <p class="kicker">The stable · 10,000 stalls</p>
+      <h2 class="px">Follow = your own stall</h2>
+      <p class="sub">Every follower gets a stall with their name on the plate, and that horse runs in every Season 1 race. Stalls go in the order people followed. Tap or hover any stall to see whose it is.</p>
+      <div class="stable-grid">
+        <div>
+          <div class="barn">
+            <div class="barn-roof">
+              <div class="barn-sign" id="barnSign">THE <span class="q">???</span> STABLE</div>
+              <div class="barn-count"><b id="barnFilled">—</b><span>of 10,000 stalls filled</span><span id="barnLeft"></span></div>
+              <div class="barn-bar" aria-hidden="true"><i id="barnBar" style="width:0"></i></div>
+            </div>
+            <canvas id="barnCanvas" width="1000" height="1000" role="img" aria-label="The stable: a 100 by 100 grid of stalls, the filled ones lit up"></canvas>
+            <div class="barn-tip" id="barnTip"></div>
+          </div>
+          <div class="barn-legend"><span><i style="background:#f5c242"></i>Filled stall</span><span><i style="background:#3ad6ff"></i>Yours</span><span><i style="background:#ff3d6e"></i>Next free stall</span><span><i style="background:#2b1d12"></i>Empty</span></div>
+        </div>
+        <div>
+          <div class="card name-vote">
+            <h3>Name the stable</h3>
+            <p style="color:var(--muted);margin:0">The most-liked name in the comments on the stable reel gets painted over the door.</p>
+            <ol id="nameLeaders"></ol>
+            <a class="btn btn-gold" id="nameBtn" href="#" target="_blank" rel="noopener">Suggest a name →</a>
+            <p class="code-note" id="nameAsOf" style="margin-top:10px"></p>
+          </div>
+          <div class="card" style="margin-top:16px">
+            <h3 style="margin:0 0 6px;font-size:18px">Find your stall</h3>
+            <form class="finder" id="stallFind" autocomplete="off" style="margin:10px 0 0">
+              <label class="field" for="stallHandle"><span>@</span><input id="stallHandle" placeholder="yourhandle" autocapitalize="none" spellcheck="false" aria-label="Instagram handle"></label>
+              <button class="btn btn-gold" type="submit">Find</button>
+            </form>
+            <p class="code-note" id="stallOut" aria-live="polite" style="margin-top:10px"></p>
+          </div>
+        </div>
+      </div>
+      <div class="sb-stalls" id="sbStalls" aria-label="Filled stalls, newest first"></div>
     </div>
   </section>
 
@@ -621,7 +694,61 @@
       $("#seasonLine").hidden = false;
     }
     $("#sEntered").textContent = entrants.size;
-    $("#sStable").textContent = horses.length;
+
+    // the stable: one stall per follower, numbered in follow order (entrants list followers newest first)
+    const ST = D.stable || { stalls: 10000 };
+    const byH = {}; horses.forEach(h => byH[norm(h.handle)] = h);
+    const STALLS = (D.nextRace?.entrants || []).filter(e => byH[norm(e)] && byH[norm(e)].via !== "like").reverse();
+    const stallOf = {}; STALLS.forEach((e, i) => stallOf[norm(e)] = i + 1);
+    const TOTAL = ST.stalls || 10000, filled = STALLS.length;
+    $("#sStable").textContent = filled.toLocaleString();
+    $("#barnFilled").textContent = filled.toLocaleString();
+    $("#barnLeft").textContent = `· ${(TOTAL - filled).toLocaleString()} still empty`;
+    $("#barnBar").style.width = Math.max(0.3, 100 * filled / TOTAL) + "%";
+    if (ST.name) $("#barnSign").textContent = ("THE " + ST.name + " STABLE").toUpperCase().replace(/^THE THE /, "THE ");
+    const IGP = "https://www.instagram.com/" + IG + "/";
+    $("#nameBtn").href = ST.reel || D.latestReel || IGP;
+    $("#nameLeaders").innerHTML = (ST.nameLeaders || []).map(n => `<li><b>${esc(n.name)}</b> <small>@${esc(n.by)} · ${n.likes} like${n.likes === 1 ? "" : "s"}</small></li>`).join("") || `<li>No names yet. Be first.</li>`;
+    if (ST.nameVoteAsOf) $("#nameAsOf").textContent = "Leaders as of " + new Date(ST.nameVoteAsOf).toLocaleString(undefined, { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" }) + ". Likes on the comment are the votes.";
+    const shortH = h => h.length > 16 ? h.slice(0, 15) + "…" : h;
+    let ME = ""; try { ME = norm(localStorage.getItem("dd-stall") || savedHorse().handle || ""); } catch {}
+    function stallCards() {
+      const cards = STALLS.map((e, i) => ({ e, n: i + 1 })).reverse().map(({ e, n }) =>
+        `<div class="sb${norm(e) === ME ? " me" : ""}" data-n="${n}"><div class="plate">#${n}</div>${spriteTag(horseLook(byH[norm(e)]), 40)}<div class="nm" title="@${esc(e)}">@${esc(shortH(e))}</div></div>`);
+      $("#sbStalls").innerHTML = `<a class="sb open" href="${IGP}" target="_blank" rel="noopener"><div class="plate">#${filled + 1}</div><div class="q">?</div><div class="nm">Follow = yours</div></a>` + cards.join("");
+    }
+    const cv = $("#barnCanvas"), cx = cv.getContext("2d"), COLS = 100, CS = 10;
+    function drawBarn() {
+      cx.fillStyle = "#120b07"; cx.fillRect(0, 0, 1000, 1000);
+      const meN = stallOf[ME] || 0;
+      for (let i = 0; i < TOTAL && i < COLS * COLS; i++) {
+        const x = (i % COLS) * CS, y = Math.floor(i / COLS) * CS, n = i + 1;
+        cx.fillStyle = n === meN ? "#3ad6ff" : n <= filled ? "#f5c242" : n === filled + 1 ? "#ff3d6e" : "#2b1d12";
+        cx.fillRect(x + 1, y + 1, CS - 2, CS - 2);
+        if (n <= filled && n !== meN) { cx.fillStyle = "#8a6510"; cx.fillRect(x + 1, y + CS - 4, CS - 2, 3); }
+      }
+    }
+    const tip = $("#barnTip");
+    function showTip(ev) {
+      const r = cv.getBoundingClientRect(), px = ev.clientX - r.left, py = ev.clientY - r.top;
+      const c = Math.floor(px / r.width * COLS), rw = Math.floor(py / r.height * COLS);
+      if (c < 0 || c >= COLS || rw < 0 || rw >= COLS) { tip.classList.remove("show"); return; }
+      const n = rw * COLS + c + 1, who = STALLS[n - 1];
+      tip.textContent = who ? `Stall #${n} · @${shortH(who)}` : n === filled + 1 ? `Stall #${n} · next free: follow to take it` : `Stall #${n} · empty`;
+      tip.style.left = Math.min(Math.max(px, 90), r.width - 90) + cv.offsetLeft + "px"; tip.style.top = (py + cv.offsetTop) + "px"; tip.classList.add("show");
+    }
+    cv.addEventListener("mousemove", showTip); cv.addEventListener("click", showTip);
+    cv.addEventListener("mouseleave", () => tip.classList.remove("show"));
+    function findStall(q) {
+      const out = $("#stallOut"); if (!q) { out.textContent = ""; return; }
+      const n = stallOf[q];
+      if (n) { ME = q; try { localStorage.setItem("dd-stall", q); } catch {} out.innerHTML = `<b style="color:var(--gold)">@${esc(q)} is in stall #${n}.</b> It's lit up blue on the map.`; }
+      else out.innerHTML = `No stall for @${esc(q)} yet. <a href="${IGP}" target="_blank" rel="noopener">Follow @${IG}</a> and stall #${filled + 1} is yours (we add new followers every few hours).`;
+      drawBarn(); stallCards();
+    }
+    $("#stallFind").addEventListener("submit", e => { e.preventDefault(); findStall(norm($("#stallHandle").value)); });
+    drawBarn(); stallCards();
+
     const named = races.find(r => r.track);
     $("#boardName").textContent = named ? named.track.toUpperCase() : "TRACK NAME ???";
     $("#updated").textContent = "Updated " + fmtDate(D.updated) + ".";
@@ -653,6 +780,7 @@
             ${s.silver ? `<span class="chip"><span class="m s"></span>${s.silver} silver</span>` : ""}
             ${s.bronze ? `<span class="chip"><span class="m b"></span>${s.bronze} bronze</span>` : ""}
             ${s.races === 0 ? `<span class="chip debut">DEBUT</span>` : ""}
+            ${stallOf[q] ? `<span class="chip stallc">Stall #${stallOf[q]}</span>` : ""}
           </div>
         </div></div>`;
     });
