@@ -3172,36 +3172,26 @@
     "stalls": 10000,
     "name": null,
     "reel": "https://www.instagram.com/p/DgB079spXvZ/",
-    "nameVoteAsOf": "2026-11-22T09:20:00Z",
+    "nameVoteAsOf": "2026-11-22T13:45:00Z",
     "nameLeaders": [
       {
         "name": "LeBron",
         "by": "word_to_bob",
-        "likes": 2
+        "likes": 4
       },
       {
         "name": "The Fuck Stable",
         "by": "_cooperp",
-        "likes": 2
+        "likes": 4
+      },
+      {
+        "name": "MJ",
+        "by": "optical_illu.son_",
+        "likes": 1
       },
       {
         "name": "Little Pyongyang",
         "by": "e.superskyi",
-        "likes": 0
-      },
-      {
-        "name": "Slow Dancer",
-        "by": "bentleym0urning",
-        "likes": 1
-      },
-      {
-        "name": "The Quarter of Hores",
-        "by": "ru._.pesh_",
-        "likes": 0
-      },
-      {
-        "name": "Me Gang",
-        "by": "republican_of_rovakia",
         "likes": 0
       }
     ]
