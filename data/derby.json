@@ -738,8 +738,8 @@
       "day": 4,
       "date": "2026-11-23",
       "kind": "race",
-      "title": "Figure 8: Crossfire",
-      "track": "Figure 8",
+      "title": "King's Warmup: Figure 8 Crossfire",
+      "track": "King's Warmup",
       "runners": 176,
       "laps": 3,
       "obstacle": "banana peel + head-on pile-ups at the crossing",
@@ -1654,7 +1654,8 @@
           "odds": 0.8,
           "dnf": true
         }
-      ]
+      ],
+      "layout": "Figure 8"
     }
   ],
   "horses": [
