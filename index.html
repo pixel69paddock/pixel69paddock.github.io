@@ -165,6 +165,12 @@
   .race h3{margin:0;font-size:17px}
   .race p{margin:4px 0 0;color:var(--muted);font-size:14px}
   .podium{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;font-size:14px}
+  .full-res{margin-top:10px}
+  .full-res summary{cursor:pointer;color:var(--neon);font-size:14px;font-weight:700}
+  .full-res .table-wrap{max-height:420px;overflow:auto}
+  .my-races{grid-column:1/-1}
+  .my-races h4{margin:0 0 8px;font-size:15px;color:var(--gold)}
+  .race > div{min-width:0}
   @media (max-width:560px){.race{grid-template-columns:auto 1fr}.race .go{grid-column:1/-1}}
 
   /* hall of fame */
@@ -638,6 +644,9 @@
   // Points (owner, 2026-11-21): 1st-10th score 20,15,12,10,9,8,7,6,5,4; other finishers 2; DNF 1
   const PTS = [20, 15, 12, 10, 9, 8, 7, 6, 5, 4];
   const racePts = r => r.dnf ? 1 : !r.place ? 0 : (PTS[r.place - 1] ?? 2);
+  const ord = n => n + (n % 100 >= 11 && n % 100 <= 13 ? "th" : ["th", "st", "nd", "rd"][n % 10] || "th");
+  const placeLabel = x => x.dnf ? "DNF" + (x.out ? " (" + x.out + ")" : "") : x.place ? ord(x.place) + (x.crashed ? " (crashed)" : "") : "—";
+  const placeCell = x => x.place && x.place <= 3 ? `<span class="m ${"gsb"[x.place - 1]}"></span>${ord(x.place)}` : esc(placeLabel(x));
   let POINTS = {};
   const tallyPoints = D => { POINTS = {}; (D.races || []).forEach(rc => (rc.results || []).forEach(r => { const k = norm(r.handle); POINTS[k] = (POINTS[k] || 0) + racePts(r); })); };
   function stats(h) {
@@ -871,7 +880,15 @@
             ${s.races === 0 ? `<span class="chip debut">DEBUT</span>` : ""}
             ${stallOf[q] ? `<span class="chip stallc">Stall #${stallOf[q]}</span>` : ""}
           </div>
-        </div></div>`;
+        </div>
+        ${(() => {
+          const mine = races.map(r => ({ r, x: (r.results || []).find(y => norm(y.handle) === q) })).filter(o => o.x);
+          return mine.length ? `<div class="my-races"><h4>Race by race</h4><div class="table-wrap"><table>
+            <thead><tr><th>Day</th><th>Finish</th><th class="num">Field</th><th class="num">Odds</th><th class="num pts">Pts</th></tr></thead>
+            <tbody>${mine.map(({ r, x }) => `<tr><td>${r.reel ? `<a href="${esc(r.reel)}" target="_blank" rel="noopener">Day ${r.day}</a>` : "Day " + r.day}</td><td>${placeCell(x)}</td><td class="num">${r.runners || (r.results || []).length}</td><td class="num">${x.odds != null ? x.odds + "%" : "—"}</td><td class="num pts">${racePts(x)}</td></tr>`).join("")}</tbody>
+          </table></div></div>` : "";
+        })()}
+        </div>`;
     });
 
     // leaderboard
@@ -937,10 +954,20 @@
           <p>${fmtDate(r.date)} · ${r.runners} runner${r.runners === 1 ? "" : "s"} · ${r.track ? "Track: " + esc(r.track) : "Track not named yet"}</p>
           ${r.note ? `<p>${esc(r.note)}</p>` : ""}
           ${pod.length ? `<div class="podium">${pod.map(p => `<span><span class="m ${"gsb"[p.place - 1]}"></span>@${esc(p.handle)}</span>`).join("")}</div>` : ""}
+          ${(r.results || []).length ? `<details class="full-res"><summary>Full results (${r.results.length})</summary>
+            <label class="qsearch" style="margin:10px 0"><span>@</span><input type="search" class="res-q" placeholder="find a horse in this race" autocapitalize="none" spellcheck="false" aria-label="Search this race's results"></label>
+            <div class="table-wrap"><table>
+            <thead><tr><th>Finish</th><th>Horse</th><th class="num">Odds</th><th class="num pts">Pts</th></tr></thead>
+            <tbody>${r.results.slice().sort((a, b) => (a.place || 1e9) - (b.place || 1e9)).map(x => { const hh = horses.find(y => norm(y.handle) === norm(x.handle)) || { handle: x.handle }; return `<tr data-h="${esc(norm(x.handle) + " " + horseName(hh).toLowerCase())}"><td>${placeCell(x)}</td><td>${whoCell(hh, 24)}</td><td class="num">${x.odds != null ? x.odds + "%" : "—"}</td><td class="num pts">${racePts(x)}</td></tr>`; }).join("")}</tbody>
+          </table></div></details>` : ""}
         </div>
         ${r.reel ? `<a class="btn btn-ghost go" href="${esc(r.reel)}" target="_blank" rel="noopener">Watch</a>` : ""}
       </div>`;
     }).join("");
+    document.querySelectorAll(".res-q").forEach(inp => inp.addEventListener("input", () => {
+      const q = norm(inp.value);
+      inp.closest(".full-res").querySelectorAll("tbody tr").forEach(tr => tr.hidden = !!q && !tr.dataset.h.includes(q));
+    }));
 
     // hall of fame: winners, then vacant frames to fill whole rows (6 wide; 3 on phones, which also divides)
     const winners = races.slice().reverse().map(r => ({ r, w: (r.results || []).find(x => x.place === 1) })).filter(x => x.w);
