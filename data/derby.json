@@ -7,6 +7,17 @@
     "date": "2026-11-23",
     "status": "open",
     "entrants": [
+      "devon.hernandez.106",
+      "evanharrison15",
+      "mathildehest123",
+      "pedersen9125",
+      "chatzinpanos",
+      "nikol_ajovanovic13",
+      "louis_f009",
+      "davidosky378",
+      "team.suokkitaival",
+      "_.sonansh",
+      "ryan_turner2011",
       "zakhary__55",
       "tayla_equestrian15",
       "rich97706",
@@ -1775,6 +1786,72 @@
       "races": 0,
       "medals": [],
       "via": "like"
+    },
+    {
+      "handle": "devon.hernandez.106",
+      "joined": "2026-11-22",
+      "races": 0,
+      "medals": []
+    },
+    {
+      "handle": "evanharrison15",
+      "joined": "2026-11-22",
+      "races": 0,
+      "medals": []
+    },
+    {
+      "handle": "mathildehest123",
+      "joined": "2026-11-22",
+      "races": 0,
+      "medals": []
+    },
+    {
+      "handle": "pedersen9125",
+      "joined": "2026-11-22",
+      "races": 0,
+      "medals": []
+    },
+    {
+      "handle": "chatzinpanos",
+      "joined": "2026-11-22",
+      "races": 0,
+      "medals": []
+    },
+    {
+      "handle": "nikol_ajovanovic13",
+      "joined": "2026-11-22",
+      "races": 0,
+      "medals": []
+    },
+    {
+      "handle": "louis_f009",
+      "joined": "2026-11-22",
+      "races": 0,
+      "medals": []
+    },
+    {
+      "handle": "davidosky378",
+      "joined": "2026-11-22",
+      "races": 0,
+      "medals": []
+    },
+    {
+      "handle": "team.suokkitaival",
+      "joined": "2026-11-22",
+      "races": 0,
+      "medals": []
+    },
+    {
+      "handle": "_.sonansh",
+      "joined": "2026-11-22",
+      "races": 0,
+      "medals": []
+    },
+    {
+      "handle": "ryan_turner2011",
+      "joined": "2026-11-22",
+      "races": 0,
+      "medals": []
     }
   ],
   "sponsorSpots": [
@@ -1986,17 +2063,22 @@
     "stalls": 10000,
     "name": null,
     "reel": "https://www.instagram.com/p/DgB079spXvZ/",
-    "nameVoteAsOf": "2026-11-22T06:00:00Z",
+    "nameVoteAsOf": "2026-11-22T09:20:00Z",
     "nameLeaders": [
+      {
+        "name": "LeBron",
+        "by": "word_to_bob",
+        "likes": 2
+      },
       {
         "name": "The Fuck Stable",
         "by": "_cooperp",
         "likes": 2
       },
       {
-        "name": "LeBron",
-        "by": "word_to_bob",
-        "likes": 1
+        "name": "Little Pyongyang",
+        "by": "e.superskyi",
+        "likes": 0
       },
       {
         "name": "Slow Dancer",
