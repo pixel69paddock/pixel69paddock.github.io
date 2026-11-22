@@ -3047,8 +3047,16 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-22T14:34:31Z",
+  "lastSync": "2026-11-22T15:37:17Z",
   "claims": [
+    {
+      "handle": "defnot_clover",
+      "look": "3432",
+      "at": "2026-11-22T15:21:55Z",
+      "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
+      "status": "waiting",
+      "name": "COOKIE"
+    },
     {
       "handle": "ssamiyahhhh._",
       "look": "2144",
