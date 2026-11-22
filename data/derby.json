@@ -1,12 +1,21 @@
 {
   "updated": "2026-11-22",
   "account": "dailyderby_horse",
-  "latestReel": "https://www.instagram.com/reel/DgAcGG5JKhP/",
+  "latestReel": "https://www.instagram.com/reel/DgB079spXvZ/",
   "nextRace": {
     "day": 4,
     "date": "2026-11-23",
     "status": "open",
     "entrants": [
+      "gavinthebest34",
+      "rus87292",
+      "word_to_bob",
+      "matthewgray905",
+      "_keys_by_deepesh",
+      "elodie.chaine_92",
+      "denondefyrste",
+      "ys_agn",
+      "a.b_breezey",
       "0scardavis",
       "malakhi_johnson",
       "gs7ejey",
@@ -34,6 +43,10 @@
       "__choi_12",
       "micro_facts_information",
       "himc__",
+      "medr.ano5323",
+      "solis.jaylyn",
+      "ari______31",
+      "remilia_92",
       "caelanmorton431",
       "nagdamaahir",
       "quentino111",
@@ -964,6 +977,91 @@
       "joined": "2026-11-22",
       "races": 0,
       "medals": []
+    },
+    {
+      "handle": "gavinthebest34",
+      "joined": "2026-11-22",
+      "races": 0,
+      "medals": []
+    },
+    {
+      "handle": "rus87292",
+      "joined": "2026-11-22",
+      "races": 0,
+      "medals": []
+    },
+    {
+      "handle": "word_to_bob",
+      "joined": "2026-11-22",
+      "races": 0,
+      "medals": [],
+      "look": "3214"
+    },
+    {
+      "handle": "matthewgray905",
+      "joined": "2026-11-22",
+      "races": 0,
+      "medals": []
+    },
+    {
+      "handle": "_keys_by_deepesh",
+      "joined": "2026-11-22",
+      "races": 0,
+      "medals": []
+    },
+    {
+      "handle": "elodie.chaine_92",
+      "joined": "2026-11-22",
+      "races": 0,
+      "medals": []
+    },
+    {
+      "handle": "denondefyrste",
+      "joined": "2026-11-22",
+      "races": 0,
+      "medals": [],
+      "look": "1111"
+    },
+    {
+      "handle": "ys_agn",
+      "joined": "2026-11-22",
+      "races": 0,
+      "medals": []
+    },
+    {
+      "handle": "a.b_breezey",
+      "joined": "2026-11-22",
+      "races": 0,
+      "medals": [],
+      "look": "2341"
+    },
+    {
+      "handle": "medr.ano5323",
+      "joined": "2026-11-22",
+      "races": 0,
+      "medals": [],
+      "via": "like"
+    },
+    {
+      "handle": "solis.jaylyn",
+      "joined": "2026-11-22",
+      "races": 0,
+      "medals": [],
+      "via": "like"
+    },
+    {
+      "handle": "ari______31",
+      "joined": "2026-11-22",
+      "races": 0,
+      "medals": [],
+      "via": "like"
+    },
+    {
+      "handle": "remilia_92",
+      "joined": "2026-11-22",
+      "races": 0,
+      "medals": [],
+      "via": "like"
     }
   ],
   "sponsorSpots": [
@@ -1049,21 +1147,28 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-22T03:35:50Z",
+  "lastSync": "2026-11-22T04:09:51Z",
   "claims": [
+    {
+      "handle": "word_to_bob",
+      "look": "3214",
+      "at": "2026-11-22T04:03:52Z",
+      "reel": "https://www.instagram.com/p/DgAcGG5JKhP/",
+      "status": "locked"
+    },
     {
       "handle": "denondefyrste",
       "look": "1111",
       "at": "2026-11-22T02:21:49Z",
       "reel": "https://www.instagram.com/p/Df_u417pzfe/",
-      "status": "waiting"
+      "status": "locked"
     },
     {
       "handle": "a.b_breezey",
       "look": "2341",
       "at": "2026-11-22T00:04:56Z",
       "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
-      "status": "waiting"
+      "status": "locked"
     },
     {
       "handle": "_gl88k",
