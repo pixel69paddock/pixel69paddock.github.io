@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-24",
+  "updated": "2026-11-23",
   "account": "dailyderby_horse",
   "latestReel": "https://www.instagram.com/p/DgEj46qJi0L/",
   "nextRace": {
@@ -236,6 +236,8 @@
       "tahnee.lagerwey_",
       "hvnah_13",
       "lily.joness8",
+      "charger_chewer",
+      "vicky_perez321",
       "ccharlieross",
       "haydenlikins",
       "canela_canela605",
@@ -649,6 +651,7 @@
       "_dorothy_0907",
       "polesryan2474",
       "lottie_4202",
+      "sinahornchen",
       "amieeandponies",
       "amelia_maclean5",
       "claire20.12",
@@ -783,6 +786,7 @@
       "bornacankovic",
       "cam83685",
       "jesse89296",
+      "annabilsland",
       "vyagra_pinkbits_rileyonlimmi",
       "kaifuhtru_2012",
       "leeknowwigandbuttcheekhairy",
@@ -1242,7 +1246,51 @@
       "goe_jul",
       "lily.equestriannn",
       "scrt.aneta_",
-      "jakemcgrew25"
+      "jakemcgrew25",
+      "adela15790",
+      "alicesoares_a",
+      "amalietomcova",
+      "bellac_equestrian",
+      "bentleym0urning",
+      "black_toast_intollerant",
+      "brooklyngt1",
+      "captyeq",
+      "carleyhilfiker",
+      "chloe7628887",
+      "claytonhelmey_64",
+      "dencaa_epi",
+      "eleni13113",
+      "emmapetrinehagen",
+      "fat.chunky.chicken",
+      "fennavan_leeuwen",
+      "gimmytaran._",
+      "hanne_p15",
+      "iamviolet21",
+      "jakobniederdorfer",
+      "jett_johnson0524",
+      "johnpercy_polar",
+      "kimlickova.n",
+      "liamhughes.lax",
+      "lil.johnny67",
+      "lydiapearlalt",
+      "marenvandervelde",
+      "milapelusa6542012",
+      "olive_marguerite",
+      "republican_of_rovakia",
+      "resible_aryan",
+      "simply_horses_hamza",
+      "taelyn_lieber",
+      "taiharley",
+      "thebigbigl",
+      "this._girl_is_on._.fire",
+      "twistedstickman",
+      "tyson_lacrosse_boy",
+      "und3rarainysky",
+      "userrrvanessa",
+      "vixxtheone",
+      "wbgheeler98",
+      "xcaitlin_hunter",
+      "zalcii_b"
     ],
     "track": "Figure 8 + the crowd's crossing hazard (comment 🚦 / 🔥 / 🍌 on the Day 4 reel; your emoji = your horse's power)"
   },
@@ -4120,46 +4168,53 @@
       "handle": "tyson_lacrosse_boy",
       "joined": "2026-11-22",
       "races": 1,
-      "medals": []
+      "medals": [],
+      "via": "comment"
     },
     {
       "handle": "captyeq",
       "joined": "2026-11-22",
       "races": 1,
       "medals": [],
-      "name": "Dih Horse"
+      "name": "Dih Horse",
+      "via": "comment"
     },
     {
       "handle": "thebigbigl",
       "joined": "2026-11-22",
       "races": 1,
       "medals": [],
-      "name": "Bobby"
+      "name": "Bobby",
+      "via": "comment"
     },
     {
       "handle": "bentleym0urning",
       "joined": "2026-11-22",
       "races": 1,
       "medals": [],
-      "name": "Slow Dancer"
+      "name": "Slow Dancer",
+      "via": "comment"
     },
     {
       "handle": "republican_of_rovakia",
       "joined": "2026-11-22",
       "races": 1,
-      "medals": []
+      "medals": [],
+      "via": "comment"
     },
     {
       "handle": "resible_aryan",
       "joined": "2026-11-22",
       "races": 1,
-      "medals": []
+      "medals": [],
+      "via": "comment"
     },
     {
       "handle": "twistedstickman",
       "joined": "2026-11-22",
       "races": 1,
-      "medals": []
+      "medals": [],
+      "via": "comment"
     },
     {
       "handle": "milofrbain",
@@ -7868,7 +7923,8 @@
       "races": 0,
       "medals": [],
       "badge": "gold",
-      "rank": 548
+      "rank": 548,
+      "name": "King"
     },
     {
       "handle": "eqemma_09",
@@ -9573,7 +9629,8 @@
       "races": 0,
       "medals": [],
       "badge": "gold",
-      "rank": 684
+      "rank": 684,
+      "name": "Max"
     },
     {
       "handle": "laziccc_e",
@@ -11392,7 +11449,8 @@
       "races": 0,
       "medals": [],
       "rank": 890,
-      "badge": "silver"
+      "badge": "silver",
+      "name": "Sig de jbcff"
     },
     {
       "handle": "sofi.palova",
@@ -12244,7 +12302,8 @@
       "races": 0,
       "medals": [],
       "rank": 952,
-      "badge": "silver"
+      "badge": "silver",
+      "name": "Nova"
     },
     {
       "handle": "official_arnav444",
@@ -12252,7 +12311,8 @@
       "races": 0,
       "medals": [],
       "rank": 953,
-      "badge": "silver"
+      "badge": "silver",
+      "name": "Bronto"
     },
     {
       "handle": "ella10vac",
@@ -12470,7 +12530,8 @@
       "races": 0,
       "medals": [],
       "rank": 980,
-      "badge": "silver"
+      "badge": "silver",
+      "name": "Qualiyy"
     },
     {
       "handle": "el.ilkone",
@@ -12698,7 +12759,8 @@
       "medals": [],
       "rank": 1008,
       "badge": "silver",
-      "name": "Secretariat"
+      "name": "Secretariat",
+      "special": "1000th"
     },
     {
       "handle": "austlexian_coolio20",
@@ -12838,7 +12900,8 @@
       "races": 0,
       "medals": [],
       "rank": 1025,
-      "badge": "silver"
+      "badge": "silver",
+      "name": "Pookie"
     },
     {
       "handle": "v.minaa11",
@@ -13248,6 +13311,255 @@
       "races": 0,
       "medals": [],
       "via": "like"
+    },
+    {
+      "handle": "adela15790",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "alicesoares_a",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "amalietomcova",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "bellac_equestrian",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "black_toast_intollerant",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "brooklyngt1",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment",
+      "name": "Ellie"
+    },
+    {
+      "handle": "carleyhilfiker",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "chloe7628887",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "claytonhelmey_64",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment",
+      "name": "John jones"
+    },
+    {
+      "handle": "dencaa_epi",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "eleni13113",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "emmapetrinehagen",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment",
+      "name": "Royal"
+    },
+    {
+      "handle": "fat.chunky.chicken",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "fennavan_leeuwen",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "gimmytaran._",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment",
+      "name": "Mastani"
+    },
+    {
+      "handle": "hanne_p15",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "iamviolet21",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment",
+      "name": "Snoopy"
+    },
+    {
+      "handle": "jett_johnson0524",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "johnpercy_polar",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "kimlickova.n",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "liamhughes.lax",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "lil.johnny67",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "lydiapearlalt",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "marenvandervelde",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment",
+      "name": "Suzy"
+    },
+    {
+      "handle": "milapelusa6542012",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment",
+      "name": "Hoofprint bay"
+    },
+    {
+      "handle": "olive_marguerite",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment",
+      "name": "Joey"
+    },
+    {
+      "handle": "simply_horses_hamza",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "taelyn_lieber",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "taiharley",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment",
+      "name": "Raven"
+    },
+    {
+      "handle": "userrrvanessa",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "vixxtheone",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment",
+      "name": "Gentildonna"
+    },
+    {
+      "handle": "wbgheeler98",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "xcaitlin_hunter",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "zalcii_b",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "via": "comment",
+      "name": "Zizi"
     }
   ],
   "sponsorSpots": [
@@ -13333,7 +13645,7 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-23T13:15:09Z",
+  "lastSync": "2026-11-23T13:23:26Z",
   "claims": [
     {
       "handle": "cailyneq22_",
@@ -13730,17 +14042,8 @@
     ]
   },
   "pendingNames": {
-    "iamviolet21": "Snoopy",
     "lydiapearlalt": "Chocolate",
-    "taelyn_lieber": "Rocket",
-    "emmapetrinehagen": "Royal",
-    "brooklyngt1": "Ellie",
-    "vixxtheone": "Gentildonna",
-    "claytonhelmey_64": "John jones",
-    "olive_marguerite": "Joey",
-    "marenvandervelde": "Suzy",
-    "milapelusa6542012": "Hoofprint bay",
-    "gimmytaran._": "Mastani"
+    "taelyn_lieber": "Rocket"
   },
   "founders": {
     "goldCount": 800,
@@ -13783,5 +14086,1294 @@
     "1114": "natal.ka.22",
     "3322": "aria_phillip19"
   },
-  "commentEntries": {}
+  "commentEntries": {
+    "cailyneq22_": {
+      "day": 4,
+      "reel": "DgEj46qJi0L"
+    },
+    "balenqci_": {
+      "day": 4,
+      "reel": "DgEj46qJi0L"
+    },
+    "skz_and_ponies_are_amazing": {
+      "day": 4,
+      "reel": "DgEj46qJi0L"
+    },
+    "micro_facts_information": {
+      "day": 4,
+      "reel": "DgEj46qJi0L"
+    },
+    "just_a_grl_who_loves_horses": {
+      "day": 4,
+      "reel": "DgEj46qJi0L"
+    },
+    "arnav_equine": {
+      "day": 4,
+      "reel": "DgEj46qJi0L"
+    },
+    "friederike.privat25": {
+      "day": 4,
+      "reel": "DgEj46qJi0L"
+    },
+    "iblamerodrix": {
+      "day": 4,
+      "reel": "DgEj46qJi0L"
+    },
+    "yanniss_wk": {
+      "day": 4,
+      "reel": "DgEj46qJi0L"
+    },
+    "official_arnav444": {
+      "day": 4,
+      "reel": "DgEj46qJi0L"
+    },
+    "dieselflipkick": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "valca_konicii": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "holly_eq_my_cob": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "ren_e1098": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "fayecoconut180": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "rose_townsend_1": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "toby_roe52": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "fat.chunky.chicken": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "pepper081526": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "zaza130815": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "jazmine_c_12": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "fara_tara_toby": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "renee_vers": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "molly.pem": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "zoeyglisch": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "sonnenberg.grace": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "viljabp": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "aver_y766": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "mathildeoverstroem": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "n_sobotkova2": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "emilija123428": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "br.ay7383": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "eskaha11": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "lil.johnny67": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "max_rides67": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "felipe.coates": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "keira19813": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "whtthefrickx1": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "ru._.pesh_": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "michaela_kacmarik": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "giulia.ribaud0": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "lcedricc_": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "ellyrebbeck_18": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "sofiasheikho123": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "alex22_rosie": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "justjayj.01": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "captyeq": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "_._baruu.ly_._": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "eq_andreeaa": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "addiandthehorses": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "taiharley": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "nikcahorse.14": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "e_qcate": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "victoria_vaquer_": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "blake._.hayes": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "lewis148804": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "simply_horses_hamza": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "haileyshelby6": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "carmel_amrani1": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "kannontabor": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "vivian_t.eq": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "20randomchild6": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "brandon94641": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "its_me__jxy326": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "beauxcurry": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "hailey_il_": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "batz.cc": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "this._girl_is_on._.fire": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "maresovaf": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "secret.lieselot13469": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "da.na.20.07": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "godzilla_jr1954": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "olive_marguerite": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "petrus_equ": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "peterson188": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "chia.eyan": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "jazzlyn.singels": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "rosaliina_helmi": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "nelligirl2016": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "_kingi_lady_hepolin": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "pony_pige1234": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "kaszanderka_official": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "chinothepotato": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "tristankraulis": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "the_secretlifeofkelso": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "ha.alhosani.7": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "feetlicker433": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "baje_sm_lauci": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "chifon__": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "liampatrogers": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "orajdzik108": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "davinas.adventures": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "hankahutlasova": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "emmapetrinehagen": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "taelyn_lieber": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "luke_walker_13": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "ch_shashanth_2011": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "kimlickova.n": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "taco_png": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "rudaa.es": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "polesryan2474": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "userrrvanessa": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "reneacosta875": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "inxoaa": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "ismaelgordo__": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "_mqt45_": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "floorgrinwis11": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "enick_must_di3": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "louis_f009": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "xcaitlin_hunter": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "lanaatjee.xx": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "domflor12345": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "elsies_ridingjourney": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "horsegirlsbraclets": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "holliehavannah": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "chloe7628887": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "talalbastati": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "anustaaaaaaa": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "republican_of_rovakia": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "khs14176": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "onlysillyprune": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "bellac_equestrian": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "tu_alba.ricoque": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "twistedstickman": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "wahc.aivilo": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "ella10vac": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "vyagra_pinkbits_rileyonlimmi": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "xrn_.bilal": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "adela15790": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "2www4727": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "himc__": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "austlexian_coolio20": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "eleni13113": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "lara_dilley02": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "amalia.catana.26": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "equi_annelynn": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "nemaproblemma_": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "marnupretoruis": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "kimiwi12.825": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "addy_the_equestrian": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "harperjeaneques": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "remruatpuia_.10": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "viviennepilkilton": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "illrc2026": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "rass.ezra": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "_.eliiskaa_": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "luna.tic_moments": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "alfaisalthebest": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "alicesoares_a": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "bobbylobby143": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "z.chr0sciel": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "vixxtheone": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "aria_phillip19": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "hvnah_13": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "knszil": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "aitaneta_con_botasss": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "emiliaelisabeth8": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "jahliahaa.rok": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "hadley.smith.eq": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "_ang_123_": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "thierrysharp88": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "nyxblackwood": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "zekeprim": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "hammerdarlene": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "commenthopia": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "lillyrose22935": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "byronwatson25": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "defnot_clover": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "maju_sinkaa": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "vala.mijatovic": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "zombie_naughty": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "kristiyan351": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "mar_tusia_sw": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "car.spots101": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "double_a1213": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "thebigbigl": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "michafanaccx": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "liamhughes.lax": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "tyson_lacrosse_boy": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "smaggioli09": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "tylerwaite2011": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "0scardavis": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "flora_millsop": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "cayla.vernall": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "areaderlol": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "marenvandervelde": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "beaubulks": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "iamviolet21": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "francisco101357": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "ducksynm": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "camiigan03": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "oce_desj": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "meli_svato": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "tingeling.maincoon_ragdoll": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "sand.eater7": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "breannasquires71": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "_yuna_vn": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "elsabuescher13": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "trappfarbe": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "nigaboy22825": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "eli_rothwell": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "david_kapepe_": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "word_to_bob": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "harper_eggleton_28": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "jax_plu": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "x.ace_00": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "sv_equipage": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "quacken123": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "milapelusa6542012": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "ml.glaser": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "willem220456": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "el.ilkone": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "shep_zzz_": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "joel_young26": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "love.y0rsxlf": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "mahier_adams": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "black_toast_intollerant": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "johannes_wallerstedt": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "brajankanani": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "theheavymeisters": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "robin_juhani_sunikka": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "lydiapearlalt": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "annixmathilde": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "haejinarts_innie": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "graciejean_5": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "bentleym0urning": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "claytonhelmey_64": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "fennavan_leeuwen": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "amaliabarragan_12345": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "thabinchicken": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "isabelle60782": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "jakobniederdorfer": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "celinedancerpersson": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "brooklyngt1": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "nardy9665": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "fiinsta_sarasara": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "britt.van.kessel14": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "benth.mss": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "zadrapova_j": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "devonte.__": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "dencaa_epi": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "bramsalemans": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "princeofthepunjab": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "johnpercy_polar": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "mayakiwi47": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "sakura_dreams7": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "anix_oficial1": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "tkacova.tally": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "that_welsh_pony_girl": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "izzie_eq13": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "ton_isabel": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "annabilsland": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "charburst1221": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "jojin_tan": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "wbgheeler98": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "itssssraquelll": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "zoekennedyovy": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "lea23schwarze": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "aine.clarke": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "just_me_3593": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "nody_alnajjar": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "exizzz_rudy": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "everleighkoval": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "szilagyi_csengiiiiiii": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "brookeis_cool1": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "golden_zozo_c": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "kavya_s_kumar89": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "amalietomcova": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "und3rarainysky": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "hanne_p15": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "gs7ejey": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "zalcii_b": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "di_petrovytska": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "charliegarvie": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "_zezulackq_": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "antonella.armino": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "optical_illu.son_": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "resible_aryan": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "queeny_is_awesome": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "signesilvertern": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "hannadaniek": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "davidosky378": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "fionav9_candy_biscuit": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "candice_eq": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "alice.thealpha": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "michalova_klara": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "_alice.em": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "kaifuhtru_2012": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "k2_3798": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "abbie_and_horses124": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "s.petkoviccc": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "bsta.ted": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "e.superskyi": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "imsoawesome4321": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "queen_aka_denise": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "valentina9047512": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "simonekragt": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "gimmytaran._": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "harley_quinn.eq": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "jett_johnson0524": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "brandin2396": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "carleyhilfiker": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "jamariparsons": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "ililx_q": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "eq._hilde": {
+      "day": 4,
+      "reel": "DgB079spXvZ"
+    },
+    "not.found.user_67": {
+      "day": 4,
+      "reel": "DgCpWRkJ0J5"
+    },
+    "sav.disimone": {
+      "day": 4,
+      "reel": "DgCpWRkJ0J5"
+    },
+    "cooper50960": {
+      "day": 4,
+      "reel": "DgCpWRkJ0J5"
+    },
+    "ssamiyahhhh._": {
+      "day": 4,
+      "reel": "DgCpWRkJ0J5"
+    },
+    "_gl88k": {
+      "day": 4,
+      "reel": "DgCpWRkJ0J5"
+    },
+    "blaize_priv_200": {
+      "day": 4,
+      "reel": "DgCpWRkJ0J5"
+    },
+    "_dorothy_0907": {
+      "day": 4,
+      "reel": "DgCpWRkJ0J5"
+    },
+    "josie_barrett1": {
+      "day": 4,
+      "reel": "DgCpWRkJ0J5"
+    },
+    "ocean__hooves": {
+      "day": 4,
+      "reel": "DgCpWRkJ0J5"
+    },
+    "valeriepredinska": {
+      "day": 4,
+      "reel": "DgCpWRkJ0J5"
+    },
+    "prilotte_": {
+      "day": 4,
+      "reel": "DgCpWRkJ0J5"
+    },
+    "logpackersfan2710": {
+      "day": 4,
+      "reel": "DgCpWRkJ0J5"
+    },
+    "ave._1120": {
+      "day": 4,
+      "reel": "DgCpWRkJ0J5"
+    },
+    "eyad.ahmed265": {
+      "day": 4,
+      "reel": "DgCpWRkJ0J5"
+    },
+    "oliverk013": {
+      "day": 4,
+      "reel": "DgCpWRkJ0J5"
+    },
+    "kacsa_.10": {
+      "day": 4,
+      "reel": "DgCpWRkJ0J5"
+    },
+    "c.c_equestriann": {
+      "day": 4,
+      "reel": "DgCpWRkJ0J5"
+    }
+  }
 }
