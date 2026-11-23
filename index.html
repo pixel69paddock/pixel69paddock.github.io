@@ -11,6 +11,7 @@
 <meta name="theme-color" content="#170f26">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -188,8 +189,33 @@
   .hof-plaque p{color:var(--muted);font-size:13px;margin:10px 0 0}
 
   /* sponsor */
-  .sponsor-grid{display:grid;grid-template-columns:minmax(0,380px) 1fr;gap:32px;align-items:start}
-  @media (max-width:820px){.sponsor-grid{grid-template-columns:1fr}}
+  .sponsor-grid{display:grid;grid-template-columns:1fr minmax(0,380px);gap:24px;align-items:start;margin-top:20px}
+  @media (max-width:820px){.sponsor-grid{grid-template-columns:1fr}.spot-panel{order:-1}}
+  .reach{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 16px}
+  @media (max-width:640px){.reach{grid-template-columns:repeat(2,1fr)}}
+  .s3d{position:relative;border:4px solid #000;border-radius:8px;overflow:hidden;aspect-ratio:16/9;background:#1d1430;box-shadow:0 0 0 2px var(--line)}
+  @media (max-width:640px){.s3d{aspect-ratio:4/5}}
+  .s3d canvas{display:block;width:100%;height:100%;cursor:grab}
+  .s3d-load{position:absolute;inset:0;display:grid;place-items:center;margin:0;color:var(--dim);font-family:var(--px);font-size:11px}
+  .s3d.ready .s3d-load{display:none}
+  .s3d-hud{position:absolute;left:10px;top:10px;display:flex;flex-wrap:wrap;gap:6px;z-index:2}
+  .s3d-hud button{font:700 12px/1 var(--sans);color:var(--ink);background:rgba(23,15,38,.82);border:1px solid var(--line);border-radius:4px;padding:8px 10px;cursor:pointer}
+  .s3d-hud button[aria-pressed="true"]{border-color:var(--neon);color:#fff;background:rgba(255,61,110,.35)}
+  .s3d-help{position:absolute;right:10px;bottom:10px;margin:0;font-size:12px;color:var(--muted);background:rgba(23,15,38,.75);padding:6px 8px;border-radius:4px;pointer-events:none}
+  .s3d-tip{position:absolute;z-index:3;pointer-events:none;background:var(--night);border:1px solid var(--neon);border-radius:4px;padding:6px 8px;font-size:13px;white-space:nowrap;transform:translate(-50%,-130%);display:none}
+  .s3d-tip b{display:block}
+  .s3d-touch[hidden]{display:none}
+  .s3d-touch{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:2;white-space:nowrap;font-size:13px;padding:10px 14px}
+  .spot-panel h3{margin:0 0 4px;font-size:20px}
+  .spot-panel .where{color:var(--muted);margin:0 0 14px;font-size:14px}
+  .price-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+  .price-row > div{background:var(--night);border:1px solid var(--line);border-radius:6px;padding:10px}
+  .price-row b{display:block;font-family:var(--px);font-size:15px;color:var(--gold)}
+  .price-row small{color:var(--dim);font-size:12px}
+  .price-row .best{border-color:#8a6510}
+  .brand-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+  .brand-row .field{flex:1;min-width:160px}
+  .spot-row .tag{white-space:nowrap}
   .map{position:relative;border:4px solid #000;border-radius:8px;overflow:hidden;max-width:380px;margin:0 auto;width:100%;aspect-ratio:9/16;height:auto;align-self:start}
   .map img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover}
   .spot{position:absolute;border:2px dashed var(--gold);background:rgba(245,194,66,.18);border-radius:2px;cursor:pointer;padding:0;animation:pulse 2.4s ease-in-out infinite}
@@ -569,17 +595,36 @@
     <div class="wrap">
       <details class="fold" id="sponsorFold">
       <summary><span class="kicker">Sponsor the track</span><span class="px">Put your brand on the course</span></summary>
-      <p class="sub">Every spot below is on screen in the daily reels. Tap a spot to pick it, then message us on Instagram. The races are live, and spots are open now.</p>
-      <div class="sponsor-grid">
-        <div class="map" id="map">
-          <img src="assets/k2_track.png" alt="The racecourse with sponsor spots highlighted" width="1080" height="1920">
+      <p class="sub">Every race reel is filmed on this course. Spin it around, tap a spot, and type your brand to see it there. Booked spots go into every race from the next day.</p>
+      <div class="reach" id="reach"></div>
+      <div class="s3d" id="s3d">
+        <div class="s3d-hud" role="group" aria-label="Camera">
+          <button type="button" data-view="race">Race cam</button><button type="button" data-view="low">Trackside</button><button type="button" data-view="side">Side</button><button type="button" data-view="spin" aria-pressed="false">Auto-spin</button>
         </div>
-        <div>
-          <div class="spots" id="spots"></div>
-          <div class="sponsor-cta">
+        <p class="s3d-load">Loading the course…</p>
+        <p class="s3d-help" id="s3dHelp">Drag to spin · scroll to zoom · tap a board</p>
+        <button class="btn btn-gold s3d-touch" id="s3dTouch" type="button" hidden>Tap to look around</button>
+        <div class="s3d-tip" id="s3dTip"></div>
+      </div>
+      <div class="map" id="map" hidden>
+        <img src="assets/k2_track.png" alt="The racecourse with sponsor spots highlighted" width="1080" height="1920">
+      </div>
+      <div class="sponsor-grid">
+        <div class="spots" id="spots"></div>
+        <div class="card spot-panel" id="spotPanel">
+          <h3 id="spName">Pick a spot</h3>
+          <p class="where" id="spWhere"></p>
+          <div class="price-row" id="spPrice"></div>
+          <div class="brand-row">
+            <div class="finder" style="flex:1;min-width:180px;margin:0"><label class="field" for="spBrand"><span style="margin-right:6px">Brand</span><input id="spBrand" maxlength="28" placeholder="type it to preview" spellcheck="false"></label></div>
+            <label class="btn btn-ghost" for="spLogo" style="padding:10px 12px">+ Logo</label><input id="spLogo" type="file" accept="image/*" hidden>
+          </div>
+          <p class="code-note" style="font-size:12px;margin-bottom:14px">Your logo stays on your device. It's only a preview.</p>
+          <div class="sponsor-cta" style="margin-top:0">
             <button class="btn btn-neon" id="dmBtn" type="button">Message us about this spot</button>
             <small id="dmHint">Opens Instagram. Your message is copied, so just paste it.</small>
           </div>
+          <p class="code-note" id="spNote" style="margin-top:14px;font-size:13px"></p>
         </div>
       </div>
       </details>
@@ -1137,9 +1182,17 @@
     // builder
     builder(D, horses);
 
-    // sponsors
+    // sponsors: 3D course viewer (falls back to the flat map), spot list with prices, brand preview
     const spots = D.sponsorSpots || [];
-    let sel = spots.find(s => s.status === "open") || spots[0];
+    const SI = D.sponsorInfo || {}, CUR = SI.currency || "$";
+    const money = v => v == null ? "" : CUR + v;
+    let sel = spots.find(s => s.status === "open") || spots[0], V3 = null, brand = { text: "", logo: null };
+    $("#reach").innerHTML = [
+      [filled.toLocaleString(), "Followers, each with a horse"],
+      [SI.raceReelViews || "—", "Views per race reel so far"],
+      [SI.bestReelViews || "—", "Our best reel"],
+      [D.season ? D.season.days + " races" : "Daily", "One a day, every day"]
+    ].map(([v, k]) => `<div class="stat"><div class="v">${esc(v)}</div><div class="k">${esc(k)}</div></div>`).join("");
     const map = $("#map");
     spots.filter(s => s.x != null).forEach(s => {
       const b = document.createElement("button");
@@ -1152,23 +1205,77 @@
     });
     $("#spots").innerHTML = spots.map(s => `<div class="spot-row" data-id="${esc(s.id)}" role="button" tabindex="0">
       <div><b>${esc(s.name)}</b><small>${esc(s.where)}${s.sponsor ? " · " + esc(s.sponsor) : ""}</small></div>
-      <span class="tag ${s.status === "taken" ? "taken" : "open"}">${s.status === "taken" ? "Taken" : "Open"}</span></div>`).join("");
+      <span class="tag ${s.status === "taken" ? "taken" : "open"}">${s.status === "taken" ? "Taken" : s.price ? money(s.price) + "/wk" : money(s.seasonPrice) + "/season"}</span></div>`).join("");
     document.querySelectorAll(".spot-row").forEach(r => {
-      r.addEventListener("click", () => pick(r.dataset.id));
-      r.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(r.dataset.id); } });
+      r.addEventListener("click", () => pick(r.dataset.id, "list"));
+      r.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(r.dataset.id, "list"); } });
     });
-    function pick(id) {
-      sel = spots.find(s => s.id === id);
+    function pick(id, from) {
+      sel = spots.find(s => s.id === id); if (!sel) return;
       document.querySelectorAll(".spot").forEach(b => b.setAttribute("aria-pressed", b.dataset.id === id));
       document.querySelectorAll(".spot-row").forEach(r => r.classList.toggle("sel", r.dataset.id === id));
-      $("#dmBtn").textContent = sel.status === "taken" ? `Ask to be next for ${sel.name}` : `Message us about ${sel.name}`;
+      $("#spName").textContent = sel.name;
+      $("#spWhere").textContent = sel.where + (sel.status === "taken" && sel.sponsor ? ` · Booked by ${sel.sponsor}` : "");
+      $("#spPrice").innerHTML = (sel.price ? `<div><b>${money(sel.price)}</b><small>a week · 7 race reels</small></div>` : "") +
+        (sel.seasonPrice ? `<div class="best"><b>${money(sel.seasonPrice)}</b><small>whole season · ${D.season ? D.season.days : 30} races${sel.price ? ` · save ${Math.round(100 - 100 * sel.seasonPrice / (sel.price * (D.season ? D.season.days : 30) / 7))}%` : ""}</small></div>` : "");
+      $("#spNote").textContent = SI.note || "";
+      $("#dmBtn").textContent = sel.status === "taken" ? `Ask to be next for ${sel.name}` : `Book ${sel.name}`;
+      if (V3) {
+        V3.select(id, from !== "init");
+        if (from === "list") { const r = $("#s3d").getBoundingClientRect(); if (r.bottom < 80 || r.top > innerHeight) $("#s3d").scrollIntoView({ behavior: "smooth", block: "center" }); }
+      }
     }
-    if (sel) pick(sel.id);
+    if (sel) pick(sel.id, "init");
+    const pushPreview = () => V3 && V3.preview(brand.text || brand.logo ? brand : null);
+    $("#spBrand").addEventListener("input", e => { brand.text = e.target.value.trim(); pushPreview(); });
+    $("#spLogo").addEventListener("change", e => {
+      const f = e.target.files && e.target.files[0]; if (!f) return;
+      const img = new Image(); img.onload = () => { brand.logo = img; pushPreview(); toast("Logo added to the preview."); };
+      img.src = URL.createObjectURL(f);
+    });
     $("#dmBtn").addEventListener("click", async () => {
-      const msg = `Hi! I'd like to sponsor the ${sel ? sel.name : "track"} on Daily Derby. Brand: `;
+      const plan = sel && sel.price ? ` (${money(sel.price)}/week or ${money(sel.seasonPrice)}/season)` : sel && sel.seasonPrice ? ` (${money(sel.seasonPrice)}/season)` : "";
+      const msg = `Hi! I'd like to book the ${sel ? sel.name : "track"}${plan} on Daily Derby. Brand: ${brand.text}`;
       try { await navigator.clipboard.writeText(msg); toast("Message copied. Paste it in the DM."); } catch { toast("Opening Instagram. Tell us which spot you'd like."); }
       setTimeout(() => window.open(DM, "_blank", "noopener"), 350);
     });
+
+    // load three.js and the course only when someone opens the sponsor section
+    const box = $("#s3d"), tip3 = $("#s3dTip");
+    const fallback = () => { box.hidden = true; map.hidden = false; };
+    let started = false;
+    function start3d() {
+      if (started) return; started = true;
+      if (!window.WebGLRenderingContext) { fallback(); return; }
+      import("./assets/sponsor3d.js").then(m => {
+        V3 = m.mount(box, spots, {
+          currency: CUR,
+          onPick: id => pick(id, "3d"),
+          onHover: (s, e) => {
+            if (!s) { tip3.style.display = "none"; return; }
+            const r = box.getBoundingClientRect();
+            tip3.innerHTML = `<b>${esc(s.name)}</b>${s.status === "taken" ? "Taken" : s.price ? money(s.price) + " a week" : ""}`;
+            tip3.style.left = (e.clientX - r.left) + "px"; tip3.style.top = (e.clientY - r.top) + "px"; tip3.style.display = "block";
+          }
+        });
+        box.classList.add("ready");
+        if (sel) V3.select(sel.id, false);
+        pushPreview();
+        if (matchMedia("(pointer:coarse)").matches) { $("#s3dTouch").hidden = false; $("#s3dHelp").hidden = true; }
+      }).catch(fallback);
+    }
+    $("#s3dTouch").addEventListener("click", e => {
+      const on = e.currentTarget.dataset.on !== "1"; e.currentTarget.dataset.on = on ? "1" : "";
+      V3 && V3.interact(on); e.currentTarget.textContent = on ? "Done, back to scrolling" : "Tap to look around";
+      $("#s3dHelp").textContent = "Drag to spin · pinch to zoom"; $("#s3dHelp").hidden = true;
+    });
+    document.querySelectorAll(".s3d-hud button").forEach(b => b.addEventListener("click", () => {
+      if (!V3) return;
+      const on = V3.view(b.dataset.view);
+      document.querySelectorAll(".s3d-hud button[data-view=spin]").forEach(x => x.setAttribute("aria-pressed", String(on)));
+    }));
+    const fold = $("#sponsorFold");
+    if (fold.open) start3d(); else fold.addEventListener("toggle", () => { if (fold.open) start3d(); });
   }
 
   function builder(D, horses) {
