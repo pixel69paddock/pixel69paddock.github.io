@@ -10842,8 +10842,23 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-23T05:22:46Z",
+  "lastSync": "2026-11-23T05:39:34Z",
   "claims": [
+    {
+      "handle": "_zezulackq_",
+      "look": "3124",
+      "at": "2026-11-23T05:22:41Z",
+      "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
+      "status": "waiting",
+      "name": "Grace"
+    },
+    {
+      "handle": "word_to_bob",
+      "look": "3214",
+      "at": "2026-11-23T05:10:43Z",
+      "reel": "https://www.instagram.com/p/Df_u417pzfe/",
+      "status": "locked"
+    },
     {
       "handle": "ocean__hooves",
       "look": "4421",
