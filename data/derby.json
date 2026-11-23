@@ -2448,7 +2448,8 @@
       ],
       "look": "2343",
       "badge": "gold",
-      "rank": 5
+      "rank": 5,
+      "original": true
     },
     {
       "handle": "why_do_you_need_a_name_",
@@ -2481,7 +2482,8 @@
       "medals": [],
       "look": "3231",
       "badge": "gold",
-      "rank": 1
+      "rank": 1,
+      "original": true
     },
     {
       "handle": "wilfred_2.0",
@@ -2519,7 +2521,8 @@
       "medals": [],
       "look": "1312",
       "badge": "gold",
-      "rank": 7
+      "rank": 7,
+      "original": true
     },
     {
       "handle": "arabella.sk8s",
@@ -2583,7 +2586,8 @@
       "medals": [],
       "look": "1214",
       "badge": "gold",
-      "rank": 22
+      "rank": 22,
+      "original": true
     },
     {
       "handle": "augustorozekarnhold",
@@ -2600,7 +2604,8 @@
       "medals": [],
       "look": "2244",
       "badge": "gold",
-      "rank": 20
+      "rank": 20,
+      "original": true
     },
     {
       "handle": "eyad.ahmed265",
@@ -2609,7 +2614,8 @@
       "medals": [],
       "look": "3342",
       "badge": "gold",
-      "rank": 19
+      "rank": 19,
+      "original": true
     },
     {
       "handle": "kangaroo.5791274",
@@ -2626,7 +2632,8 @@
       "medals": [],
       "look": "3331",
       "badge": "gold",
-      "rank": 17
+      "rank": 17,
+      "original": true
     },
     {
       "handle": "logpackersfan2710",
@@ -2640,7 +2647,8 @@
       ],
       "look": "2344",
       "badge": "gold",
-      "rank": 16
+      "rank": 16,
+      "original": true
     },
     {
       "handle": "aolaa_w",
@@ -2654,7 +2662,8 @@
       ],
       "look": "2324",
       "badge": "gold",
-      "rank": 15
+      "rank": 15,
+      "original": true
     },
     {
       "handle": "aidenlarch7",
@@ -2776,7 +2785,8 @@
       "medals": [],
       "badge": "gold",
       "rank": 23,
-      "look": "1333"
+      "look": "1333",
+      "original": true
     },
     {
       "handle": "ur_fave.emo",
@@ -2806,7 +2816,8 @@
       "races": 2,
       "medals": [],
       "via": "like",
-      "look": "2441"
+      "look": "2441",
+      "original": true
     },
     {
       "handle": "nagdamaahir",
@@ -2852,7 +2863,8 @@
       "medals": [],
       "look": "3324",
       "badge": "gold",
-      "rank": 25
+      "rank": 25,
+      "original": true
     },
     {
       "handle": "gavinthebest34",
@@ -2875,7 +2887,8 @@
       "medals": [],
       "look": "3214",
       "badge": "gold",
-      "rank": 34
+      "rank": 34,
+      "original": true
     },
     {
       "handle": "matthewgray905",
@@ -2925,7 +2938,8 @@
       "medals": [],
       "look": "2341",
       "badge": "gold",
-      "rank": 28
+      "rank": 28,
+      "original": true
     },
     {
       "handle": "medr.ano5323",
@@ -3223,7 +3237,8 @@
       "medals": [],
       "look": "2222",
       "badge": "gold",
-      "rank": 45
+      "rank": 45,
+      "original": true
     },
     {
       "handle": "_debaxit",
@@ -3601,7 +3616,8 @@
       "races": 1,
       "medals": [],
       "via": "like",
-      "look": "4441"
+      "look": "4441",
+      "original": true
     },
     {
       "handle": "pinoybigbody76",
@@ -3735,7 +3751,9 @@
       "races": 1,
       "medals": [],
       "badge": "gold",
-      "rank": 118
+      "rank": 118,
+      "look": "1111",
+      "original": true
     },
     {
       "handle": "evanharrison15",
@@ -4426,7 +4444,8 @@
       "medals": [],
       "name": "Cora posey",
       "badge": "gold",
-      "rank": 420
+      "rank": 420,
+      "look": "2144"
     },
     {
       "handle": "elsabuescher13",
@@ -4581,7 +4600,8 @@
       "medals": [],
       "look": "2124",
       "badge": "gold",
-      "rank": 401
+      "rank": 401,
+      "original": true
     },
     {
       "handle": "polesryan2474",
@@ -4733,7 +4753,8 @@
       "look": "2114",
       "name": "Platinum",
       "badge": "gold",
-      "rank": 383
+      "rank": 383,
+      "original": true
     },
     {
       "handle": "tatum45231",
@@ -4954,7 +4975,8 @@
       "look": "4421",
       "name": "Rhett",
       "badge": "gold",
-      "rank": 356
+      "rank": 356,
+      "original": true
     },
     {
       "handle": "deez_cpm808",
@@ -5942,7 +5964,8 @@
       "name": "asteroid abolisher",
       "look": "4324",
       "badge": "gold",
-      "rank": 234
+      "rank": 234,
+      "original": true
     },
     {
       "handle": "sophia._.watkins",
@@ -6323,7 +6346,8 @@
       "medals": [],
       "badge": "gold",
       "rank": 187,
-      "look": "3333"
+      "look": "3333",
+      "original": true
     },
     {
       "handle": "fuhhh_wit_v",
@@ -6437,7 +6461,8 @@
       "look": "2144",
       "name": "Stormy",
       "badge": "gold",
-      "rank": 173
+      "rank": 173,
+      "original": true
     },
     {
       "handle": "tomiveselovsky",
@@ -6714,7 +6739,8 @@
       "name": "Cookie",
       "look": "3432",
       "badge": "gold",
-      "rank": 139
+      "rank": 139,
+      "original": true
     },
     {
       "handle": "kajq67",
@@ -7297,7 +7323,8 @@
       "name": "Cupcake",
       "look": "1211",
       "badge": "gold",
-      "rank": 580
+      "rank": 580,
+      "original": true
     },
     {
       "handle": "brynlee_eq",
@@ -7910,7 +7937,8 @@
       "name": "Bacrdi",
       "look": "2141",
       "badge": "gold",
-      "rank": 505
+      "rank": 505,
+      "original": true
     },
     {
       "handle": "route_.21",
@@ -9096,7 +9124,8 @@
       "badge": "gold",
       "rank": 663,
       "look": "1222",
-      "name": "Midnight champion"
+      "name": "Midnight champion",
+      "original": true
     },
     {
       "handle": "0htood_les",
@@ -9741,7 +9770,8 @@
       "badge": "gold",
       "rank": 743,
       "name": "Midnight",
-      "look": "4432"
+      "look": "4432",
+      "original": true
     },
     {
       "handle": "queen_aka_denise",
@@ -10725,7 +10755,8 @@
       "badge": "silver",
       "rank": 847,
       "look": "1121",
-      "name": "Scooter"
+      "name": "Scooter",
+      "original": true
     }
   ],
   "sponsorSpots": [
@@ -10811,7 +10842,7 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-23T05:17:27Z",
+  "lastSync": "2026-11-23T05:22:46Z",
   "claims": [
     {
       "handle": "ocean__hooves",
@@ -10819,6 +10850,7 @@
       "at": "2026-11-23T05:02:58Z",
       "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
       "status": "locked",
+      "original": true,
       "name": "Rhett"
     },
     {
@@ -10827,6 +10859,7 @@
       "at": "2026-11-23T05:02:34Z",
       "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
       "status": "locked",
+      "original": true,
       "name": "Scooter"
     },
     {
@@ -10835,6 +10868,7 @@
       "at": "2026-11-23T02:50:48Z",
       "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
       "status": "locked",
+      "original": true,
       "name": "midnight"
     },
     {
@@ -10842,7 +10876,8 @@
       "look": "1222",
       "at": "2026-11-23T02:01:23Z",
       "reel": "https://www.instagram.com/p/DgB079spXvZ/",
-      "status": "locked"
+      "status": "locked",
+      "original": true
     },
     {
       "handle": "antonella.armino",
@@ -10850,6 +10885,7 @@
       "at": "2026-11-23T00:45:51Z",
       "reel": "https://www.instagram.com/p/DgB079spXvZ/",
       "status": "locked",
+      "original": true,
       "name": "Cupcake"
     },
     {
@@ -10858,6 +10894,7 @@
       "at": "2026-11-22T23:41:26Z",
       "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
       "status": "locked",
+      "original": true,
       "name": "Bacrdi"
     },
     {
@@ -10865,7 +10902,7 @@
       "look": "2144",
       "at": "2026-11-22T22:03:25Z",
       "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
-      "status": "taken",
+      "status": "locked",
       "name": "Cora posey"
     },
     {
@@ -10873,7 +10910,8 @@
       "look": "2124",
       "at": "2026-11-22T21:43:24Z",
       "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
-      "status": "locked"
+      "status": "locked",
+      "original": true
     },
     {
       "handle": "sav.disimone",
@@ -10881,6 +10919,7 @@
       "at": "2026-11-22T21:17:26Z",
       "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
       "status": "locked",
+      "original": true,
       "name": "Platinum"
     },
     {
@@ -10888,7 +10927,8 @@
       "look": "2222",
       "at": "2026-11-22T18:47:38Z",
       "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
-      "status": "locked"
+      "status": "locked",
+      "original": true
     },
     {
       "handle": "knszil",
@@ -10896,6 +10936,7 @@
       "at": "2026-11-22T16:54:00Z",
       "reel": "https://www.instagram.com/p/DgB079spXvZ/",
       "status": "locked",
+      "original": true,
       "name": "asteroid abolisher"
     },
     {
@@ -10904,6 +10945,7 @@
       "at": "2026-11-22T15:21:55Z",
       "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
       "status": "locked",
+      "original": true,
       "name": "COOKIE"
     },
     {
@@ -10911,7 +10953,8 @@
       "look": "3333",
       "at": "2026-11-22T14:39:57Z",
       "reel": "https://www.instagram.com/p/DgB079spXvZ/",
-      "status": "locked"
+      "status": "locked",
+      "original": true
     },
     {
       "handle": "ssamiyahhhh._",
@@ -10919,6 +10962,7 @@
       "at": "2026-11-22T14:19:02Z",
       "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
       "status": "locked",
+      "original": true,
       "name": "Stormy"
     },
     {
@@ -10926,63 +10970,72 @@
       "look": "3231",
       "at": "2026-11-22T11:40:39Z",
       "reel": "https://www.instagram.com/p/DgB079spXvZ/",
-      "status": "locked"
+      "status": "locked",
+      "original": true
     },
     {
       "handle": "gs7ejey",
       "look": "3324",
       "at": "2026-11-22T08:47:40Z",
       "reel": "https://www.instagram.com/p/DgB079spXvZ/",
-      "status": "locked"
+      "status": "locked",
+      "original": true
     },
     {
       "handle": "this._girl_is_on._.fire",
       "look": "4441",
       "at": "2026-11-22T04:21:48Z",
       "reel": "https://www.instagram.com/p/DgB079spXvZ/",
-      "status": "locked"
+      "status": "locked",
+      "original": true
     },
     {
       "handle": "word_to_bob",
       "look": "3214",
       "at": "2026-11-22T04:03:52Z",
       "reel": "https://www.instagram.com/p/DgAcGG5JKhP/",
-      "status": "locked"
+      "status": "locked",
+      "original": true
     },
     {
       "handle": "a.b_breezey",
       "look": "2341",
       "at": "2026-11-22T00:04:56Z",
       "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
-      "status": "locked"
+      "status": "locked",
+      "original": true
     },
     {
       "handle": "_gl88k",
       "look": "1214",
       "at": "2026-11-21T14:38:32Z",
       "reel": "https://www.instagram.com/p/DgAcGG5JKhP/",
-      "status": "locked"
+      "status": "locked",
+      "original": true
     },
     {
       "handle": "aolaa_w",
       "look": "2324",
       "at": "2026-11-21T09:25:10Z",
       "reel": "https://www.instagram.com/p/Df_u417pzfe/",
-      "status": "locked"
+      "status": "locked",
+      "original": true
     },
     {
       "handle": "caelanmorton431",
       "look": "2441",
       "at": "2026-11-21T08:22:10Z",
       "reel": "https://www.instagram.com/p/Df-_4FZppBC/",
-      "status": "locked"
+      "status": "locked",
+      "original": true
     },
     {
       "handle": "krinc_prason",
       "look": "2244",
       "at": "2026-11-20T16:35:45Z",
       "reel": "https://www.instagram.com/p/Df40W_ip_FW/",
-      "status": "locked"
+      "status": "locked",
+      "original": true
     },
     {
       "handle": "snocin",
@@ -10996,49 +11049,56 @@
       "look": "3342",
       "at": "2026-11-20T15:49:56Z",
       "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
-      "status": "locked"
+      "status": "locked",
+      "original": true
     },
     {
       "handle": "diaz_monkey_3",
       "look": "1333",
       "at": "2026-11-20T15:40:08Z",
       "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
-      "status": "locked"
+      "status": "locked",
+      "original": true
     },
     {
       "handle": "devon.hernandez.106",
       "look": "1111",
       "at": "2026-11-20T15:37:09Z",
       "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
-      "status": "taken"
+      "status": "locked",
+      "original": true
     },
     {
       "handle": "tavianhaddox",
       "look": "3331",
       "at": "2026-11-20T15:11:54Z",
       "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
-      "status": "locked"
+      "status": "locked",
+      "original": true
     },
     {
       "handle": "e.superskyi",
       "look": "2343",
       "at": "2026-11-20T15:06:29Z",
       "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
-      "status": "locked"
+      "status": "locked",
+      "original": true
     },
     {
       "handle": "logpackersfan2710",
       "look": "2344",
       "at": "2026-11-20T14:19:11Z",
       "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
-      "status": "locked"
+      "status": "locked",
+      "original": true
     },
     {
       "handle": "yanniss_wk",
       "look": "1312",
       "at": "2026-11-20T13:21:27Z",
       "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
-      "status": "locked"
+      "status": "locked",
+      "original": true
     }
   ],
   "season": {
@@ -11168,5 +11228,36 @@
     "goldCount": 800,
     "goldClosed": "2026-11-23",
     "silverTo": 5000
+  },
+  "originals": {
+    "1312": "yanniss_wk",
+    "2344": "logpackersfan2710",
+    "2343": "e.superskyi",
+    "3331": "tavianhaddox",
+    "1111": "devon.hernandez.106",
+    "1333": "diaz_monkey_3",
+    "3342": "eyad.ahmed265",
+    "2244": "krinc_prason",
+    "2441": "caelanmorton431",
+    "2324": "aolaa_w",
+    "1214": "_gl88k",
+    "2341": "a.b_breezey",
+    "3214": "word_to_bob",
+    "4441": "this._girl_is_on._.fire",
+    "3324": "gs7ejey",
+    "3231": "himc__",
+    "2144": "ssamiyahhhh._",
+    "3333": "lewis148804",
+    "3432": "defnot_clover",
+    "4324": "knszil",
+    "2222": "its_zzzuh",
+    "2114": "sav.disimone",
+    "2124": "_dorothy_0907",
+    "2141": "prilotte_",
+    "1211": "antonella.armino",
+    "1222": "breannasquires71",
+    "4432": "ave._1120",
+    "1121": "josie_barrett1",
+    "4421": "ocean__hooves"
   }
 }

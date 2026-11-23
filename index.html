@@ -239,6 +239,7 @@
   .barn-bar{height:8px;background:#1c120b;border:2px solid #000;border-radius:3px;margin:10px auto 0;max-width:420px;overflow:hidden}
   .barn-bar i{display:block;height:100%;background:var(--gold);min-width:3px}
   .barn canvas{display:block;width:100%;height:auto;image-rendering:pixelated;cursor:crosshair;touch-action:manipulation}
+  .orig{color:var(--gold);font-size:13px}
   .barn-zoom{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:8px;background:#1c120b;border-top:3px solid #000}
   .barn-zoom button{background:#3a2718;color:#f4e4bc;border:2px solid #000;border-radius:4px;font:600 13px var(--sans);padding:6px 10px;cursor:pointer;min-width:36px}
   .barn-zoom button:hover{background:#5c3e26}
@@ -356,7 +357,7 @@
         <p class="lede">A pixel horse race on Instagram every day, and every horse belongs to a real person. Free to play, no betting.</p>
         <ol class="join" aria-label="Join in 10 seconds">
           <li><span class="n">1</span><div><b>Follow @dailyderby_horse</b><small>Your own stall, and your horse runs in every race. Followers run at 1.5×.</small></div><a class="btn btn-neon" href="https://www.instagram.com/dailyderby_horse/" target="_blank" rel="noopener">Follow</a></li>
-          <li><span class="n">2</span><div><b>Build &amp; name your horse</b><small>256 looks, one owner each. Custom horses get +5–10%.</small></div><a class="btn btn-gold" href="#build">Build</a></li>
+          <li><span class="n">2</span><div><b>Build &amp; name your horse</b><small>256 looks, free for all. First to claim one gets ✦ Original. Custom horses get +5–10%.</small></div><a class="btn btn-gold" href="#build">Build</a></li>
           <li><span class="n">3</span><div><b>Comment on the latest race</b><small>Likes on your comment make your horse faster.</small></div><a class="btn btn-ghost" id="enterBtn" href="https://www.instagram.com/p/Df40W_ip_FW/" target="_blank" rel="noopener">Open</a></li>
         </ol>
         <form class="finder hero-find" id="finder" autocomplete="off">
@@ -431,7 +432,7 @@
       <p class="kicker">Your shed</p>
       <h2 class="px">Build your horse</h2>
       <p class="shed-soon"><span>🔒 Coming</span> Shed decorating + feeding your horse · opening at <b>10,000 likes</b></p>
-      <p class="sub">Pick a coat, mane, silks and pattern: 256 looks, and each one belongs to whoever claims it first. Your horse wears it in every race from then on, and custom horses run <b>+5–10% faster</b> every race.</p>
+      <p class="sub">Pick a coat, mane, silks and pattern: 256 looks, and <b>any look can be yours</b>. The first person to claim each one gets the <b style="color:var(--gold)">✦ Original</b> mark. Your horse wears it in every race from then on, and custom horses run <b>+5–10% faster</b> every race.</p>
       <div class="builder">
         <div class="stall">
           <div class="pen"><svg id="bPreview" viewBox="0 0 17 13" aria-label="Your horse"></svg></div>
@@ -645,7 +646,6 @@
   function pendingFor(handle) {
     const sv = savedHorse(), me = norm(handle);
     if (!sv.done || sv.handle !== me || !validLook(sv.code)) return null;
-    if (OWNER[sv.code] && OWNER[sv.code] !== me) return null;   // someone else got it first
     return sv.code;
   }
   const horseLook = h => pendingFor(h.handle) || (validLook(h.look) ? h.look : lookFor(h.handle));
@@ -677,8 +677,9 @@
   let OWNER = {}, LIVE = null, redrawBuilder = () => {};
   const ownersOf = D => {
     const o = {};
+    if (D.originals) { Object.entries(D.originals).forEach(([c, h]) => { if (validLook(c)) o[c] = norm(h); }); return o; }
     if (D.reserved) { Object.entries(D.reserved).forEach(([h, c]) => { if (validLook(c)) o[c] = norm(h); }); return o; }
-    (D.horses || []).forEach(h => { if (h.status !== "removed" && validLook(h.look)) o[h.look] = norm(h.handle); });
+    (D.horses || []).forEach(h => { if (h.status !== "removed" && validLook(h.look) && !o[h.look]) o[h.look] = norm(h.handle); });
     return o;
   };
   // Instant claims: when derby.json names a claims server, its live state wins over the hourly sync.
@@ -704,15 +705,15 @@
     const sv = savedHorse();
     const mineLocked = sv.done && (D.horses || []).some(h => norm(h.handle) === sv.handle && h.look === sv.code);
     if (sv.done && validLook(sv.code) && !mineLocked && !claims.some(c => norm(c.handle) === sv.handle && c.look === sv.code))
-      claims = [{ handle: sv.handle, look: sv.code, at: sv.doneAt, status: OWNER[sv.code] && OWNER[sv.code] !== sv.handle ? "taken" : "pending" }, ...claims];
+      claims = [{ handle: sv.handle, look: sv.code, at: sv.doneAt, status: "pending" }, ...claims];
     $("#liveFeed").innerHTML = claims.length ? claims.map(c => {
       const st = c.status === "taken" ? `<span class="tag-s no">Taken</span>` : c.status === "waiting" ? `<span class="tag-s">Like or follow to lock</span>` : c.status === "pending" ? `<span class="tag-s" style="color:var(--gold);border-color:#8a6510">Pending</span>` : `<span class="tag-s ok">Locked in</span>`;
-      return `<div class="claim-row">${spriteTag(validLook(c.look) ? c.look : "1111", 34)}<span class="who">${c.name ? `<b style="color:var(--gold);font-family:var(--px);font-size:11px">${esc(cleanName(c.name).toUpperCase())}</b> ` : ""}@${esc(c.handle)}</span><p class="code">HORSE ${esc(c.look)}</p>${st}<small class="when">${esc(ago(c.at))}</small></div>`;
+      return `<div class="claim-row">${spriteTag(validLook(c.look) ? c.look : "1111", 34)}<span class="who">${c.original ? `<b class="orig" title="First to claim this look">✦</b> ` : ""}${c.name ? `<b style="color:var(--gold);font-family:var(--px);font-size:11px">${esc(cleanName(c.name).toUpperCase())}</b> ` : ""}@${esc(c.handle)}</span><p class="code">HORSE ${esc(c.look)}</p>${st}<small class="when">${esc(ago(c.at))}</small></div>`;
     }).join("") + ((D.claims || []).length > 12 && !SHOW_ALL ? `<button class="btn" id="claimsAll" type="button" style="margin-top:6px">Show all ${(D.claims || []).length} claims</button>` : "") : `<div class="empty">No claims yet. Be the first: build a horse above and comment its code.</div>`;
     const more = $("#claimsAll"); if (more) more.onclick = () => { SHOW_ALL = true; liveUpdate(LIVE); };
     redrawBuilder();
     const n = Object.keys(OWNER).length;
-    $("#bCount").textContent = `${n} of 256 looks claimed. Want a different one later? Comment a new code; your old look goes back in the pool.`;
+    $("#bCount").textContent = `${n} of 256 looks have an ✦ Original. ${256 - n} still waiting for theirs. Change any time: comment a new code.`;
   }
   function myStatus() {
     const box = $("#liveMine"); if (!box || !LIVE) return;
@@ -729,7 +730,6 @@
     const synced = LIVE.live ? `Checked live with Instagram ${ago(LIVE.lastSync)}. Just commented? Tap Check my horse again in a few seconds.` : LIVE.lastSync ? `Last synced with Instagram ${ago(LIVE.lastSync)}. Next sync ${when}.` : "Waiting for the first sync with Instagram.";
     let look = h && validLook(h.look) ? h.look : null, msg;
     if (look && (!want || want === look)) msg = `<b style="color:#7dff9c">Locked in: @${esc(me)} wears HORSE ${esc(look)}.</b> It runs in this look from the next race.`;
-    else if (want && OWNER[want] && OWNER[want] !== me) { msg = `<b style="color:var(--neon)">HORSE ${esc(want)} went to @${esc(OWNER[want])} first.</b> Pick another look above and comment the new code.`; }
     else if (saved.done && saved.handle === me && want === saved.code) { look = want; msg = `<b style="color:var(--gold)">Done! You're wearing HORSE ${esc(want)} (pending).</b> It shows on this device now; everyone else sees it once we confirm your comment, next check ${when}.`; }
     else if (claim && claim.look === want && claim.status === "waiting") { look = want; msg = `<b style="color:var(--gold)">We saw your HORSE ${esc(want)} comment.</b> Like any of our reels or follow to lock it in.`; }
     else if (want) { look = want; msg = LIVE.live ? `<b style="color:var(--gold)">We haven't seen HORSE ${esc(want)} from @${esc(me)} yet.</b> Comment it on any of our reels, then tap Check my horse.` : `<b style="color:var(--gold)">Not synced yet: HORSE ${esc(want)}.</b> Comment it on any of our reels if you haven't. It locks in at the next sync.`; }
@@ -1161,10 +1161,10 @@
       $("#bName").textContent = LOOKS.map((p, i) => p.options[pick[i]].name + (i === 1 ? " mane" : i === 2 ? " silks" : "")).join(" · ");
       const me = norm(handleIn.value), who = OWNER[code];
       const pend = !who && pendingFor(me) === code;
-      const mine = (!!who && who === me) || pend, taken = !!who && who !== me;
-      $("#bTaken").textContent = taken ? `Taken by @${who}. Try another combo.` : pend ? "Yours, pending confirmation." : mine ? "This is your horse." : "Available.";
-      $("#bTaken").style.color = taken ? "var(--neon)" : "#7dff9c";
-      $("#bSave").disabled = taken || mine;
+      const mine = (!!who && who === me) || pend, orig = !!who && who !== me;
+      $("#bTaken").innerHTML = orig ? `<span style="color:var(--gold)">✦ Original: @${esc(who)}.</span> You can still wear it.` : pend ? "Yours, pending confirmation." : mine ? "This is your horse ✦ Original." : "✦ Nobody has this yet: claim it and you're the Original.";
+      $("#bTaken").style.color = "#7dff9c";
+      $("#bSave").disabled = mine;
       $("#bSave").textContent = mine ? "Already yours" : "Claim this horse";
     }
     handleIn.addEventListener("change", () => { setCode(startFor(norm(handleIn.value))); draw(); });

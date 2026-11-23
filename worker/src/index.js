@@ -128,16 +128,15 @@ function resolve(found, site) {
     const at = iso(c.timestamp);
     if (!newest[h] || at > newest[h].at) newest[h] = { handle: h, look: code, at, reel: c.reel };
   }
-  // first come, first served, in comment order
-  const owner = {}, looks = {}, claims = [];
+  // looks are free for all (owner 2026-11-23); the first to claim a look gets the "Original" mark
+  const originals = {}, looks = {}, claims = [];
   for (const c of Object.values(newest).sort((a, b) => a.at.localeCompare(b.at))) {
-    if (owner[c.look]) { claims.push({ ...c, status: "taken", by: owner[c.look] }); continue; }
-    owner[c.look] = c.handle;
-    looks[c.handle] = c.look;
-    claims.push({ ...c, status: stable.has(c.handle) ? "locked" : "waiting" });
+    const st = stable.has(c.handle) ? "locked" : "waiting";
+    if (st === "locked") { looks[c.handle] = c.look; if (!originals[c.look]) originals[c.look] = c.handle; }
+    claims.push({ ...c, status: st, ...(originals[c.look] === c.handle && st === "locked" ? { original: true } : {}) });
   }
   claims.sort((a, b) => b.at.localeCompare(a.at));
-  return { lastSync: new Date().toISOString().replace(/\.\d+Z$/, "Z"), looks, claims: claims.slice(0, 50) };
+  return { lastSync: new Date().toISOString().replace(/\.\d+Z$/, "Z"), looks, originals, claims };
 }
 
 function handleStatus(st, handle) {
@@ -146,7 +145,7 @@ function handleStatus(st, handle) {
 }
 
 function publicState(st) {
-  return { lastSync: st.lastSync, looks: st.looks, claims: st.claims, syncEveryMin: 1, live: true };
+  return { lastSync: st.lastSync, looks: st.looks, originals: st.originals || {}, claims: st.claims, syncEveryMin: 1, live: true };
 }
 
 async function siteData(env) {
