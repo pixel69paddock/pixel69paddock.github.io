@@ -11336,7 +11336,9 @@
       "medals": [],
       "rank": 876,
       "badge": "silver",
-      "name": "Freya"
+      "name": "Freya",
+      "look": "3312",
+      "original": true
     },
     {
       "handle": "sarkakovacikova",
@@ -13714,8 +13716,16 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-23T13:38:21Z",
+  "lastSync": "2026-11-23T18:37:03Z",
   "claims": [
+    {
+      "handle": "valca_konicii",
+      "look": "3312",
+      "at": "2026-11-23T13:36:08Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked",
+      "original": true
+    },
     {
       "handle": "bays.over.baes_",
       "look": "1124",
@@ -14185,7 +14195,8 @@
     "2311": "iblamerodrix",
     "1144": "cailyneq22_",
     "1114": "natal.ka.22",
-    "3322": "aria_phillip19"
+    "3322": "aria_phillip19",
+    "3312": "valca_konicii"
   },
   "commentEntries": {
     "cailyneq22_": {
