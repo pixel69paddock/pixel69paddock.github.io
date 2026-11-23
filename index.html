@@ -239,6 +239,12 @@
   .barn-bar{height:8px;background:#1c120b;border:2px solid #000;border-radius:3px;margin:10px auto 0;max-width:420px;overflow:hidden}
   .barn-bar i{display:block;height:100%;background:var(--gold);min-width:3px}
   .barn canvas{display:block;width:100%;height:auto;image-rendering:pixelated;cursor:crosshair;touch-action:manipulation}
+  .barn-zoom{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:8px;background:#1c120b;border-top:3px solid #000}
+  .barn-zoom button{background:#3a2718;color:#f4e4bc;border:2px solid #000;border-radius:4px;font:600 13px var(--sans);padding:6px 10px;cursor:pointer;min-width:36px}
+  .barn-zoom button:hover{background:#5c3e26}
+  .barn-zoom #barnGold{color:var(--gold)} .barn-zoom #barnSilver{color:var(--silver)} .barn-zoom #barnNext{color:var(--neon)}
+  .barn-zoom span{margin-left:auto;color:#bfae93;font-size:12px}
+  .barn canvas{touch-action:none}
   .barn-tip{position:absolute;pointer-events:none;background:#000;color:#fff;font:600 12px/1.3 var(--sans);padding:6px 8px;border-radius:4px;white-space:nowrap;transform:translate(-50%,-120%);opacity:0;transition:opacity .1s;z-index:2}
   .barn-tip.show{opacity:1}
   .barn-legend{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--muted);font-size:13px;margin:12px 0 0}
@@ -379,7 +385,7 @@
     <div class="wrap">
       <p class="kicker">The stable · 10,000 stalls</p>
       <h2 class="px">Follow = your own stall</h2>
-      <p class="sub">Every follower gets a stall with their name on the plate, and that horse runs in every Season 1 race. Stalls go in the order people followed. Tap or hover any stall to see whose it is.</p>
+      <p class="sub">Every follower gets a stall with their name on the plate, and that horse runs in every Season 1 race. Stalls go in the order people followed. Zoom in (scroll, pinch or +) to see every horse, its badge and its name. Tap any stall to see whose it is.</p>
       <div class="stable-grid">
         <div>
           <div class="barn">
@@ -390,6 +396,11 @@
             </div>
             <canvas id="barnCanvas" width="1000" height="1000" role="img" aria-label="The stable: a 100 by 100 grid of stalls, the filled ones lit up"></canvas>
             <div class="barn-tip" id="barnTip"></div>
+            <div class="barn-zoom" role="toolbar" aria-label="Map zoom">
+              <button type="button" id="barnIn" aria-label="Zoom in">+</button><button type="button" id="barnOut" aria-label="Zoom out">−</button>
+              <button type="button" id="barnAll">All</button><button type="button" id="barnGold">★ Gold</button><button type="button" id="barnSilver">★ Silver</button><button type="button" id="barnNext">Next free</button>
+              <span id="barnZoomLbl">Whole stable</span>
+            </div>
           </div>
           <div class="barn-legend"><span><i style="background:#f5c242"></i>Gold founder (first 800)</span><span><i style="background:#cfd6e3"></i>Silver (to 5,000)</span><span><i style="background:#3ad6ff"></i>Yours</span><span><i style="background:#ff3d6e"></i>Next free stall</span><span><i style="background:#3b3946"></i>Empty silver</span><span><i style="background:#2b1d12"></i>Empty</span></div>
         </div>
@@ -809,41 +820,128 @@
         `<div class="sb ${n <= GOLD_N ? "tg" : "ts"}${norm(e) === ME ? " me" : ""}" data-n="${n}"><div class="plate">#${n}</div>${spriteTag(horseLook(byH[norm(e)]), 40)}${horseName(byH[norm(e)]) ? `<div class="hn">${esc(horseName(byH[norm(e)]).toUpperCase())}</div>` : ""}<div class="nm" title="@${esc(e)}">@${esc(shortH(e))}</div></div>`);
       $("#sbStalls").innerHTML = `<a class="sb open" href="${IGP}" target="_blank" rel="noopener"><div class="plate">#${filled + 1}</div><div class="q">?</div><div class="nm">Follow = yours</div></a>` + cards.join("");
     }
-    const cv = $("#barnCanvas"), cx = cv.getContext("2d"), COLS = 100, CS = 10;
-    function drawBarn() {
-      cx.fillStyle = "#120b07"; cx.fillRect(0, 0, 1000, 1000);
-      const meN = stallOf[ME] || 0;
-      for (let i = 0; i < TOTAL && i < COLS * COLS; i++) {
-        const x = (i % COLS) * CS, y = Math.floor(i / COLS) * CS, n = i + 1;
-        const gold = n <= GOLD_N;
-        cx.fillStyle = n === meN ? "#3ad6ff" : n <= filled ? (gold ? "#f5c242" : "#cfd6e3") : n === filled + 1 ? "#ff3d6e" : n <= SILVER_TO ? "#3b3946" : "#2b1d12";
-        cx.fillRect(x + 1, y + 1, CS - 2, CS - 2);
-        if (n <= filled && n !== meN) { cx.fillStyle = gold ? "#8a6510" : "#7d8597"; cx.fillRect(x + 1, y + CS - 4, CS - 2, 3); }
-      }
-      // silver frame: stalls 801-5,000
-      const r0 = Math.floor(GOLD_N / COLS), r1 = Math.ceil(SILVER_TO / COLS);
-      cx.strokeStyle = "#cfd6e3"; cx.lineWidth = 4; cx.strokeRect(2, r0 * CS + 2, 996, (r1 - r0) * CS - 4);
-      cx.strokeStyle = "#f5c242"; cx.strokeRect(2, 2, 996, r0 * CS - 4);
+    // ---- the stable map: zoom (wheel, pinch, +/-), drag to pan; close up each stall shows horse, badge, name
+    const cv = $("#barnCanvas"), cx = cv.getContext("2d"), COLS = 100, W0 = 1000;
+    let LIVE_N = filled;
+    const V = { s: 10, x: 0, y: 0 };                       // s = px per stall (10 = whole wall); x,y = top-left in stall units
+    const clampV = () => { V.s = Math.min(160, Math.max(10, V.s)); const span = W0 / V.s; V.x = Math.min(Math.max(0, V.x), COLS - span); V.y = Math.min(Math.max(0, V.y), COLS - span); };
+    const sprCache = {};
+    function horseCanvas(look) {
+      if (sprCache[look]) return sprCache[look];
+      const c = document.createElement("canvas"); c.width = 17; c.height = 13; const g = c.getContext("2d");
+      const pal = validLook(look) ? lookPal(look) : { B: "#7a4a2a", L: "#4e3422", M: "#3b2414", C: "#ff3d6e", P: 0 };
+      const col = { B: pal.B, L: pal.L, M: pal.M, K: "#120b06", H: "#2a1a0e", C: pal.C };
+      HORSE.forEach((row, y) => [...row].forEach((ch, x) => {
+        let f = col[ch];
+        if (ch === "C") { if (pal.P === 1 && y === 5) f = "#faf4e4"; if (pal.P === 2 && ((x === 7 && y >= 4 && y <= 6) || (y === 5 && x >= 6 && x <= 8))) f = "#faf4e4"; if (pal.P === 3 && (x + y) % 2) f = pal.S; }
+        if (f) { g.fillStyle = f; g.fillRect(x, y, 1, 1); }
+      }));
+      return (sprCache[look] = c);
     }
+    function badge(x, y, r, gold) {
+      cx.beginPath(); cx.arc(x, y, r, 0, Math.PI * 2); cx.fillStyle = gold ? "#f5c242" : "#cfd6e3"; cx.fill();
+      cx.lineWidth = Math.max(1, r / 5); cx.strokeStyle = gold ? "#8a6510" : "#6f7686"; cx.stroke();
+      cx.fillStyle = gold ? "#5a3d06" : "#3e4350"; cx.font = `bold ${Math.round(r * 1.2)}px sans-serif`; cx.textAlign = "center"; cx.textBaseline = "middle";
+      cx.fillText("★", x, y + r * 0.05);
+    }
+    function drawBarn() {
+      cx.imageSmoothingEnabled = false;
+      cx.fillStyle = "#120b07"; cx.fillRect(0, 0, W0, W0);
+      const meN = stallOf[ME] || 0, s = V.s;
+      const c0 = Math.floor(V.x), c1 = Math.min(COLS, Math.ceil(V.x + W0 / s)), r0 = Math.floor(V.y), r1 = Math.min(COLS, Math.ceil(V.y + W0 / s));
+      for (let r = r0; r < r1; r++) for (let c = c0; c < c1; c++) {
+        const n = r * COLS + c + 1, x = (c - V.x) * s, y = (r - V.y) * s, gold = n <= GOLD_N, has = n <= LIVE_N, who = STALLS[n - 1];
+        const fill = n === meN ? "#3ad6ff" : has ? (gold ? "#f5c242" : "#cfd6e3") : n === LIVE_N + 1 ? "#ff3d6e" : n <= SILVER_TO ? "#3b3946" : "#2b1d12";
+        if (s < 26) {
+          cx.fillStyle = fill; cx.fillRect(x + 1, y + 1, s - 2, s - 2);
+          if (has && n !== meN) { cx.fillStyle = gold ? "#8a6510" : "#7d8597"; cx.fillRect(x + 1, y + s - s * 0.35, s - 2, s * 0.3); }
+          continue;
+        }
+        // close up: wooden stall, tier rim, horse, badge, plate
+        const p = Math.max(2, s * 0.05);
+        cx.fillStyle = "#2b1d12"; cx.fillRect(x, y, s, s);
+        cx.fillStyle = has ? "#5c3e26" : (n <= SILVER_TO ? "#33313d" : "#3a2718"); cx.fillRect(x + p, y + p, s - 2 * p, s - 2 * p);
+        const lw = Math.max(2, s * 0.06);
+        if (has || n === meN || n === LIVE_N + 1) {
+          cx.lineWidth = lw; cx.strokeStyle = n === meN ? "#3ad6ff" : n === LIVE_N + 1 ? "#ff3d6e" : gold ? "#f5c242" : "#cfd6e3";
+          cx.strokeRect(x + lw / 2, y + lw / 2, s - lw, s - lw);
+        }
+        if (has && who) {
+          const h = byH[norm(who)] || { handle: who }, im = horseCanvas(horseLook(h)), hw = s * 0.62, hh = hw * 13 / 17;
+          cx.drawImage(im, x + (s - hw) / 2, y + s * 0.3, hw, hh);
+          badge(x + s * 0.16, y + s * 0.84, Math.max(4, s * 0.1), gold);
+          if (s >= 60) {
+            const nm = horseName(h), fs = Math.max(8, s * 0.11);
+            cx.fillStyle = "#f4e4bc"; cx.fillRect(x + p * 2, y + p * 2, s - p * 4, fs * (nm ? 2.3 : 1.35));
+            cx.textAlign = "center"; cx.textBaseline = "top";
+            const fit = t => { let o = t; while (o.length > 3 && cx.measureText(o).width > s - p * 6) o = o.slice(0, -2) + "…"; return o; };
+            if (nm) {
+              cx.font = `bold ${fs}px sans-serif`; cx.fillStyle = "#8a6510"; cx.fillText(fit(nm.toUpperCase()), x + s / 2, y + p * 2 + fs * 0.15);
+              cx.font = `${fs * 0.9}px sans-serif`; cx.fillStyle = "#1c120b"; cx.fillText(fit("@" + who), x + s / 2, y + p * 2 + fs * 1.2);
+            } else { cx.font = `bold ${fs}px sans-serif`; cx.fillStyle = "#1c120b"; cx.fillText(fit("@" + who), x + s / 2, y + p * 2 + fs * 0.15); }
+            cx.fillStyle = "#e9d9bf"; cx.font = `${Math.max(7, s * 0.09)}px sans-serif`; cx.textAlign = "right"; cx.textBaseline = "bottom";
+            cx.fillText("#" + n, x + s - p * 2, y + s - p * 1.5);
+          }
+        } else if (s >= 60) {
+          cx.fillStyle = n === LIVE_N + 1 ? "#ff3d6e" : "#9a8f8a"; cx.font = `bold ${Math.max(8, s * 0.11)}px sans-serif`; cx.textAlign = "center"; cx.textBaseline = "middle";
+          cx.fillText(n === LIVE_N + 1 ? "FOLLOW = YOURS" : "#" + n, x + s / 2, y + s / 2);
+        }
+      }
+      // tier frames
+      const fy0 = (0 - V.y) * s, gy = (Math.floor(GOLD_N / COLS) - V.y) * s, sy = (Math.ceil(SILVER_TO / COLS) - V.y) * s, fx = (0 - V.x) * s, fw = COLS * s;
+      cx.lineWidth = 4; cx.strokeStyle = "#f5c242"; cx.strokeRect(fx + 2, fy0 + 2, fw - 4, gy - fy0 - 4);
+      cx.strokeStyle = "#cfd6e3"; cx.strokeRect(fx + 2, gy + 2, fw - 4, sy - gy - 4);
+      if (s < 26) {
+        cx.font = "bold 22px sans-serif"; cx.textAlign = "left"; cx.textBaseline = "top";
+        const lab = (t, y, c) => { const w = cx.measureText(t).width; cx.fillStyle = "rgba(18,11,7,.85)"; cx.fillRect(12, y, w + 16, 30); cx.fillStyle = c; cx.fillText(t, 20, y + 4); };
+        if (gy > 40) lab(`★ GOLD FOUNDERS · 1–${GOLD_N}`, Math.max(8, fy0 + 10), "#f5c242");
+        if (sy > 60 && gy < W0 - 40) lab(`★ SILVER · ${GOLD_N + 1}–${SILVER_TO.toLocaleString()}`, Math.max(8, gy + 14), "#cfd6e3");
+      }
+      $("#barnZoomLbl").textContent = V.s <= 10 ? "Whole stable" : (Math.round(V.s) / 10) + "×";
+    }
+    // pointer: drag to pan, pinch / wheel to zoom, tap for the tooltip
+    const toCanvas = (ex, ey) => { const r = cv.getBoundingClientRect(); return [(ex - r.left) / r.width * W0, (ey - r.top) / r.height * W0]; };
+    function zoomAt(f, px, py) { const ux = V.x + px / V.s, uy = V.y + py / V.s; V.s *= f; clampV(); V.x = ux - px / V.s; V.y = uy - py / V.s; clampV(); drawBarn(); }
+    function flyTo(n, s = 120) { const c = (n - 1) % COLS, r = Math.floor((n - 1) / COLS); V.s = s; clampV(); V.x = c + 0.5 - W0 / V.s / 2; V.y = r + 0.5 - W0 / V.s / 2; clampV(); drawBarn(); }
+    cv.addEventListener("wheel", e => { e.preventDefault(); const [px, py] = toCanvas(e.clientX, e.clientY); zoomAt(Math.exp(-e.deltaY * 0.0015), px, py); }, { passive: false });
+    const pts = new Map(); let pinch0 = 0, moved = 0;
+    cv.addEventListener("pointerdown", e => { cv.setPointerCapture(e.pointerId); pts.set(e.pointerId, [e.clientX, e.clientY]); moved = 0; if (pts.size === 2) { const [a, b] = [...pts.values()]; pinch0 = Math.hypot(a[0] - b[0], a[1] - b[1]); } });
+    cv.addEventListener("pointermove", e => {
+      if (!pts.has(e.pointerId)) { if (e.pointerType === "mouse") showTip(e); return; }
+      const prev = pts.get(e.pointerId); pts.set(e.pointerId, [e.clientX, e.clientY]);
+      if (pts.size === 2) { const [a, b] = [...pts.values()], d = Math.hypot(a[0] - b[0], a[1] - b[1]); const [px, py] = toCanvas((a[0] + b[0]) / 2, (a[1] + b[1]) / 2); if (pinch0) zoomAt(d / pinch0, px, py); pinch0 = d; moved = 99; return; }
+      const r = cv.getBoundingClientRect(), dx = (e.clientX - prev[0]) / r.width * W0, dy = (e.clientY - prev[1]) / r.height * W0;
+      moved += Math.abs(dx) + Math.abs(dy); if (V.s > 10) { V.x -= dx / V.s; V.y -= dy / V.s; clampV(); drawBarn(); }
+      tip.classList.remove("show");
+    });
+    const up = e => { pts.delete(e.pointerId); pinch0 = 0; if (moved < 8 && e.type === "pointerup") showTip(e); };
+    cv.addEventListener("pointerup", up); cv.addEventListener("pointercancel", up);
+    cv.addEventListener("dblclick", e => { const [px, py] = toCanvas(e.clientX, e.clientY); zoomAt(2.5, px, py); });
+    $("#barnIn").onclick = () => zoomAt(2, W0 / 2, W0 / 2);
+    $("#barnOut").onclick = () => zoomAt(0.5, W0 / 2, W0 / 2);
+    $("#barnAll").onclick = () => { V.s = 10; V.x = V.y = 0; drawBarn(); };
+    $("#barnGold").onclick = () => flyTo(1, 60);
+    $("#barnSilver").onclick = () => flyTo(GOLD_N + 1, 60);
+    $("#barnNext").onclick = () => flyTo(LIVE_N + 1, 120);
     const tip = $("#barnTip");
     function showTip(ev) {
-      const r = cv.getBoundingClientRect(), px = ev.clientX - r.left, py = ev.clientY - r.top;
-      const c = Math.floor(px / r.width * COLS), rw = Math.floor(py / r.height * COLS);
+      const r = cv.getBoundingClientRect(), [qx, qy] = toCanvas(ev.clientX, ev.clientY);
+      const c = Math.floor(V.x + qx / V.s), rw = Math.floor(V.y + qy / V.s);
       if (c < 0 || c >= COLS || rw < 0 || rw >= COLS) { tip.classList.remove("show"); return; }
       const n = rw * COLS + c + 1, who = STALLS[n - 1];
-      const tier = n <= GOLD_N ? "gold founder" : n <= SILVER_TO ? "silver" : "bronze";
+      const tier = n <= GOLD_N ? "★ gold founder" : n <= SILVER_TO ? "★ silver" : "bronze";
       const hn = who ? horseName(byH[norm(who)]) : "";
-      tip.textContent = who ? `Stall #${n} · ${hn ? hn + " · " : ""}@${shortH(who)} · ${tier}` : n === filled + 1 ? `Stall #${n} · next free (${tier}): follow to take it` : `Stall #${n} · empty · ${tier}`;
+      tip.textContent = who ? `Stall #${n} · ${hn ? hn + " · " : ""}@${shortH(who)} · ${tier}` : n === LIVE_N + 1 ? `Stall #${n} · next free (${tier}): follow to take it` : `Stall #${n} · empty · ${tier}`;
+      const px = ev.clientX - r.left, py = ev.clientY - r.top;
       tip.style.left = Math.min(Math.max(px, 90), r.width - 90) + cv.offsetLeft + "px"; tip.style.top = (py + cv.offsetTop) + "px"; tip.classList.add("show");
     }
-    cv.addEventListener("mousemove", showTip); cv.addEventListener("click", showTip);
     cv.addEventListener("mouseleave", () => tip.classList.remove("show"));
     function findStall(q) {
       const out = $("#stallOut"); if (!q) { out.textContent = ""; return; }
       const n = stallOf[q];
-      if (n) { ME = q; try { localStorage.setItem("dd-stall", q); } catch {} const hn = horseName(byH[q] || {}); out.innerHTML = `<b style="color:var(--gold)">@${esc(q)}${hn ? ` (${esc(hn)})` : ""} is in stall #${n}.</b> ${n <= GOLD_N ? "Gold founder." : "Silver."} It's lit up blue on the map.`; }
-      else out.innerHTML = `No stall for @${esc(q)} yet. <a href="${IGP}" target="_blank" rel="noopener">Follow @${IG}</a> and stall #${filled + 1} is yours (we add new followers every few hours).`;
-      drawBarn(); stallCards();
+      if (n) { ME = q; try { localStorage.setItem("dd-stall", q); } catch {} const hn = horseName(byH[q] || {}); out.innerHTML = `<b style="color:var(--gold)">@${esc(q)}${hn ? ` (${esc(hn)})` : ""} is in stall #${n}.</b> ${n <= GOLD_N ? "★ Gold founder." : "★ Silver."} Zoomed in on the map.`; flyTo(n); cv.scrollIntoView({ behavior: "smooth", block: "center" }); }
+      else { out.innerHTML = `No stall for @${esc(q)} yet. <a href="${IGP}" target="_blank" rel="noopener">Follow @${IG}</a> and stall #${filled + 1} is yours (we add new followers every few hours).`; drawBarn(); }
+      stallCards();
     }
     $("#stallFind").addEventListener("submit", e => { e.preventDefault(); findStall(norm($("#stallHandle").value)); });
     drawBarn(); stallCards();
@@ -855,11 +953,7 @@
       $("#barnFilled").textContent = n.toLocaleString();
       $("#barnLeft").textContent = `· ${(TOTAL - n).toLocaleString()} still empty · live`;
       $("#barnBar").style.width = Math.max(0.3, 100 * n / TOTAL) + "%";
-      for (let k = filled; k < n && k < COLS * COLS; k++) {
-        const x = (k % COLS) * CS, y = Math.floor(k / COLS) * CS;
-        cx.fillStyle = k < GOLD_N ? "#f5c242" : "#cfd6e3"; cx.fillRect(x + 1, y + 1, CS - 2, CS - 2);
-      }
-      if (n < COLS * COLS) { const x = (n % COLS) * CS, y = Math.floor(n / COLS) * CS; cx.fillStyle = "#ff3d6e"; cx.fillRect(x + 1, y + 1, CS - 2, CS - 2); }
+      LIVE_N = n; drawBarn();
     };
     if (D.claimsApi) {
       const pull = () => fetch(D.claimsApi.replace(/\/$/, "") + "/followers").then(r => r.json()).then(j => liveCount(j.followers)).catch(() => {});
