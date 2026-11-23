@@ -5120,9 +5120,11 @@
       "joined": "2026-11-23",
       "races": 0,
       "medals": [],
-      "name": "Alfie",
+      "name": "ALFIEEE",
       "badge": "gold",
-      "rank": 379
+      "rank": 379,
+      "look": "1113",
+      "original": true
     },
     {
       "handle": "robynalex.olds",
@@ -10488,7 +10490,10 @@
       "races": 0,
       "medals": [],
       "badge": "gold",
-      "rank": 790
+      "rank": 790,
+      "look": "4433",
+      "original": true,
+      "name": "silence suzuka"
     },
     {
       "handle": "ykdasroddy",
@@ -12378,7 +12383,9 @@
       "races": 0,
       "medals": [],
       "rank": 961,
-      "badge": "silver"
+      "badge": "silver",
+      "look": "3221",
+      "original": true
     },
     {
       "handle": "audrey_w9",
@@ -13716,14 +13723,93 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-23T21:36:19Z",
+  "lastSync": "2026-11-23T22:40:05Z",
   "claims": [
+    {
+      "handle": "holly_eq_my_cob",
+      "look": "1113",
+      "at": "2026-11-23T21:44:47Z",
+      "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
+      "status": "locked",
+      "original": true,
+      "name": "ALFIEEE"
+    },
+    {
+      "handle": "_.nikol.vojackova._",
+      "look": "3322",
+      "at": "2026-11-23T21:36:52Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "waiting"
+    },
+    {
+      "handle": "emrose_vaults",
+      "look": "3324",
+      "at": "2026-11-23T20:33:09Z",
+      "reel": "https://www.instagram.com/p/DgEj46qJi0L/",
+      "status": "waiting",
+      "name": "Atlas"
+    },
     {
       "handle": "emrose_vaults",
       "look": "2314",
       "at": "2026-11-23T20:30:14Z",
       "reel": "https://www.instagram.com/p/Df_u417pzfe/",
       "status": "waiting"
+    },
+    {
+      "handle": "2pawlliss_",
+      "look": "4433",
+      "at": "2026-11-23T19:13:18Z",
+      "reel": "https://www.instagram.com/p/DgEj46qJi0L/",
+      "status": "locked",
+      "original": true,
+      "name": "silence suzuka"
+    },
+    {
+      "handle": "lucymax_love",
+      "look": "1114",
+      "at": "2026-11-23T18:00:32Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "waiting"
+    },
+    {
+      "handle": "cc7x007",
+      "look": "3221",
+      "at": "2026-11-23T17:41:58Z",
+      "reel": "https://www.instagram.com/p/DgEj46qJi0L/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "xkit.barrancexx",
+      "look": "1141",
+      "at": "2026-11-23T16:31:38Z",
+      "reel": "https://www.instagram.com/p/DgB079spXvZ/",
+      "status": "waiting",
+      "name": "Rubymy loan"
+    },
+    {
+      "handle": "hostickova.b",
+      "look": "2213",
+      "at": "2026-11-23T15:58:18Z",
+      "reel": "https://www.instagram.com/p/DgEj46qJi0L/",
+      "status": "waiting",
+      "name": "Chroust"
+    },
+    {
+      "handle": "ta_klarkq",
+      "look": "1144",
+      "at": "2026-11-23T15:44:56Z",
+      "reel": "https://www.instagram.com/p/DgEj46qJi0L/",
+      "status": "waiting"
+    },
+    {
+      "handle": "thildejuhler",
+      "look": "4211",
+      "at": "2026-11-23T14:54:23Z",
+      "reel": "https://www.instagram.com/p/DgB079spXvZ/",
+      "status": "waiting",
+      "name": "Pøls"
     },
     {
       "handle": "valca_konicii",
@@ -14203,7 +14289,10 @@
     "1144": "cailyneq22_",
     "1114": "natal.ka.22",
     "3322": "aria_phillip19",
-    "3312": "valca_konicii"
+    "3312": "valca_konicii",
+    "3221": "cc7x007",
+    "4433": "2pawlliss_",
+    "1113": "holly_eq_my_cob"
   },
   "commentEntries": {
     "cailyneq22_": {
