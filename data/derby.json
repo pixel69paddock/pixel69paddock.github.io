@@ -11565,7 +11565,9 @@
       "races": 0,
       "medals": [],
       "rank": 930,
-      "badge": "silver"
+      "badge": "silver",
+      "look": "3322",
+      "original": true
     },
     {
       "handle": "jojin_tan",
@@ -12033,8 +12035,16 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-23T09:14:33Z",
+  "lastSync": "2026-11-23T09:38:38Z",
   "claims": [
+    {
+      "handle": "aria_phillip19",
+      "look": "3322",
+      "at": "2026-11-23T09:14:26Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked",
+      "original": true
+    },
     {
       "handle": "natal.ka.22",
       "look": "1114",
@@ -12477,6 +12487,7 @@
     "1121": "josie_barrett1",
     "4421": "ocean__hooves",
     "3124": "_zezulackq_",
-    "1114": "natal.ka.22"
+    "1114": "natal.ka.22",
+    "3322": "aria_phillip19"
   }
 }
