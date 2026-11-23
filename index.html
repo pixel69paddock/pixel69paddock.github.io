@@ -270,6 +270,7 @@
   .more-row{display:flex;justify-content:center;align-items:center;gap:14px;margin-top:14px;color:var(--dim);font-size:14px}
   tr.me td{background:rgba(58,214,255,.12)}
   .who .nm{display:flex;flex-direction:column;min-width:0;line-height:1.25}
+  .bdg{display:inline-block;width:8px;height:8px;border-radius:50%;margin:0 4px 0 -2px;border:1px solid #000}.bdg.gold{background:var(--gold)}.bdg.silver{background:var(--silver)}.bdg.bronze{background:var(--bronze)}
   .who .nm b{font-family:var(--px);font-size:11px;color:var(--gold);letter-spacing:.02em}
   .who .nm small{color:var(--muted);font-size:13px}
   .name-field{margin-top:10px}
@@ -526,7 +527,7 @@
         <div class="card"><div class="v">×1.5</div><p>Followers' horses get 1.5× the win chance of like-only horses.</p></div>
         <div class="card"><div class="v">0.4%</div><p>The longest shot. On Day 4 one took bronze.</p></div>
       </div>
-      <div class="card soon"><b>Coming soon:</b> gold rims for the first 500 followers, and feeding your horse here on the site. Got a track idea? Comment it on our latest reel: the most-liked idea gets built.</div>
+      <div class="card soon"><b>Founding members:</b> the first 803 followers wear <b>gold</b> (closed 23 Nov). Everyone after, up to 5,000, wears <b>silver</b>; then bronze. <b>Coming soon:</b> feeding your horse here on the site. Got a track idea? Comment it on our latest reel: the most-liked idea gets built.</div>
       </details>
     </div>
   </section>
@@ -634,7 +635,8 @@
   // Horse names (owner 2026-11-22): comment "HORSE 3233 Slow Dancer"; the hourly sync copies the name to horses[].name
   const cleanName = s => String(s || "").replace(/[^\p{L}\p{N} '.\-]/gu, "").replace(/\s+/g, " ").trim().slice(0, 18);
   const horseName = h => { const sv = savedHorse(); return (sv.done && sv.handle === norm(h.handle) && sv.name) ? sv.name : (h.name || ""); };
-  const whoCell = (h, size = 30) => { const n = horseName(h); return `<span class="who">${spriteTag(horseLook(h), size)}${n ? `<span class="nm"><b>${esc(n.toUpperCase())}</b><small>@${esc(h.handle)}</small></span>` : `@${esc(h.handle)}`}</span>`; };
+  const badge = h => h.badge ? `<i class="bdg ${h.badge}" title="${h.badge} member"></i>` : "";
+  const whoCell = (h, size = 30) => { const n = horseName(h); return `<span class="who">${spriteTag(horseLook(h), size)}${badge(h)}${n ? `<span class="nm"><b>${esc(n.toUpperCase())}</b><small>@${esc(h.handle)}</small></span>` : `@${esc(h.handle)}`}</span>`; };
   let REBOARD = () => {};
   document.querySelectorAll("svg.sprite").forEach(s => sprite(s, s.dataset.colour));
 
