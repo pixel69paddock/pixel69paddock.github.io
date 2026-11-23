@@ -13716,8 +13716,15 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-23T19:36:16Z",
+  "lastSync": "2026-11-23T20:35:50Z",
   "claims": [
+    {
+      "handle": "emrose_vaults",
+      "look": "2314",
+      "at": "2026-11-23T20:30:14Z",
+      "reel": "https://www.instagram.com/p/Df_u417pzfe/",
+      "status": "waiting"
+    },
     {
       "handle": "valca_konicii",
       "look": "3312",
