@@ -13645,8 +13645,16 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-23T13:23:26Z",
+  "lastSync": "2026-11-23T13:38:21Z",
   "claims": [
+    {
+      "handle": "bays.over.baes_",
+      "look": "1124",
+      "at": "2026-11-23T13:17:05Z",
+      "reel": "https://www.instagram.com/p/Df_u417pzfe/",
+      "status": "waiting",
+      "name": "Atlas"
+    },
     {
       "handle": "cailyneq22_",
       "look": "1144",
@@ -13666,6 +13674,22 @@
       "name": "Darkstorm"
     },
     {
+      "handle": "aria_phillip19",
+      "look": "3322",
+      "at": "2026-11-23T09:14:26Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "natal.ka.22",
+      "look": "1114",
+      "at": "2026-11-23T06:25:24Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked",
+      "original": true
+    },
+    {
       "handle": "_zezulackq_",
       "look": "3124",
       "at": "2026-11-23T05:22:41Z",
@@ -13673,6 +13697,14 @@
       "status": "locked",
       "original": true,
       "name": "Grace"
+    },
+    {
+      "handle": "word_to_bob",
+      "look": "3214",
+      "at": "2026-11-23T05:10:43Z",
+      "reel": "https://www.instagram.com/p/Df_u417pzfe/",
+      "status": "locked",
+      "original": true
     },
     {
       "handle": "ocean__hooves",
