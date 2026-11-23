@@ -9539,7 +9539,10 @@
       "races": 0,
       "medals": [],
       "badge": "gold",
-      "rank": 698
+      "rank": 698,
+      "look": "1144",
+      "name": "Xena Hehe",
+      "original": true
     },
     {
       "handle": "harriet_eqnz",
@@ -12035,8 +12038,17 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-23T11:36:17Z",
+  "lastSync": "2026-11-23T12:36:17Z",
   "claims": [
+    {
+      "handle": "cailyneq22_",
+      "look": "1144",
+      "at": "2026-11-23T12:10:33Z",
+      "reel": "https://www.instagram.com/p/DgEj46qJi0L/",
+      "status": "locked",
+      "name": "Xena Hehe",
+      "original": true
+    },
     {
       "handle": "aria_phillip19",
       "look": "3322",
@@ -12488,6 +12500,7 @@
     "4421": "ocean__hooves",
     "3124": "_zezulackq_",
     "1114": "natal.ka.22",
-    "3322": "aria_phillip19"
+    "3322": "aria_phillip19",
+    "1144": "cailyneq22_"
   }
 }
