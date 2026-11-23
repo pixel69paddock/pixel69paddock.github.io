@@ -246,6 +246,7 @@
   .shed-soon{display:inline-flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 14px;padding:8px 12px;border:2px dashed var(--gold);border-radius:6px;background:#241a30;color:var(--ink);font-size:14px}
   .shed-soon span{background:var(--gold);color:#2a1d05;font-weight:700;padding:2px 8px;border-radius:3px;font-size:12px;letter-spacing:.04em}
   .shed-soon b{color:var(--gold)}
+  .sb .hn{font-family:var(--px);font-size:9px;color:var(--gold);letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
   .sb.tg{border-color:var(--gold)} .sb.ts{border-color:var(--silver)} .sb.ts .plate{color:var(--silver)}
   .barn-legend i{width:12px;height:12px;border:1px solid #000;display:inline-block}
   .stable-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:24px;align-items:start}
@@ -683,19 +684,21 @@
     try { return mergeLive(D, await apiGet("/state")); } catch { return D; }
   }
   const ago = iso => { if (!iso) return ""; const m = Math.max(0, Math.round((Date.now() - new Date(iso)) / 60000)); return m < 1 ? "just now" : m < 60 ? m + " min ago" : m < 1440 ? Math.round(m / 60) + " h ago" : Math.round(m / 1440) + " d ago"; };
+  let SHOW_ALL = false;
   function liveUpdate(D) {
     LIVE = D; OWNER = ownersOf(D);
     const every = D.syncEveryMin || 60;
     $("#liveSync").textContent = D.live ? `Live from Instagram · updated ${ago(D.lastSync)}` : D.lastSync ? `Synced with Instagram ${ago(D.lastSync)} · checks every ${every >= 60 ? every / 60 + " h" : every + " min"}` : "Waiting for the first sync";
-    let claims = (D.claims || []).slice(0, 12);
+    let claims = (D.claims || []).slice(0, SHOW_ALL ? 999 : 12);
     const sv = savedHorse();
     const mineLocked = sv.done && (D.horses || []).some(h => norm(h.handle) === sv.handle && h.look === sv.code);
     if (sv.done && validLook(sv.code) && !mineLocked && !claims.some(c => norm(c.handle) === sv.handle && c.look === sv.code))
       claims = [{ handle: sv.handle, look: sv.code, at: sv.doneAt, status: OWNER[sv.code] && OWNER[sv.code] !== sv.handle ? "taken" : "pending" }, ...claims];
     $("#liveFeed").innerHTML = claims.length ? claims.map(c => {
       const st = c.status === "taken" ? `<span class="tag-s no">Taken</span>` : c.status === "waiting" ? `<span class="tag-s">Like or follow to lock</span>` : c.status === "pending" ? `<span class="tag-s" style="color:var(--gold);border-color:#8a6510">Pending</span>` : `<span class="tag-s ok">Locked in</span>`;
-      return `<div class="claim-row">${spriteTag(validLook(c.look) ? c.look : "1111", 34)}<span class="who">@${esc(c.handle)}</span><p class="code">HORSE ${esc(c.look)}</p>${st}<small class="when">${esc(ago(c.at))}</small></div>`;
-    }).join("") : `<div class="empty">No claims yet. Be the first: build a horse above and comment its code.</div>`;
+      return `<div class="claim-row">${spriteTag(validLook(c.look) ? c.look : "1111", 34)}<span class="who">${c.name ? `<b style="color:var(--gold);font-family:var(--px);font-size:11px">${esc(cleanName(c.name).toUpperCase())}</b> ` : ""}@${esc(c.handle)}</span><p class="code">HORSE ${esc(c.look)}</p>${st}<small class="when">${esc(ago(c.at))}</small></div>`;
+    }).join("") + ((D.claims || []).length > 12 && !SHOW_ALL ? `<button class="btn" id="claimsAll" type="button" style="margin-top:6px">Show all ${(D.claims || []).length} claims</button>` : "") : `<div class="empty">No claims yet. Be the first: build a horse above and comment its code.</div>`;
+    const more = $("#claimsAll"); if (more) more.onclick = () => { SHOW_ALL = true; liveUpdate(LIVE); };
     redrawBuilder();
     const n = Object.keys(OWNER).length;
     $("#bCount").textContent = `${n} of 256 looks claimed. Want a different one later? Comment a new code; your old look goes back in the pool.`;
@@ -803,7 +806,7 @@
     let ME = ""; try { ME = norm(localStorage.getItem("dd-stall") || savedHorse().handle || ""); } catch {}
     function stallCards() {
       const cards = STALLS.map((e, i) => ({ e, n: i + 1 })).reverse().map(({ e, n }) =>
-        `<div class="sb ${n <= GOLD_N ? "tg" : "ts"}${norm(e) === ME ? " me" : ""}" data-n="${n}"><div class="plate">#${n}</div>${spriteTag(horseLook(byH[norm(e)]), 40)}<div class="nm" title="@${esc(e)}">@${esc(shortH(e))}</div></div>`);
+        `<div class="sb ${n <= GOLD_N ? "tg" : "ts"}${norm(e) === ME ? " me" : ""}" data-n="${n}"><div class="plate">#${n}</div>${spriteTag(horseLook(byH[norm(e)]), 40)}${horseName(byH[norm(e)]) ? `<div class="hn">${esc(horseName(byH[norm(e)]).toUpperCase())}</div>` : ""}<div class="nm" title="@${esc(e)}">@${esc(shortH(e))}</div></div>`);
       $("#sbStalls").innerHTML = `<a class="sb open" href="${IGP}" target="_blank" rel="noopener"><div class="plate">#${filled + 1}</div><div class="q">?</div><div class="nm">Follow = yours</div></a>` + cards.join("");
     }
     const cv = $("#barnCanvas"), cx = cv.getContext("2d"), COLS = 100, CS = 10;
@@ -829,7 +832,8 @@
       if (c < 0 || c >= COLS || rw < 0 || rw >= COLS) { tip.classList.remove("show"); return; }
       const n = rw * COLS + c + 1, who = STALLS[n - 1];
       const tier = n <= GOLD_N ? "gold founder" : n <= SILVER_TO ? "silver" : "bronze";
-      tip.textContent = who ? `Stall #${n} · @${shortH(who)} · ${tier}` : n === filled + 1 ? `Stall #${n} · next free (${tier}): follow to take it` : `Stall #${n} · empty · ${tier}`;
+      const hn = who ? horseName(byH[norm(who)]) : "";
+      tip.textContent = who ? `Stall #${n} · ${hn ? hn + " · " : ""}@${shortH(who)} · ${tier}` : n === filled + 1 ? `Stall #${n} · next free (${tier}): follow to take it` : `Stall #${n} · empty · ${tier}`;
       tip.style.left = Math.min(Math.max(px, 90), r.width - 90) + cv.offsetLeft + "px"; tip.style.top = (py + cv.offsetTop) + "px"; tip.classList.add("show");
     }
     cv.addEventListener("mousemove", showTip); cv.addEventListener("click", showTip);
@@ -837,7 +841,7 @@
     function findStall(q) {
       const out = $("#stallOut"); if (!q) { out.textContent = ""; return; }
       const n = stallOf[q];
-      if (n) { ME = q; try { localStorage.setItem("dd-stall", q); } catch {} out.innerHTML = `<b style="color:var(--gold)">@${esc(q)} is in stall #${n}.</b> It's lit up blue on the map.`; }
+      if (n) { ME = q; try { localStorage.setItem("dd-stall", q); } catch {} const hn = horseName(byH[q] || {}); out.innerHTML = `<b style="color:var(--gold)">@${esc(q)}${hn ? ` (${esc(hn)})` : ""} is in stall #${n}.</b> ${n <= GOLD_N ? "Gold founder." : "Silver."} It's lit up blue on the map.`; }
       else out.innerHTML = `No stall for @${esc(q)} yet. <a href="${IGP}" target="_blank" rel="noopener">Follow @${IG}</a> and stall #${filled + 1} is yours (we add new followers every few hours).`;
       drawBarn(); stallCards();
     }

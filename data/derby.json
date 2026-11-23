@@ -2775,7 +2775,8 @@
       "races": 2,
       "medals": [],
       "badge": "gold",
-      "rank": 23
+      "rank": 23,
+      "look": "1333"
     },
     {
       "handle": "ur_fave.emo",
@@ -4949,7 +4950,7 @@
       "joined": "2026-11-23",
       "races": 0,
       "medals": [],
-      "look": "4414",
+      "look": "4421",
       "name": "Rhett",
       "badge": "gold",
       "rank": 356
@@ -6318,7 +6319,8 @@
       "races": 0,
       "medals": [],
       "badge": "gold",
-      "rank": 187
+      "rank": 187,
+      "look": "3333"
     },
     {
       "handle": "fuhhh_wit_v",
@@ -10524,7 +10526,8 @@
       "races": 0,
       "medals": [],
       "badge": "silver",
-      "rank": 824
+      "rank": 824,
+      "name": "Falcon"
     },
     {
       "handle": "los.campecosmos",
@@ -10644,7 +10647,8 @@
       "races": 0,
       "medals": [],
       "badge": "silver",
-      "rank": 839
+      "rank": 839,
+      "name": "Roma"
     },
     {
       "handle": "ayaalhunaity",
@@ -10708,7 +10712,9 @@
       "races": 0,
       "medals": [],
       "badge": "silver",
-      "rank": 847
+      "rank": 847,
+      "look": "1121",
+      "name": "Scooter"
     }
   ],
   "sponsorSpots": [
@@ -10794,14 +10800,31 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-23T05:02:33Z",
+  "lastSync": "2026-11-23T05:13:24Z",
   "claims": [
+    {
+      "handle": "ocean__hooves",
+      "look": "4421",
+      "at": "2026-11-23T05:02:58Z",
+      "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
+      "status": "locked",
+      "name": "Rhett"
+    },
+    {
+      "handle": "josie_barrett1",
+      "look": "1121",
+      "at": "2026-11-23T05:02:34Z",
+      "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
+      "status": "locked",
+      "name": "Scooter"
+    },
     {
       "handle": "ave._1120",
       "look": "4432",
       "at": "2026-11-23T02:50:48Z",
       "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
-      "status": "locked"
+      "status": "locked",
+      "name": "midnight"
     },
     {
       "handle": "breannasquires71",
@@ -10815,21 +10838,24 @@
       "look": "1211",
       "at": "2026-11-23T00:45:51Z",
       "reel": "https://www.instagram.com/p/DgB079spXvZ/",
-      "status": "locked"
+      "status": "locked",
+      "name": "Cupcake"
     },
     {
       "handle": "prilotte_",
       "look": "2141",
       "at": "2026-11-22T23:41:26Z",
       "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
-      "status": "locked"
+      "status": "locked",
+      "name": "Bacrdi"
     },
     {
       "handle": "blaize_priv_200",
       "look": "2144",
       "at": "2026-11-22T22:03:25Z",
       "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
-      "status": "taken"
+      "status": "taken",
+      "name": "Cora posey"
     },
     {
       "handle": "_dorothy_0907",
@@ -10843,14 +10869,8 @@
       "look": "2114",
       "at": "2026-11-22T21:17:26Z",
       "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
-      "status": "locked"
-    },
-    {
-      "handle": "ocean__hooves",
-      "look": "4414",
-      "at": "2026-11-22T20:54:52Z",
-      "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
-      "status": "locked"
+      "status": "locked",
+      "name": "Platinum"
     },
     {
       "handle": "its_zzzuh",
@@ -10864,13 +10884,22 @@
       "look": "4324",
       "at": "2026-11-22T16:54:00Z",
       "reel": "https://www.instagram.com/p/DgB079spXvZ/",
-      "status": "locked"
+      "status": "locked",
+      "name": "asteroid abolisher"
     },
     {
       "handle": "defnot_clover",
       "look": "3432",
       "at": "2026-11-22T15:21:55Z",
       "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
+      "status": "locked",
+      "name": "COOKIE"
+    },
+    {
+      "handle": "lewis148804",
+      "look": "3333",
+      "at": "2026-11-22T14:39:57Z",
+      "reel": "https://www.instagram.com/p/DgB079spXvZ/",
       "status": "locked"
     },
     {
@@ -10878,7 +10907,8 @@
       "look": "2144",
       "at": "2026-11-22T14:19:02Z",
       "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
-      "status": "locked"
+      "status": "locked",
+      "name": "Stormy"
     },
     {
       "handle": "himc__",
@@ -10906,13 +10936,6 @@
       "look": "3214",
       "at": "2026-11-22T04:03:52Z",
       "reel": "https://www.instagram.com/p/DgAcGG5JKhP/",
-      "status": "locked"
-    },
-    {
-      "handle": "denondefyrste",
-      "look": "1111",
-      "at": "2026-11-22T02:21:49Z",
-      "reel": "https://www.instagram.com/p/Df_u417pzfe/",
       "status": "locked"
     },
     {
@@ -10965,11 +10988,18 @@
       "status": "locked"
     },
     {
-      "handle": "_gl88k",
-      "look": "3114",
-      "at": "2026-11-20T15:27:11Z",
+      "handle": "diaz_monkey_3",
+      "look": "1333",
+      "at": "2026-11-20T15:40:08Z",
       "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
       "status": "locked"
+    },
+    {
+      "handle": "devon.hernandez.106",
+      "look": "1111",
+      "at": "2026-11-20T15:37:09Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "taken"
     },
     {
       "handle": "tavianhaddox",
@@ -11121,7 +11151,6 @@
   "founders": {
     "goldCount": 800,
     "goldClosed": "2026-11-23",
-    "silverTo": 5000,
-    "note": "Gold = the first 800 followers by date followed (closed 2026-11-23). Silver to 5000, Bronze after."
+    "silverTo": 5000
   }
 }
