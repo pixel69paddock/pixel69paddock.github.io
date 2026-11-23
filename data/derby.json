@@ -6821,7 +6821,10 @@
       "races": 0,
       "medals": [],
       "badge": "gold",
-      "rank": 214
+      "rank": 214,
+      "look": "2423",
+      "original": true,
+      "name": "juke"
     },
     {
       "handle": "not_asko.fr",
@@ -8891,7 +8894,9 @@
       "races": 0,
       "medals": [],
       "badge": "gold",
-      "rank": 473
+      "rank": 473,
+      "look": "2342",
+      "original": true
     },
     {
       "handle": "gi0perse",
@@ -13960,7 +13965,10 @@
       "races": 0,
       "medals": [],
       "rank": 1047,
-      "badge": "silver"
+      "badge": "silver",
+      "look": "1124",
+      "original": true,
+      "name": "Atlas"
     },
     {
       "handle": "tylersbyrne",
@@ -14346,7 +14354,8 @@
       "races": 0,
       "medals": [],
       "rank": 1096,
-      "badge": "silver"
+      "badge": "silver",
+      "look": "1114"
     },
     {
       "handle": "elvirahjarner",
@@ -16198,7 +16207,8 @@
       "races": 0,
       "medals": [],
       "rank": 1326,
-      "badge": "silver"
+      "badge": "silver",
+      "look": "3322"
     },
     {
       "handle": "emily_the_elephant11",
@@ -16922,8 +16932,17 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-23T23:12:55Z",
+  "lastSync": "2026-11-23T23:40:30Z",
   "claims": [
+    {
+      "handle": "leo____chi2010",
+      "look": "2423",
+      "at": "2026-11-23T23:21:38Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked",
+      "original": true,
+      "name": "juke"
+    },
     {
       "handle": "dalb_0710",
       "look": "1134",
@@ -16943,6 +16962,13 @@
       "name": "ALFIEEE"
     },
     {
+      "handle": "_.nikol.vojackova._",
+      "look": "3322",
+      "at": "2026-11-23T21:36:52Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked"
+    },
+    {
       "handle": "emrose_vaults",
       "look": "3324",
       "at": "2026-11-23T20:33:09Z",
@@ -16960,6 +16986,13 @@
       "name": "silence suzuka"
     },
     {
+      "handle": "lucymax_love",
+      "look": "1114",
+      "at": "2026-11-23T18:00:32Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked"
+    },
+    {
       "handle": "cc7x007",
       "look": "3221",
       "at": "2026-11-23T17:41:58Z",
@@ -16975,6 +17008,14 @@
       "status": "locked",
       "original": true,
       "name": "Ruby"
+    },
+    {
+      "handle": "_.celenas._",
+      "look": "2342",
+      "at": "2026-11-23T16:25:17Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked",
+      "original": true
     },
     {
       "handle": "hostickova.b",
@@ -17002,6 +17043,22 @@
       "name": "Pøls"
     },
     {
+      "handle": "valca_konicii",
+      "look": "3312",
+      "at": "2026-11-23T13:36:08Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked"
+    },
+    {
+      "handle": "bays.over.baes_",
+      "look": "1124",
+      "at": "2026-11-23T13:17:05Z",
+      "reel": "https://www.instagram.com/p/Df_u417pzfe/",
+      "status": "locked",
+      "original": true,
+      "name": "Atlas"
+    },
+    {
       "handle": "cailyneq22_",
       "look": "1144",
       "at": "2026-11-23T12:44:00Z",
@@ -17020,6 +17077,20 @@
       "name": "Darkstorm"
     },
     {
+      "handle": "aria_phillip19",
+      "look": "3322",
+      "at": "2026-11-23T09:14:26Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked"
+    },
+    {
+      "handle": "natal.ka.22",
+      "look": "1114",
+      "at": "2026-11-23T06:25:24Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked"
+    },
+    {
       "handle": "_zezulackq_",
       "look": "3124",
       "at": "2026-11-23T05:22:41Z",
@@ -17027,6 +17098,13 @@
       "status": "locked",
       "original": true,
       "name": "Grace"
+    },
+    {
+      "handle": "word_to_bob",
+      "look": "3214",
+      "at": "2026-11-23T05:10:43Z",
+      "reel": "https://www.instagram.com/p/Df_u417pzfe/",
+      "status": "locked"
     },
     {
       "handle": "ocean__hooves",
@@ -17446,7 +17524,10 @@
     "1134": "dalb_0710",
     "1114": "natal.ka.22",
     "3312": "valca_konicii",
-    "3322": "aria_phillip19"
+    "3322": "aria_phillip19",
+    "1124": "bays.over.baes_",
+    "2342": "_.celenas._",
+    "2423": "leo____chi2010"
   },
   "commentEntries": {
     "cailyneq22_": {
