@@ -903,7 +903,21 @@
       "dyl.3x",
       "declan_marston2708",
       "wheggie13",
-      "canela_canela605"
+      "canela_canela605",
+      "haydenlikins",
+      "ccharlieross",
+      "vicky_perez321",
+      "charger_chewer",
+      "lily.joness8",
+      "hvnah_13",
+      "tahnee.lagerwey_",
+      "jungle.baguette",
+      "og_goatroper",
+      "willowsummerhays",
+      "fiserova321",
+      "your_boy_harri",
+      "ave_elsa42",
+      "luj.anz"
     ],
     "track": "Figure 8 + the crowd's crossing hazard (comment 🚦 / 🔥 / 🍌 on the Day 4 reel; your emoji = your horse's power)"
   },
@@ -5706,7 +5720,8 @@
       "races": 0,
       "medals": [],
       "badge": "gold",
-      "rank": 255
+      "rank": 255,
+      "name": "Puhh"
     },
     {
       "handle": "amelia_mystery",
@@ -8567,7 +8582,8 @@
       "races": 0,
       "medals": [],
       "badge": "gold",
-      "rank": 606
+      "rank": 606,
+      "name": "Chiyono"
     },
     {
       "handle": "hadley.smith.eq",
@@ -8623,7 +8639,8 @@
       "races": 0,
       "medals": [],
       "badge": "gold",
-      "rank": 613
+      "rank": 613,
+      "name": "Ravioli"
     },
     {
       "handle": "seth_beaton6",
@@ -8855,7 +8872,8 @@
       "races": 0,
       "medals": [],
       "badge": "gold",
-      "rank": 642
+      "rank": 642,
+      "name": "Pajarito"
     },
     {
       "handle": "lorenzo_tosoni1203vb",
@@ -9023,7 +9041,8 @@
       "races": 0,
       "medals": [],
       "badge": "gold",
-      "rank": 663
+      "rank": 663,
+      "look": "1222"
     },
     {
       "handle": "0htood_les",
@@ -9663,7 +9682,9 @@
       "races": 0,
       "medals": [],
       "badge": "gold",
-      "rank": 743
+      "rank": 743,
+      "name": "Midnight",
+      "look": "4432"
     },
     {
       "handle": "queen_aka_denise",
@@ -10192,6 +10213,118 @@
       "medals": [],
       "badge": "silver",
       "rank": 809
+    },
+    {
+      "handle": "haydenlikins",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "badge": "silver",
+      "rank": 810
+    },
+    {
+      "handle": "ccharlieross",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "badge": "silver",
+      "rank": 811
+    },
+    {
+      "handle": "vicky_perez321",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "badge": "silver",
+      "rank": 812
+    },
+    {
+      "handle": "charger_chewer",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "badge": "silver",
+      "rank": 813
+    },
+    {
+      "handle": "lily.joness8",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "badge": "silver",
+      "rank": 814
+    },
+    {
+      "handle": "hvnah_13",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "badge": "silver",
+      "rank": 815
+    },
+    {
+      "handle": "tahnee.lagerwey_",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "badge": "silver",
+      "rank": 816
+    },
+    {
+      "handle": "jungle.baguette",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "badge": "silver",
+      "rank": 817
+    },
+    {
+      "handle": "og_goatroper",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "badge": "silver",
+      "rank": 818
+    },
+    {
+      "handle": "willowsummerhays",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "badge": "silver",
+      "rank": 819
+    },
+    {
+      "handle": "fiserova321",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "badge": "silver",
+      "rank": 820
+    },
+    {
+      "handle": "your_boy_harri",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "badge": "silver",
+      "rank": 821
+    },
+    {
+      "handle": "ave_elsa42",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "badge": "silver",
+      "rank": 822
+    },
+    {
+      "handle": "luj.anz",
+      "joined": "2026-11-23",
+      "races": 0,
+      "medals": [],
+      "badge": "silver",
+      "rank": 823
     }
   ],
   "sponsorSpots": [
@@ -10277,31 +10410,42 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-23T03:46:35Z",
+  "lastSync": "2026-11-23T04:14:15Z",
   "claims": [
+    {
+      "handle": "ave._1120",
+      "look": "4432",
+      "at": "2026-11-23T02:50:48Z",
+      "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
+      "status": "locked"
+    },
+    {
+      "handle": "breannasquires71",
+      "look": "1222",
+      "at": "2026-11-23T02:01:23Z",
+      "reel": "https://www.instagram.com/p/DgB079spXvZ/",
+      "status": "locked"
+    },
     {
       "handle": "antonella.armino",
       "look": "1211",
       "at": "2026-11-23T00:45:51Z",
       "reel": "https://www.instagram.com/p/DgB079spXvZ/",
-      "status": "locked",
-      "name": "Cupcake"
+      "status": "locked"
     },
     {
       "handle": "prilotte_",
       "look": "2141",
       "at": "2026-11-22T23:41:26Z",
       "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
-      "status": "locked",
-      "name": "Bacrdi"
+      "status": "locked"
     },
     {
       "handle": "blaize_priv_200",
       "look": "2144",
       "at": "2026-11-22T22:03:25Z",
       "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
-      "status": "taken",
-      "name": "Cora posey"
+      "status": "taken"
     },
     {
       "handle": "_dorothy_0907",
@@ -10315,16 +10459,14 @@
       "look": "2114",
       "at": "2026-11-22T21:17:26Z",
       "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
-      "status": "locked",
-      "name": "Platinum"
+      "status": "locked"
     },
     {
       "handle": "ocean__hooves",
       "look": "4414",
       "at": "2026-11-22T20:54:52Z",
       "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
-      "status": "locked",
-      "name": "Rhett"
+      "status": "locked"
     },
     {
       "handle": "its_zzzuh",
@@ -10338,24 +10480,21 @@
       "look": "4324",
       "at": "2026-11-22T16:54:00Z",
       "reel": "https://www.instagram.com/p/DgB079spXvZ/",
-      "status": "locked",
-      "name": "asteroid abolisher"
+      "status": "locked"
     },
     {
       "handle": "defnot_clover",
       "look": "3432",
       "at": "2026-11-22T15:21:55Z",
       "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
-      "status": "locked",
-      "name": "COOKIE"
+      "status": "locked"
     },
     {
       "handle": "ssamiyahhhh._",
       "look": "2144",
       "at": "2026-11-22T14:19:02Z",
       "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
-      "status": "locked",
-      "name": "Stormy"
+      "status": "locked"
     },
     {
       "handle": "himc__",
@@ -10488,17 +10627,17 @@
     "stalls": 10000,
     "name": "LeBron",
     "reel": "https://www.instagram.com/p/DgB079spXvZ/",
-    "nameVoteAsOf": "2026-11-23T00:59:45Z",
+    "nameVoteAsOf": "2026-11-23T04:14:15Z",
     "nameLeaders": [
       {
         "name": "LeBron",
         "by": "word_to_bob",
-        "likes": 31
+        "likes": 50
       },
       {
         "name": "The Quarter of Hores",
         "by": "ru._.pesh_",
-        "likes": 11
+        "likes": 17
       },
       {
         "name": "The Fuck Stable",
