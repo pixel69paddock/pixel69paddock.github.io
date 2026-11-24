@@ -289,6 +289,7 @@
     onSpin: on => { const b = $('#views [data-v="spin"]'); b.setAttribute("aria-pressed", on); }
   });
   setTimeout(() => $("#loading").classList.add("done"), 250);
+  window.__shed = api;   // for QA from the console
 
   // views
   $("#views").addEventListener("click", e => {

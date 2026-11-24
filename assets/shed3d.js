@@ -125,12 +125,14 @@ const lam = (o) => new THREE.MeshLambertMaterial(o);
 
 // ---------- the voxel horse (original art; faces +x, hooves on y = 0) ----------
 const NECK0 = -0.72, HEAD0 = -0.2;
-const FIXED = {
+const FIXED_BASE = {
   hoof: lam({ color: "#2a2018" }), eye: lam({ color: "#0d0907" }), glint: new THREE.MeshBasicMaterial({ color: "#ffffff" }),
   white: lam({ color: "#f4efe4" }), strap: lam({ color: "#3a2214" }), iron: lam({ color: "#c9cbd4" }),
   gold: lam({ color: "#f5c242", emissive: "#5a3c00" }), pink: lam({ color: "#ff3d6e" }), nose: lam({ color: "#3a2a24" })
 };
 function makeHorse() {
+  // per-horse copies of the fixed materials, so one horse can fade without fading the others
+  const FIXED = Object.fromEntries(Object.entries(FIXED_BASE).map(([k, m]) => [k, m.clone()]));
   const mats = {
     coat: lam({ color: "#ffffff" }), coatDark: lam({ color: "#d8d8d8" }), mane: lam({ color: "#2a1a10" }),
     silk: lam({ color: "#ffffff" }), silkSolid: lam({ color: "#ff3d6e" }),
@@ -204,7 +206,8 @@ function makeHorse() {
   const tail = new THREE.Group(); tail.position.set(-2.35, 3.95, 0); body.add(tail);
   B.box(mats.mane, 0.36, 0.5, 0.34, -0.15, -0.05, 0, 0.5, 0.6).box(mats.mane, 0.44, 1.7, 0.4, -0.38, -1.05, 0, 0.12, 0.6).box(mats.mane, 0.34, 0.5, 0.3, -0.45, -2.0, 0, 0, 0.6).build(tail);
 
-  const H = { root, body, neck, head, tail, legs, mats, acc, saddles, toss: 0, phase: Math.random() * 10, walk: 0, rear: 0, pose: "idle", yaw: null, yawVel: 0 };
+  const H = { root, body, neck, head, tail, legs, mats, acc, saddles, toss: 0, phase: Math.random() * 10, walk: 0, rear: 0, pose: "idle", yaw: null, yawVel: 0, fade: 1 };
+  const all = new Set(); root.traverse(o => { if (o.material) all.add(o.material); }); H.allMats = [...all];
   H.setLook = (look, parts) => setHorseLook(H, look, parts);
   return H;
 }
@@ -338,11 +341,13 @@ function makeSlot() {
   B.build(g);
   // half door, hinged on the left post; swings in against the left divider when open
   s.door = new THREE.Group(); s.door.position.set(-W / 2 + 0.32, 0, 0.18); g.add(s.door);
-  const dw = W - 0.64;
-  B.box(M.plankH, dw, 3.0, 0.2, dw / 2, 1.65, 0)
-    .box(M.beam, dw, 0.22, 0.26, dw / 2, 3.2, 0)
-    .box(M.beam, 0.22, 3.6, 0.24, dw / 2, 1.65, 0.03, Math.atan2(2.6, dw) - Math.PI / 2, 0)
-    .box(M.iron, 0.5, 0.14, 0.26, 0.3, 2.6, 0, 0, 0).box(M.iron, 0.5, 0.14, 0.26, 0.3, 0.8, 0, 0, 0)
+  const dw = W - 0.64;   // own fading materials: a closed door in front of a neighbour can block the view too
+  s.doorMats = [M.plankH, M.beam, M.iron].map(m => m.clone()); s.doorFade = 1;
+  const [oP, oB, oI] = s.doorMats;
+  B.box(oP, dw, 3.0, 0.2, dw / 2, 1.65, 0)
+    .box(oB, dw, 0.22, 0.26, dw / 2, 3.2, 0)
+    .box(oB, 0.22, 3.6, 0.24, dw / 2, 1.65, 0.03, Math.atan2(2.6, dw) - Math.PI / 2, 0)
+    .box(oI, 0.5, 0.14, 0.26, 0.3, 2.6, 0, 0, 0).box(oI, 0.5, 0.14, 0.26, 0.3, 0.8, 0, 0, 0)
     .build(s.door);
   s.doorTo = 0;
   // nameplate: tier rim + painted board (canvas)
@@ -436,6 +441,17 @@ export function mount(el, opts = {}) {
   const endMat = barnMats().plankV.clone(); let endFade = 1;
   { const B = builder(), g = new THREE.Group(); B.box(endMat, 0.5, 11, 30, 0, 5.5, 5).build(g); g.position.x = W / 2; scene.add(g); }
   // see-through walls: a wall fades when it sits between the camera and the horse
+  const rectBlocks = (x0, x1, z0, z1, pts) => {
+    const cx = camera.position.x, cz = camera.position.z;
+    return pts.some(([px, pz]) => {
+      let t0 = 0, t1 = 1; const dx = px - cx, dz = pz - cz;
+      for (const [p, q] of [[-dx, cx - x0], [dx, x1 - cx], [-dz, cz - z0], [dz, z1 - cz]]) {
+        if (p === 0) { if (q < 0) return false; continue; }
+        const r = q / p; if (p < 0) { if (r > t1) return false; if (r > t0) t0 = r; } else { if (r < t0) return false; if (r < t1) t1 = r; }
+      }
+      return t1 > t0 && t0 < 0.97;
+    });
+  };
   const blocks = (wx, z0, z1, pts) => {
     const cx = camera.position.x, cz = camera.position.z;
     return pts.some(([px, pz]) => {
@@ -650,9 +666,22 @@ export function mount(el, opts = {}) {
       else s.plateM.color.setScalar(1);
     });
     // fade whatever blocks the view of the focused horse
-    { const tz = -3.2, hx = (reel ? reel.k : focusK) * W, pts = [[hx - 2.2, tz], [hx, tz], [hx + 2.2, tz], [hx, -1]];
-      slots.forEach(s => { if (s.g.visible) s.divFade = fadeTo(s.divMats, s.divFade, blocks(s.k * W - W / 2, -DEPTH - 0.2, 0.4, pts) ? 0.16 : 1, dt); });
-      endFade = fadeTo([endMat], endFade, blocks(W / 2, -10, 20, pts) ? 0.12 : 1, dt); }
+    { const hx = (reel ? reel.k : focusK) * W - 0.45, pts = [];   // a grid over the horse's footprint (any yaw)
+      for (const dx of [-2.6, -1.3, 0, 1.3, 2.6]) for (const z of [-5.2, -3.3, -1.4]) pts.push([hx + dx, z]);
+      const oK = reel ? reel.k : focusK;
+      slots.forEach(s => {
+        if (!s.g.visible) return;
+        const divB = blocks(s.k * W - W / 2, -DEPTH - 0.2, 0.4, pts);
+        s.divFade = fadeTo(s.divMats, s.divFade, divB ? 0.16 : 1, dt);
+        // open door folds against the left divider; a closed one spans the stall front
+        const doorB = s.k === oK ? divB : rectBlocks(s.k * W - W / 2, s.k * W + W / 2, -0.1, 0.45, pts);
+        s.doorFade = fadeTo(s.doorMats, s.doorFade, doorB ? 0.16 : 1, dt);
+      });
+      endFade = fadeTo([endMat], endFade, blocks(W / 2, -10, 20, pts) ? 0.12 : 1, dt);
+      // neighbouring horses that stand between the camera and the focused horse
+      const fk = reel ? reel.k : focusK;
+      slots.forEach(s => { if (!s.g.visible || !s.st || s.k === fk) { if (s.horse.fade < 1) s.horse.fade = fadeTo(s.horse.allMats, s.horse.fade, 1, 1); return; }
+        const x = s.k * W - 0.45; s.horse.fade = fadeTo(s.horse.allMats, s.horse.fade, rectBlocks(x - 2.9, x + 2.9, -6, -0.6, pts) ? 0.18 : 1, dt); }); }
     // lights follow the action
     const fx = reel ? reel.k * W : Math.round(tx / W) * W;
     spot.position.set(fx + 1.2, 9.6, 5.2); spot.target.position.set(fx, 2.2, -3.0);
@@ -694,6 +723,8 @@ export function mount(el, opts = {}) {
     focus(k, { instant = false, view } = {}) { focusK = k; autoSpin = false; flyTo(k, view || viewName, instant); },
     view(name) { if (name === "spin") { autoSpin = !autoSpin; fly = null; return autoSpin; } autoSpin = false; flyTo(focusK, name); return false; },
     get viewName() { return viewName; },
+    _dbg() { return { cam: camera.position.toArray().map(v => +v.toFixed(2)), focusK, slots: slots.filter(s => s.g.visible).map(s => [s.k, +s.divFade.toFixed(2), +s.horse.fade.toFixed(2)]) }; },
+    angle(az, pol) { autoSpin = false; fly = null; const d = camera.position.distanceTo(controls.target); camera.position.copy(controls.target).add(sph(az, pol ?? 1.35, d)); controls.update(); },
     pose(k, name) { const ps = poseOf.get(k) || {}; ps.pose = name; poseOf.set(k, ps); const s = slots.find(q => q.k === k); if (s) s.horse.pose = name; },
     poseOf(k) { return (poseOf.get(k) || {}).pose || "idle"; },
     // dir: -1 / +1 starts a held spin, 0 stops; step: turn by that many radians
