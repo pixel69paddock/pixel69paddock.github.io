@@ -23226,7 +23226,10 @@
       "races": 0,
       "medals": [],
       "rank": 1316,
-      "badge": "silver"
+      "badge": "silver",
+      "look": "3323",
+      "shed": "2BM9",
+      "original": true
     },
     {
       "handle": "neas_pony_planet4",
@@ -27684,8 +27687,16 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-24T15:39:53Z",
+  "lastSync": "2026-11-24T16:39:29Z",
   "claims": [
+    {
+      "handle": "charlotte.the.penguin",
+      "look": "3323",
+      "at": "2026-11-24T15:51:49Z",
+      "reel": "https://www.instagram.com/p/DgHvMispbq5/",
+      "status": "locked",
+      "original": true
+    },
     {
       "handle": "equestrian.emilia.g",
       "look": "4314",
@@ -28514,7 +28525,8 @@
     "3313": "dr_art_.1",
     "2122": "prilotte_",
     "4214": "fran.nigr",
-    "4314": "equestrian.emilia.g"
+    "4314": "equestrian.emilia.g",
+    "3323": "charlotte.the.penguin"
   },
   "commentEntries": {
     "cailyneq22_": {
