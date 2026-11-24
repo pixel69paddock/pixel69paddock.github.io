@@ -15419,7 +15419,8 @@
       "races": 1,
       "medals": [],
       "badge": "gold",
-      "rank": 564
+      "rank": 564,
+      "name": "Trixy"
     },
     {
       "handle": "kyra77912",
@@ -24748,7 +24749,8 @@
       "races": 0,
       "medals": [],
       "rank": 1441,
-      "badge": "silver"
+      "badge": "silver",
+      "name": "KR Dusk To Dawn"
     },
     {
       "handle": "abrielladacoolest",
@@ -25446,7 +25448,8 @@
       "races": 0,
       "medals": [],
       "rank": 1517,
-      "badge": "silver"
+      "badge": "silver",
+      "name": "Iivari"
     },
     {
       "handle": "vorcaknina",
@@ -26757,7 +26760,8 @@
       "races": 0,
       "medals": [],
       "rank": 1673,
-      "badge": "silver"
+      "badge": "silver",
+      "name": "Gojo"
     },
     {
       "handle": "marty_robbins47",
@@ -27304,7 +27308,8 @@
       "races": 0,
       "medals": [],
       "rank": 1741,
-      "badge": "silver"
+      "badge": "silver",
+      "name": "Evan"
     },
     {
       "handle": "faely_2013_",
@@ -28426,7 +28431,8 @@
       "races": 0,
       "medals": [],
       "rank": 1832,
-      "badge": "silver"
+      "badge": "silver",
+      "name": "Kimber Lip"
     },
     {
       "handle": "billie_404__",
@@ -30206,7 +30212,8 @@
     "maena.derty": "Prince",
     "mirthevonck": "Lara",
     "juli_theoneee": "Poco",
-    "ola__bromirska": "Tofik"
+    "ola__bromirska": "Tofik",
+    "isabela_dullius": "Oreo"
   },
   "founders": {
     "goldCount": 800,
