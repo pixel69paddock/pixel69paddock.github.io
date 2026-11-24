@@ -24820,8 +24820,16 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-24T06:38:51Z",
+  "lastSync": "2026-11-24T07:37:25Z",
   "claims": [
+    {
+      "handle": "sj.jkp",
+      "look": "2322",
+      "at": "2026-11-24T06:43:08Z",
+      "reel": "https://www.instagram.com/p/DgGiCCkpn6_/",
+      "status": "waiting",
+      "name": "UltraMegaHorse"
+    },
     {
       "handle": "the.hungry_hungry.caterpiller",
       "look": "3344",
@@ -24934,6 +24942,15 @@
       "status": "locked",
       "original": true,
       "name": "Tvxedo"
+    },
+    {
+      "handle": "idk1863eg",
+      "look": "2433",
+      "at": "2026-11-23T23:43:23Z",
+      "reel": "https://www.instagram.com/p/DgEj46qJi0L/",
+      "status": "locked",
+      "original": true,
+      "name": "Silly goosey"
     },
     {
       "handle": "leo____chi2010",
