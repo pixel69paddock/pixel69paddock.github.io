@@ -85,6 +85,17 @@
   .sw button[aria-pressed="true"]{outline:3px solid var(--cyan);outline-offset:2px}
   .sw button span{position:absolute;left:0;right:0;bottom:-1px;font:600 10px var(--sans);color:#fff;text-shadow:0 1px 2px #000,0 0 3px #000;text-align:center}
   .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .sec.deco{margin-top:22px;padding-top:14px;border-top:2px dashed var(--line)}
+  .sec.deco h3{color:var(--gold);font-size:13px}
+  .sw6{grid-template-columns:repeat(6,1fr);gap:6px}
+  .sw6 button{height:44px}
+  .sw6 button span{font-size:9px}
+  .sw button.pl{display:flex;align-items:center;justify-content:center;border-width:3px}
+  .sw button.pl b{font-family:var(--px);font-size:12px;margin-top:-10px}
+  .stk{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .stk button{display:flex;flex-direction:column;align-items:center;gap:2px;background:#1c120b;border:2px solid var(--line);border-radius:6px;padding:6px 2px;cursor:pointer;color:var(--muted);font-size:11px;min-height:58px}
+  .stk button img{image-rendering:pixelated;width:32px;height:32px}
+  .stk button[aria-pressed="true"]{border-color:var(--cyan);background:rgba(58,214,255,.16);color:var(--ink)}
   .chips button{background:#1c120b;border:2px solid var(--line);border-radius:999px;padding:7px 12px;cursor:pointer;font-size:14px;color:var(--ink);min-height:38px}
   .chips button[aria-pressed="true"]{border-color:var(--cyan);background:rgba(58,214,255,.16)}
   .code{margin-top:18px;background:#120b06;border:2px dashed var(--gold);border-radius:6px;padding:12px;text-align:center}
@@ -186,7 +197,7 @@
 <div id="toast" role="status"></div>
 
 <script type="module">
-  import { mount, tierOf, ACC, SADDLES, POSES } from "./assets/shed3d.js";
+  import { mount, tierOf, ACC, SADDLES, POSES, PAINTS, PLATES, STICKERS, stickerIcon } from "./assets/shed3d.js";
   const IG = "dailyderby_horse", IGP = "https://www.instagram.com/" + IG + "/";
   const $ = (s, r = document) => r.querySelector(s);
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -222,7 +233,7 @@
   function stateOf(k) {
     const h = STALLS[k - 1]; if (!h) return null;
     const d = draftOf(h.handle) || {};
-    return { handle: h.handle, name: h.name || "", look: d.look || officialLook(h), saddle: d.saddle ?? 1, acc: d.acc || [], original: !!h.original, h };
+    return { handle: h.handle, name: h.name || "", look: d.look || officialLook(h), saddle: d.saddle ?? 1, acc: d.acc || [], wall: d.wall || 0, plate: d.plate || 0, stickers: d.stickers || [], original: !!h.original, h };
   }
 
   // ------- reel mode: 1080x1920 move-in film -------
@@ -381,6 +392,7 @@
   new ResizeObserver(layoutInset).observe(panel);
 
   const rgb = c => `rgb(${c.join(",")})`;
+  const STICON = Object.fromEntries(STICKERS.map(t => [t.id, stickerIcon(t.id)]));
   const TIERS = { g: "★ Gold founder", s: "★ Silver", b: "Bronze" };
   function swatches(part, sel, fn) {
     const p = LOOKS[part];
@@ -438,6 +450,10 @@
         <div class="sec"><h3>Pattern <em>${esc(LOOKS[3].options[+code[3] - 1].name)}</em></h3>${swatches(3, +code[3])}</div>
         <div class="sec"><h3>Saddle <em>${esc(SADDLES[st.saddle])}</em></h3><div class="chips" id="sad">${SADDLES.map((s, i) => `<button type="button" data-s="${i}" aria-pressed="${st.saddle === i}">${esc(s)}</button>`).join("")}</div></div>
         <div class="sec"><h3>Accessories</h3><div class="chips" id="acc">${ACC.map(a => `<button type="button" data-a="${a.id}" aria-pressed="${st.acc.includes(a.id)}">${esc(a.name)}</button>`).join("")}</div></div>
+        <div class="sec deco"><h3>Your stall <em>free</em></h3></div>
+        <div class="sec"><h3>Wall paint <em>${esc(PAINTS[st.wall].name)}</em></h3><div class="sw sw6">${PAINTS.map((p, i) => `<button type="button" data-wall="${i}" aria-pressed="${st.wall === i}" style="background:${p.base ? `repeating-linear-gradient(90deg,${p.base} 0 10px,rgba(0,0,0,.25) 10px 11px)` : "repeating-linear-gradient(90deg,#7a5434 0 10px,#4b3020 10px 11px)"}" aria-label="Wall paint: ${esc(p.name)}"><span>${esc(p.name)}</span></button>`).join("")}</div></div>
+        <div class="sec"><h3>Nameplate <em>${esc(PLATES[st.plate].name)}</em></h3><div class="sw">${PLATES.map((p, i) => `<button type="button" data-plate="${i}" aria-pressed="${st.plate === i}" class="pl" style="background:${p.in};border-color:${p.bg};color:${p.ink}" aria-label="Nameplate: ${esc(p.name)}"><b>@</b><span style="color:${p.ink};text-shadow:none">${esc(p.name)}</span></button>`).join("")}</div></div>
+        <div class="sec"><h3>Stickers <em>${st.stickers.length}/8</em></h3><div class="stk">${STICKERS.map(t => `<button type="button" data-st="${t.id}" aria-pressed="${st.stickers.includes(t.id)}" title="${esc(t.name)}"><img src="${STICON[t.id]}" alt="" width="32" height="32"><span>${esc(t.name)}</span></button>`).join("")}</div></div>
         <div class="code"><div class="c">HORSE ${code}</div><p>${statusLine(code, h)}</p></div>
         <div class="acts">
           <button class="btn btn-neon" type="button" id="claim">Claim this look · free</button>
@@ -445,12 +461,15 @@
           ${mine ? "" : `<button class="btn" type="button" id="isme">This is me: set as my stall</button>`}
           <button class="btn soon" type="button" id="premium" aria-disabled="true">🔒 Premium extras <small>coming soon</small></button>
         </div>
-        <p class="fine">Every look is free. Claiming = comment the code on the latest reel from your account; the first to claim a look gets ✦ Original. Saddle &amp; accessories show in the shed only for now. Looks are cosmetic: every horse races equal.</p>
+        <p class="fine">Every look is free. Claiming = comment the code on the latest reel from your account; the first to claim a look gets ✦ Original. Saddle, accessories and stall decor show in the shed only for now. Looks are cosmetic: every horse races equal.</p>
       </div>`;
     pb.querySelectorAll(".sw button").forEach(b => b.onclick = () => {
       const c = [...code]; c[+b.dataset.part] = b.dataset.i; setDraft(h, { look: c.join("") });
     });
     pb.querySelectorAll("#pose button").forEach(b => b.onclick = () => { api.pose(cur, b.dataset.p); render(); });
+    pb.querySelectorAll("[data-wall]").forEach(b => b.onclick = () => setDraft(h, { wall: +b.dataset.wall }));
+    pb.querySelectorAll("[data-plate]").forEach(b => b.onclick = () => setDraft(h, { plate: +b.dataset.plate }));
+    pb.querySelectorAll("[data-st]").forEach(b => b.onclick = () => { const x = new Set(st.stickers); x.has(b.dataset.st) ? x.delete(b.dataset.st) : x.add(b.dataset.st); setDraft(h, { stickers: [...x] }); });
     pb.querySelectorAll("#sad button").forEach(b => b.onclick = () => setDraft(h, { saddle: +b.dataset.s }));
     pb.querySelectorAll("#acc button").forEach(b => b.onclick = () => {
       const s = new Set(st.acc); s.has(b.dataset.a) ? s.delete(b.dataset.a) : s.add(b.dataset.a); setDraft(h, { acc: [...s] });

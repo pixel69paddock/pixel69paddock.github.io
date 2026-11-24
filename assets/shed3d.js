@@ -284,6 +284,59 @@ function animateHorse(H, t, dt, walking) {
   H.body.scale.y = 0.86 * (1 + Math.sin(p * 1.3) * 0.008);
 }
 
+
+// ---------- stall decor (free): wall paint, nameplate style, stickers ----------
+export const PAINTS = [
+  { name: "Natural", base: null }, { name: "Barn red", base: "#a8342c" }, { name: "Sage", base: "#7a9a6e" },
+  { name: "Navy", base: "#34507e" }, { name: "Cream", base: "#d8c69a" }, { name: "Plum", base: "#6a4a86" }
+];
+export const PLATES = [
+  { name: "Classic", bg: "#1c120b", in: "#2c1d12", ink: "#fff6e0", sub: "#ffcf7a" },
+  { name: "Gold", bg: "#8a6510", in: "#f5c242", ink: "#2a1d05", sub: "#5a3c00" },
+  { name: "Neon", bg: "#0d0818", in: "#1d1430", ink: "#ff3d6e", sub: "#3ad6ff" },
+  { name: "Ice", bg: "#7d8597", in: "#eef2f8", ink: "#1d2b4a", sub: "#4a5a7a" }
+];
+const ST_MAPS = {
+  horseshoe: ["............", "..gg....gg..", ".gddg..gddg.", ".gkg....gkg.", ".gdg....gdg.", ".gkg....gkg.", ".gdg....gdg.", ".gddg..gddg.", "..gddggddg..", "...gdkkdg...", "....gggg....", "............"],
+  trophy: ["............", ".yyyyyyyyyy.", "y.yyyyyyyy.y", "y.yoyyyyyy.y", ".yyoyyyyyyy.", "..yyyyyyyy..", "...yyyyyy...", ".....yy.....", ".....yy.....", "....oooo....", "...oooooo...", "............"],
+  flowers: ["............", ".pp......ww.", "pyyp....wyyw", ".pp..rr..ww.", "..g.ryyr.g..", "..g..rr..g..", "..g...g..g..", "...g..g.g...", "...g..g.g...", "....gggg....", "....gggg....", "............"],
+  flag: ["............", "bkwkwkwkw...", "bwkwkwkwk...", "bkwkwkwkw...", "bwkwkwkwk...", "bkwkwkwkw...", "b...........", "b...........", "b...........", "b...........", "b...........", "bb.........."],
+  star: [".....y......", ".....yy.....", "....yyy.....", "yyyyyyyyyyy.", ".yyyyoyyyy..", "..yyyyyyy...", "..yyyyyyy...", ".yyyy.yyyy..", ".yyy...yyy..", "yy.......yy.", "............", "............"],
+  heart: ["............", ".rrr...rrr..", "rllrr.rrrrr.", "rlrrrrrrrrr.", "rrrrrrrrrrr.", ".rrrrrrrrr..", "..rrrrrrr...", "...rrrrr....", "....rrr.....", ".....r......", "............", "............"],
+  carrot: [".......g.g..", "........gg.g", ".......ggg..", "......oog...", ".....oooo...", "....odoo....", "...oooo.....", "..oodo......", "..ooo.......", ".oo.........", ".o..........", "............"],
+  bolt: ["......yyyy..", ".....yyyy...", "....yyyy....", "...yyyy.....", "..yyyyyyyy..", ".....yyyy...", "....yyyy....", "...yyy......", "..yyy.......", ".yy.........", "y...........", "............"]
+};
+const ST_PAL = {
+  horseshoe: { g: "#c9ccd6", d: "#8a8e9c", k: "#3a3a44" }, trophy: { y: "#f5c242", o: "#b8860b" },
+  flowers: { p: "#ff6fa0", w: "#ffffff", y: "#f5c242", r: "#b07cff", g: "#4f9a46" }, flag: { b: "#6b4a2a", k: "#16121e", w: "#ffffff" },
+  star: { y: "#f5c242", o: "#fff3b0" }, heart: { r: "#ff3d6e", l: "#ffb3c6" }, carrot: { o: "#ff8a3d", d: "#c25a12", g: "#4f9a46" },
+  bolt: { y: "#ffe14a", o: "#ff9a1a" }
+};
+export const STICKERS = [
+  { id: "horseshoe", name: "Horseshoe" }, { id: "trophy", name: "Trophy" }, { id: "flowers", name: "Flowers" }, { id: "flag", name: "Race flag" },
+  { id: "star", name: "Star" }, { id: "heart", name: "Heart" }, { id: "carrot", name: "Carrot" }, { id: "bolt", name: "Lightning" }
+];
+function stickerCanvas(id) {
+  const c = document.createElement("canvas"); c.width = c.height = 16;
+  const x = c.getContext("2d"), map = ST_MAPS[id], pal = ST_PAL[id], on = new Set();
+  map.forEach((row, y) => [...row].forEach((ch, i) => { if (pal[ch]) { x.fillStyle = pal[ch]; x.fillRect(i + 2, y + 2, 1, 1); on.add((i + 2) + "," + (y + 2)); } }));
+  // white sticker border
+  x.fillStyle = "#fff6e0";
+  for (let yy = 0; yy < 16; yy++) for (let xx = 0; xx < 16; xx++) {
+    if (on.has(xx + "," + yy)) continue;
+    let near = false; for (let a = -1; a <= 1 && !near; a++) for (let b = -1; b <= 1; b++) if (on.has((xx + a) + "," + (yy + b))) { near = true; break; }
+    if (near) x.fillRect(xx, yy, 1, 1);
+  }
+  return c;
+}
+export const stickerIcon = id => stickerCanvas(id).toDataURL();
+const stickerTex = id => pixTex("st-" + id, 16, 16, (x) => x.drawImage(stickerCanvas(id), 0, 0), false);
+const paintTex = i => i ? planks("paint" + i, PAINTS[i].base, true, 20 + i) : planks("pv", "#7a5434", true, 3);
+// where each sticker goes: back wall (above the horse) or the outside of the half door (seen from the aisle)
+const ST_SPOT = {
+  horseshoe: ["back", -1.0, 6.5], trophy: ["back", 2.6, 6.4], flowers: ["back", -2.7, 5.9], star: ["back", 0.3, 5.6],
+  heart: ["back", 2.0, 5.2], flag: ["door", 1.3, 2.05], carrot: ["door", 3.15, 1.7], bolt: ["door", 5.0, 2.1]
+};
 // ---------- one stall (static structure merged per material) ----------
 let MAT = null;
 function barnMats() {
@@ -309,7 +362,8 @@ function makeSlot() {
   const M = barnMats(), B = builder(), g = new THREE.Group();
   const s = { g, k: null };
   // back wall with a high window (sunset outside)
-  B.box(M.plankV, W, 10, 0.4, 0, 5, -DEPTH - 0.2)
+  s.backMat = M.plankV.clone();   // own material: the wall paint
+  B.box(s.backMat, W, 10, 0.4, 0, 5, -DEPTH - 0.2)
     .box(M.beam, 1.9, 1.6, 0.3, 0.9, 8.1, -DEPTH, 0, 1.2)
     .box(M.window, 1.5, 1.2, 0.3, 0.9, 8.1, -DEPTH + 0.03, 0, 0)
     .box(M.beam, 1.5, 0.12, 0.34, 0.9, 8.1, -DEPTH + 0.06, 0, 1.2).box(M.beam, 0.12, 1.2, 0.34, 0.9, 8.1, -DEPTH + 0.06, 0, 1.2);
@@ -353,6 +407,16 @@ function makeSlot() {
     .box(oI, 0.5, 0.14, 0.26, 0.3, 2.6, 0, 0, 0).box(oI, 0.5, 0.14, 0.26, 0.3, 0.8, 0, 0, 0)
     .build(s.door);
   s.doorTo = 0;
+  // stickers (hidden until chosen)
+  s.stickers = {}; s.stickerDoorMats = [];
+  STICKERS.forEach(({ id }) => {
+    const [where, sx, sy] = ST_SPOT[id];
+    const m = new THREE.MeshBasicMaterial({ map: stickerTex(id), alphaTest: 0.5, toneMapped: false, color: "#e8dccb" });
+    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(1.05, 1.05), m); mesh.visible = false;
+    if (where === "door") { mesh.position.set(sx, sy, 0.115); s.door.add(mesh); s.stickerDoorMats.push(m); }
+    else { mesh.position.set(sx, sy, -DEPTH + 0.02); mesh.rotation.z = ((sx * 7) % 3 - 1) * 0.08; g.add(mesh); }
+    s.stickers[id] = mesh;
+  });
   // nameplate: tier rim + painted board (canvas)
   s.rimMat = lam({ color: "#666", emissive: "#000" });
   const rim = new THREE.Mesh(vbox(4.1, 1.05, 0.14, 0), s.rimMat); rim.position.set(0, 7.6, 0.36); g.add(rim);
@@ -382,20 +446,21 @@ function pxText(x, str, cx, cy, size, color, maxW) {
 }
 export function paintPlate(c, k, st, tier, extra = {}) {
   const x = c.getContext("2d"); x.imageSmoothingEnabled = false;
-  x.fillStyle = "#1c120b"; x.fillRect(0, 0, 256, 64);
-  x.fillStyle = "#2c1d12"; x.fillRect(4, 4, 248, 56);
+  const PS = PLATES[(st && st.plate) || 0] || PLATES[0];
+  x.fillStyle = PS.bg; x.fillRect(0, 0, 256, 64);
+  x.fillStyle = PS.in; x.fillRect(4, 4, 248, 56);
   x.fillStyle = "#120b06"; x.fillRect(4, 4, 248, 2); x.fillRect(4, 58, 248, 2);
   const tc = TIER[tier];
   // tiny corner nails
   x.fillStyle = shade(tc, 0.8); [[8, 8], [246, 8], [8, 54], [246, 54]].forEach(([a, b]) => x.fillRect(a, b, 3, 3));
-  pxText(x, "#" + k.toLocaleString("en-US") + (tier === "g" ? " ★" : ""), 128, 16, 8, tc, 220);
+  pxText(x, "#" + k.toLocaleString("en-US") + (tier === "g" ? " ★" : ""), 128, 16, 8, PS.name === "Gold" || PS.name === "Ice" ? PS.sub : tc, 220);
   if (extra.painted != null) {               // move-in film: letters painted one by one
     const s = extra.painted;
     if (s) pxText(x, s, 128, 40, 24, "#fff6e0", 236);
     if (extra.cursor) { x.fillStyle = "#ff3d6e"; x.fillRect(128 + extra.cursor - 4, 30, 8, 20); }
   } else if (st) {
-    pxText(x, "@" + st.handle, 128, st.name ? 34 : 40, 16, "#fff6e0", 236);
-    if (st.name) pxText(x, st.name.toUpperCase(), 128, 51, 8, "#ffcf7a", 236);
+    pxText(x, "@" + st.handle, 128, st.name ? 34 : 40, 16, PS.ink, 236);
+    if (st.name) pxText(x, st.name.toUpperCase(), 128, 51, 8, PS.sub, 236);
   } else if (extra.next) {
     pxText(x, "NEXT: YOU?", 128, 40, 16, "#ff3d6e", 236);
   } else {
@@ -494,6 +559,11 @@ export function mount(el, opts = {}) {
     const ps = poseOf.get(k) || {}; s.horse.pose = ps.pose || "idle"; s.horse.yawVel = 0;
     if (s.lastK !== k) { s.horse.yaw = ps.yaw || 0; s.horse.root.rotation.y = s.horse.yaw; s.lastK = k; }
     if (st) s.horse.setLook(st, opts.looks);
+    // decor: paint, stickers (plate style is painted below)
+    const wallI = (st && st.wall) || 0;
+    if (s.paint !== wallI) { s.backMat.map = paintTex(wallI); s.backMat.needsUpdate = true; s.paint = wallI; }
+    const stk = new Set((st && st.stickers) || []);
+    STICKERS.forEach(({ id }) => s.stickers[id].visible = stk.has(id));
     s.next = !st && opts.getStall && opts.getStall(k - 1) && !opts.getStall(k);
     if (paint) { paintPlate(s.plateC, k, st, tier, { next: s.next }); s.plateT.needsUpdate = true; plateBusy.delete(s); }
     else plateBusy.add(s);
@@ -738,7 +808,7 @@ export function mount(el, opts = {}) {
         s.divFade = fadeTo(s.divMats, s.divFade, divB ? 0.16 : 1, dt);
         // open door folds against the left divider; a closed one spans the stall front
         const doorB = s.k === oK ? divB : rectBlocks(s.k * W - W / 2, s.k * W + W / 2, -0.1, 0.45, pts);
-        s.doorFade = fadeTo(s.doorMats, s.doorFade, doorB ? 0.16 : 1, dt);
+        s.doorFade = fadeTo(s.doorMats.concat(s.stickerDoorMats), s.doorFade, doorB ? 0.16 : 1, dt);
       });
       endFade = fadeTo([endMat], endFade, blocks(W / 2, -10, 20, pts) ? 0.12 : 1, dt);
       // header beam + nameplate: 3D test, the line of sight crosses the stall front at plate height
