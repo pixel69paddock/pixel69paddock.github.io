@@ -26820,7 +26820,10 @@
       "races": 0,
       "medals": [],
       "rank": 1708,
-      "badge": "silver"
+      "badge": "silver",
+      "look": "3313",
+      "original": true,
+      "shed": "B708"
     },
     {
       "handle": "_.kourilova._",
@@ -27672,8 +27675,29 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-24T13:08:53Z",
+  "lastSync": "2026-11-24T13:40:20Z",
   "claims": [
+    {
+      "handle": "kefah_rabah1234",
+      "look": "3311",
+      "at": "2026-11-24T13:34:13Z",
+      "reel": "https://www.instagram.com/p/DgHvMispbq5/",
+      "status": "waiting"
+    },
+    {
+      "handle": "ilsje2005",
+      "look": "3134",
+      "at": "2026-11-24T13:33:34Z",
+      "reel": "https://www.instagram.com/p/DgHvMispbq5/",
+      "status": "waiting"
+    },
+    {
+      "handle": "x.jada_exe",
+      "look": "1123",
+      "at": "2026-11-24T13:10:59Z",
+      "reel": "https://www.instagram.com/p/DgHvMispbq5/",
+      "status": "waiting"
+    },
     {
       "handle": "schutzjude",
       "look": "4422",
@@ -27687,6 +27711,14 @@
       "look": "2224",
       "at": "2026-11-24T12:31:57Z",
       "reel": "https://www.instagram.com/p/DgHvMispbq5/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "dr_art_.1",
+      "look": "3313",
+      "at": "2026-11-24T12:21:46Z",
+      "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
       "status": "locked",
       "original": true
     },
@@ -27775,6 +27807,14 @@
       "name": "Blondie"
     },
     {
+      "handle": "1wbyi",
+      "look": "2143",
+      "at": "2026-11-24T03:09:35Z",
+      "reel": "https://www.instagram.com/p/DgB079spXvZ/",
+      "status": "locked",
+      "name": "Raven"
+    },
+    {
       "handle": "sophia_9112001",
       "look": "2324",
       "at": "2026-11-24T03:03:52Z",
@@ -27837,6 +27877,14 @@
       "name": "Tvxedo"
     },
     {
+      "handle": "leo____chi2010",
+      "look": "2423",
+      "at": "2026-11-23T23:21:38Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked",
+      "name": "juke"
+    },
+    {
       "handle": "dalb_0710",
       "look": "1134",
       "at": "2026-11-23T22:44:27Z",
@@ -27855,6 +27903,13 @@
       "name": "ALFIEEE"
     },
     {
+      "handle": "_.nikol.vojackova._",
+      "look": "3322",
+      "at": "2026-11-23T21:36:52Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked"
+    },
+    {
       "handle": "emrose_vaults",
       "look": "3324",
       "at": "2026-11-23T20:33:09Z",
@@ -27870,6 +27925,13 @@
       "status": "locked",
       "original": true,
       "name": "silence suzuka"
+    },
+    {
+      "handle": "lucymax_love",
+      "look": "1114",
+      "at": "2026-11-23T18:00:32Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked"
     },
     {
       "handle": "cc7x007",
@@ -27914,6 +27976,13 @@
       "name": "Pøls"
     },
     {
+      "handle": "valca_konicii",
+      "look": "3312",
+      "at": "2026-11-23T13:36:08Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked"
+    },
+    {
       "handle": "cailyneq22_",
       "look": "1144",
       "at": "2026-11-23T12:44:00Z",
@@ -27932,6 +28001,13 @@
       "name": "Darkstorm"
     },
     {
+      "handle": "natal.ka.22",
+      "look": "1114",
+      "at": "2026-11-23T06:25:24Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked"
+    },
+    {
       "handle": "_zezulackq_",
       "look": "3124",
       "at": "2026-11-23T05:22:41Z",
@@ -27939,6 +28015,13 @@
       "status": "locked",
       "original": true,
       "name": "Grace"
+    },
+    {
+      "handle": "word_to_bob",
+      "look": "3214",
+      "at": "2026-11-23T05:10:43Z",
+      "reel": "https://www.instagram.com/p/Df_u417pzfe/",
+      "status": "locked"
     },
     {
       "handle": "ocean__hooves",
@@ -28362,7 +28445,8 @@
     "1124": "bays.over.baes_",
     "3322": "_.nikol.vojackova._",
     "2143": "1wbyi",
-    "3314": "sina_fn09"
+    "3314": "sina_fn09",
+    "3313": "dr_art_.1"
   },
   "commentEntries": {
     "cailyneq22_": {
