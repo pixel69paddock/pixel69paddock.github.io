@@ -26371,7 +26371,10 @@
       "races": 0,
       "medals": [],
       "rank": 1625,
-      "badge": "silver"
+      "badge": "silver",
+      "look": "2232",
+      "original": true,
+      "shed": "B7V6"
     },
     {
       "handle": "liza_meijerink",
@@ -29467,8 +29470,16 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-24T18:13:05Z",
+  "lastSync": "2026-11-24T18:37:06Z",
   "claims": [
+    {
+      "handle": "summer_solstce",
+      "look": "2232",
+      "at": "2026-11-24T18:09:06Z",
+      "reel": "https://www.instagram.com/p/DgHvMispbq5/",
+      "status": "locked",
+      "original": true
+    },
     {
       "handle": "9.15.2026",
       "look": "2144",
@@ -29608,6 +29619,14 @@
       "look": "2224",
       "at": "2026-11-24T12:31:57Z",
       "reel": "https://www.instagram.com/p/DgHvMispbq5/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "dr_art_.1",
+      "look": "3313",
+      "at": "2026-11-24T12:21:46Z",
+      "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
       "status": "locked",
       "original": true
     },
@@ -29759,6 +29778,15 @@
       "name": "Tvxedo"
     },
     {
+      "handle": "leo____chi2010",
+      "look": "2423",
+      "at": "2026-11-23T23:21:38Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked",
+      "original": true,
+      "name": "juke"
+    },
+    {
       "handle": "dalb_0710",
       "look": "1134",
       "at": "2026-11-23T22:44:27Z",
@@ -29777,6 +29805,14 @@
       "name": "ALFIEEE"
     },
     {
+      "handle": "_.nikol.vojackova._",
+      "look": "3322",
+      "at": "2026-11-23T21:36:52Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked",
+      "original": true
+    },
+    {
       "handle": "emrose_vaults",
       "look": "3324",
       "at": "2026-11-23T20:33:09Z",
@@ -29792,6 +29828,13 @@
       "status": "locked",
       "original": true,
       "name": "silence suzuka"
+    },
+    {
+      "handle": "lucymax_love",
+      "look": "1114",
+      "at": "2026-11-23T18:00:32Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked"
     },
     {
       "handle": "cc7x007",
@@ -29836,6 +29879,23 @@
       "name": "Pøls"
     },
     {
+      "handle": "valca_konicii",
+      "look": "3312",
+      "at": "2026-11-23T13:36:08Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "bays.over.baes_",
+      "look": "1124",
+      "at": "2026-11-23T13:17:05Z",
+      "reel": "https://www.instagram.com/p/Df_u417pzfe/",
+      "status": "locked",
+      "original": true,
+      "name": "Atlas"
+    },
+    {
       "handle": "cailyneq22_",
       "look": "1144",
       "at": "2026-11-23T12:44:00Z",
@@ -29854,6 +29914,14 @@
       "name": "Darkstorm"
     },
     {
+      "handle": "natal.ka.22",
+      "look": "1114",
+      "at": "2026-11-23T06:25:24Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked",
+      "original": true
+    },
+    {
       "handle": "_zezulackq_",
       "look": "3124",
       "at": "2026-11-23T05:22:41Z",
@@ -29861,6 +29929,14 @@
       "status": "locked",
       "original": true,
       "name": "Grace"
+    },
+    {
+      "handle": "word_to_bob",
+      "look": "3214",
+      "at": "2026-11-23T05:10:43Z",
+      "reel": "https://www.instagram.com/p/Df_u417pzfe/",
+      "status": "locked",
+      "original": true
     },
     {
       "handle": "ocean__hooves",
@@ -30292,7 +30368,8 @@
     "1124": "bays.over.baes_",
     "3322": "_.nikol.vojackova._",
     "3314": "sina_fn09",
-    "3313": "dr_art_.1"
+    "3313": "dr_art_.1",
+    "2232": "summer_solstce"
   },
   "commentEntries": {
     "cailyneq22_": {
