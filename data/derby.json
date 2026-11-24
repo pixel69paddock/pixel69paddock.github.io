@@ -17687,7 +17687,9 @@
       "races": 1,
       "medals": [],
       "badge": "gold",
-      "rank": 799
+      "rank": 799,
+      "look": "2322",
+      "original": true
     },
     {
       "handle": "_ahorsenamedcoldair",
@@ -24818,8 +24820,32 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-24T05:37:39Z",
+  "lastSync": "2026-11-24T06:38:51Z",
   "claims": [
+    {
+      "handle": "the.hungry_hungry.caterpiller",
+      "look": "3344",
+      "at": "2026-11-24T06:25:29Z",
+      "reel": "https://www.instagram.com/p/DgGiCCkpn6_/",
+      "status": "waiting",
+      "name": "black diamond"
+    },
+    {
+      "handle": "glaceonz18",
+      "look": "2142",
+      "at": "2026-11-24T06:24:40Z",
+      "reel": "https://www.instagram.com/p/DgGiCCkpn6_/",
+      "status": "waiting",
+      "name": "rice"
+    },
+    {
+      "handle": "isabellab_147",
+      "look": "2322",
+      "at": "2026-11-24T05:42:08Z",
+      "reel": "https://www.instagram.com/p/DgGiCCkpn6_/",
+      "status": "locked",
+      "original": true
+    },
     {
       "handle": "kaifuhtru_2012",
       "look": "2431",
@@ -25501,7 +25527,8 @@
     "3322": "aria_phillip19",
     "1124": "bays.over.baes_",
     "2143": "1wbyi",
-    "2431": "kaifuhtru_2012"
+    "2431": "kaifuhtru_2012",
+    "2322": "isabellab_147"
   },
   "commentEntries": {
     "cailyneq22_": {
