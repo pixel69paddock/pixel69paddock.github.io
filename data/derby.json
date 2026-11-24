@@ -15707,10 +15707,11 @@
       "races": 1,
       "medals": [],
       "name": "Bacrdi",
-      "look": "2141",
+      "look": "2122",
       "badge": "gold",
       "rank": 505,
-      "original": true
+      "original": true,
+      "shed": "03KU"
     },
     {
       "handle": "route_.21",
@@ -23560,8 +23561,9 @@
       "rank": 1357,
       "badge": "silver",
       "name": "Blondie",
-      "look": "1244",
-      "original": true
+      "look": "4214",
+      "original": true,
+      "shed": "4NMB"
     },
     {
       "handle": "clauds_eq",
@@ -26308,7 +26310,9 @@
       "races": 0,
       "medals": [],
       "rank": 1644,
-      "badge": "silver"
+      "badge": "silver",
+      "look": "4441",
+      "shed": "60W2"
     },
     {
       "handle": "stanc230",
@@ -27675,8 +27679,24 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-24T13:40:20Z",
+  "lastSync": "2026-11-24T14:39:59Z",
   "claims": [
+    {
+      "handle": "kenji_oja1",
+      "look": "4441",
+      "at": "2026-11-24T14:36:01Z",
+      "reel": "https://www.instagram.com/p/DgHvMispbq5/",
+      "status": "locked"
+    },
+    {
+      "handle": "fran.nigr",
+      "look": "4214",
+      "at": "2026-11-24T14:03:11Z",
+      "reel": "https://www.instagram.com/p/DgHvMispbq5/",
+      "status": "locked",
+      "original": true,
+      "name": "Blondie"
+    },
     {
       "handle": "kefah_rabah1234",
       "look": "3311",
@@ -27690,6 +27710,15 @@
       "at": "2026-11-24T13:33:34Z",
       "reel": "https://www.instagram.com/p/DgHvMispbq5/",
       "status": "waiting"
+    },
+    {
+      "handle": "prilotte_",
+      "look": "2122",
+      "at": "2026-11-24T13:28:11Z",
+      "reel": "https://www.instagram.com/p/DgHvMispbq5/",
+      "status": "locked",
+      "original": true,
+      "name": "Bacrdi"
     },
     {
       "handle": "x.jada_exe",
@@ -28446,7 +28475,9 @@
     "3322": "_.nikol.vojackova._",
     "2143": "1wbyi",
     "3314": "sina_fn09",
-    "3313": "dr_art_.1"
+    "3313": "dr_art_.1",
+    "2122": "prilotte_",
+    "4214": "fran.nigr"
   },
   "commentEntries": {
     "cailyneq22_": {
