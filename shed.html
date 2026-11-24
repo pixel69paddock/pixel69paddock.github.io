@@ -230,10 +230,29 @@
   let DRAFT = store.get("dd-shed", {});
   const draftOf = h => DRAFT[norm(h)] || null;
   const officialLook = h => validLook(h.look) ? h.look : lookFor(h.handle);
+  // Shed code: 4 base36 characters after the look, "HORSE 4243+0A1B". 19 bits:
+  // saddle 2 | accessories 4 | wall paint 3 | nameplate 2 | stickers 8. Same layout as comments_classify.py (shed_ok).
+  const ACC_IDS = ACC.map(a => a.id), ST_IDS = STICKERS.map(t => t.id);
+  const bits = (list, ids) => ids.reduce((v, id, i) => v | (list.includes(id) ? 1 << i : 0), 0);
+  function shedEncode(x) {
+    const v = (x.saddle & 3) | bits(x.acc || [], ACC_IDS) << 2 | (x.wall & 7) << 6 | (x.plate & 3) << 9 | bits(x.stickers || [], ST_IDS) << 11;
+    return v.toString(36).toUpperCase().padStart(4, "0");
+  }
+  function shedDecode(code) {
+    const v = parseInt(String(code || ""), 36);
+    if (!/^[0-9A-Z]{4}$/i.test(String(code || "")) || !(v < 1 << 19) || ((v >> 6) & 7) > 5) return null;
+    return { saddle: v & 3, acc: ACC_IDS.filter((_, i) => v >> 2 & 1 << i), wall: v >> 6 & 7, plate: v >> 9 & 3, stickers: ST_IDS.filter((_, i) => v >> 11 & 1 << i) };
+  }
   function stateOf(k) {
     const h = STALLS[k - 1]; if (!h) return null;
-    const d = draftOf(h.handle) || {};
-    return { handle: h.handle, name: h.name || "", look: d.look || officialLook(h), saddle: d.saddle ?? 1, acc: d.acc || [], wall: d.wall || 0, plate: d.plate || 0, stickers: d.stickers || [], original: !!h.original, h };
+    // the saved stall (from the owner's comment) for everyone; this device's unsaved tries on top
+    const pub = shedDecode(h.shed) || {};
+    let d = draftOf(h.handle) || {};
+    if (h.shed && d.look && d.look === officialLook(h) && shedEncode({ saddle: 1, ...pub, ...d }) === String(h.shed).toUpperCase()) {
+      delete DRAFT[norm(h.handle)]; store.set("dd-shed", DRAFT); d = {};   // the comment landed: the draft is now public
+    }
+    const x = { saddle: 1, acc: [], wall: 0, plate: 0, stickers: [], ...pub, ...d };
+    return { handle: h.handle, name: h.name || "", look: d.look || officialLook(h), saddle: x.saddle, acc: x.acc, wall: x.wall, plate: x.plate, stickers: x.stickers, original: !!h.original, saved: !!h.shed, h };
   }
 
   // ------- reel mode: 1080x1920 move-in film -------
@@ -454,14 +473,15 @@
         <div class="sec"><h3>Wall paint <em>${esc(PAINTS[st.wall].name)}</em></h3><div class="sw sw6">${PAINTS.map((p, i) => `<button type="button" data-wall="${i}" aria-pressed="${st.wall === i}" style="background:${p.base ? `repeating-linear-gradient(90deg,${p.base} 0 10px,rgba(0,0,0,.25) 10px 11px)` : "repeating-linear-gradient(90deg,#7a5434 0 10px,#4b3020 10px 11px)"}" aria-label="Wall paint: ${esc(p.name)}"><span>${esc(p.name)}</span></button>`).join("")}</div></div>
         <div class="sec"><h3>Nameplate <em>${esc(PLATES[st.plate].name)}</em></h3><div class="sw">${PLATES.map((p, i) => `<button type="button" data-plate="${i}" aria-pressed="${st.plate === i}" class="pl" style="background:${p.in};border-color:${p.bg};color:${p.ink}" aria-label="Nameplate: ${esc(p.name)}"><b>@</b><span style="color:${p.ink};text-shadow:none">${esc(p.name)}</span></button>`).join("")}</div></div>
         <div class="sec"><h3>Stickers <em>${st.stickers.length}/8</em></h3><div class="stk">${STICKERS.map(t => `<button type="button" data-st="${t.id}" aria-pressed="${st.stickers.includes(t.id)}" title="${esc(t.name)}"><img src="${STICON[t.id]}" alt="" width="32" height="32"><span>${esc(t.name)}</span></button>`).join("")}</div></div>
-        <div class="code"><div class="c">HORSE ${code}</div><p>${statusLine(code, h)}</p></div>
+        <div class="code"><div class="c">HORSE ${code}+${shedEncode(st)}</div><p>${statusLine(code, h)}</p>
+          <p>${edited ? `<b>Not saved yet.</b> Save it and everyone sees your stall within about an hour.` : st.saved ? `This is the stall everyone sees.` : `Save it so everyone sees your horse and stall like this.`}</p></div>
         <div class="acts">
-          <button class="btn btn-neon" type="button" id="claim">Claim this look · free</button>
+          <button class="btn btn-neon" type="button" id="claim">Save my stall · free</button>
           <div class="btn-row"><button class="btn" type="button" id="rand">🎲 Surprise me</button><button class="btn" type="button" id="reset"${edited ? "" : " disabled style='opacity:.5'"}>Reset</button></div>
           ${mine ? "" : `<button class="btn" type="button" id="isme">This is me: set as my stall</button>`}
           <button class="btn soon" type="button" id="premium" aria-disabled="true">🔒 Premium extras <small>coming soon</small></button>
         </div>
-        <p class="fine">Every look is free. Claiming = comment the code on the latest reel from your account; the first to claim a look gets ✦ Original. Saddle, accessories and stall decor show in the shed only for now. Looks are cosmetic: every horse races equal.</p>
+        <p class="fine">Everything here is free. Saving = comment the code on the latest reel from your own account (that's how we know it's you); the first to claim a look gets ✦ Original. Custom horses run +5–10% faster, and anyone can customise.</p>
       </div>`;
     pb.querySelectorAll(".sw button").forEach(b => b.onclick = () => {
       const c = [...code]; c[+b.dataset.part] = b.dataset.i; setDraft(h, { look: c.join("") });
@@ -480,7 +500,7 @@
     });
     $("#reset").onclick = () => { delete DRAFT[norm(h.handle)]; store.set("dd-shed", DRAFT); api.refresh(cur, true); render(); };
     $("#claim").onclick = async () => {
-      const msg = `HORSE ${code}${h.name ? " " + h.name : ""}`;
+      const msg = `HORSE ${code}+${shedEncode(st)}${h.name ? " " + h.name : ""}`;
       let ok = false; try { await navigator.clipboard.writeText(msg); ok = true; } catch {}
       toast(ok ? `Copied “${msg}”. Paste it as a comment on the latest reel.` : `Comment “${msg}” on the latest reel.`);
       setTimeout(() => window.open(D.latestReel || IGP, "_blank", "noopener"), 900);
@@ -510,7 +530,9 @@
 
   if (EMBED) {
     // homepage card: a slow tour. The next free stall ("NEXT: YOU?"), a random horse, your own stall if we know it.
-    const mineK = stallOf[ME], picks = () => 1 + Math.floor(Math.random() * FILLED);
+    // prefer stalls people really decorated (saved shed codes); otherwise any filled stall
+    const decorated = STALLS.map((h, i) => h.shed ? i + 1 : 0).filter(Boolean);
+    const mineK = stallOf[ME], picks = () => decorated.length && Math.random() < 0.75 ? decorated[Math.floor(Math.random() * decorated.length)] : 1 + Math.floor(Math.random() * FILLED);
     const tour = [() => [FILLED + 1, "aisle"], () => [picks(), "side"], () => [mineK || picks(), "close"], () => [FILLED + 1, "aisle"], () => [picks(), "close"]];
     let i = 0;
     setInterval(() => { if (document.hidden) return; i = (i + 1) % tour.length; const [k, v] = tour[i](); cur = k; api.focus(k, { view: v }); }, 5200);

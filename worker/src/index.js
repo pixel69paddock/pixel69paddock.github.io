@@ -17,7 +17,8 @@
 // KV binding: DERBY
 
 const API = "https://graph.instagram.com/v25.0";
-const CODE_RE = /horse\s*#?\s*([1-4]{4})(?![0-9])/i;
+// [2] = optional 3D-shed code: "HORSE 4243+0A1B" (see shed.html shedEncode)
+const CODE_RE = /horse\s*#?\s*([1-4]{4})(?![0-9])(?:\s*\+\s*([0-9a-z]{4})(?![0-9a-z]))?/i;
 const STALE_MS = 60_000;      // /state rescans when the cached scan is older than this
 const MIN_SCAN_MS = 15_000;   // never scan more often than this (rate limits)
 const OLD_MEDIA_MS = 3 * 86400_000;
