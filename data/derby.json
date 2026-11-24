@@ -10362,7 +10362,10 @@
       "races": 2,
       "medals": [],
       "badge": "gold",
-      "rank": 64
+      "rank": 64,
+      "look": "2433",
+      "name": "Silly goosey",
+      "original": true
     },
     {
       "handle": "liddlemuffin999",
@@ -15498,8 +15501,9 @@
       "medals": [],
       "badge": "gold",
       "rank": 473,
-      "look": "2342",
-      "original": true
+      "look": "3343",
+      "original": true,
+      "name": "Tvxedo"
     },
     {
       "handle": "gi0perse",
@@ -16015,7 +16019,10 @@
       "races": 1,
       "medals": [],
       "badge": "gold",
-      "rank": 612
+      "rank": 612,
+      "look": "1142",
+      "name": "Hank",
+      "original": true
     },
     {
       "handle": "just_me_3593",
@@ -16088,7 +16095,10 @@
       "races": 1,
       "medals": [],
       "badge": "gold",
-      "rank": 621
+      "rank": 621,
+      "look": "4224",
+      "name": "Sparkle Farts",
+      "original": true
     },
     {
       "handle": "yourfavlivi",
@@ -23540,8 +23550,44 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-24T00:35:55Z",
+  "lastSync": "2026-11-24T01:39:18Z",
   "claims": [
+    {
+      "handle": "madisonburckhardt25",
+      "look": "4224",
+      "at": "2026-11-24T00:22:30Z",
+      "reel": "https://www.instagram.com/p/DgEj46qJi0L/",
+      "status": "locked",
+      "original": true,
+      "name": "Sparkle Farts"
+    },
+    {
+      "handle": "izzie_eq13",
+      "look": "1142",
+      "at": "2026-11-24T00:18:28Z",
+      "reel": "https://www.instagram.com/p/DgEj46qJi0L/",
+      "status": "locked",
+      "original": true,
+      "name": "Hank"
+    },
+    {
+      "handle": "_.celenas._",
+      "look": "3343",
+      "at": "2026-11-23T23:46:13Z",
+      "reel": "https://www.instagram.com/p/DgEj46qJi0L/",
+      "status": "locked",
+      "original": true,
+      "name": "Tvxedo"
+    },
+    {
+      "handle": "idk1863eg",
+      "look": "2433",
+      "at": "2026-11-23T23:43:23Z",
+      "reel": "https://www.instagram.com/p/DgEj46qJi0L/",
+      "status": "locked",
+      "original": true,
+      "name": "Silly goosey"
+    },
     {
       "handle": "leo____chi2010",
       "look": "2423",
@@ -24135,7 +24181,11 @@
     "3322": "aria_phillip19",
     "1124": "bays.over.baes_",
     "2342": "_.celenas._",
-    "2423": "leo____chi2010"
+    "2423": "leo____chi2010",
+    "2433": "idk1863eg",
+    "3343": "_.celenas._",
+    "1142": "izzie_eq13",
+    "4224": "madisonburckhardt25"
   },
   "commentEntries": {
     "cailyneq22_": {
