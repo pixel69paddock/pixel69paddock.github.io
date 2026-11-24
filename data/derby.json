@@ -13184,7 +13184,10 @@
       "races": 1,
       "medals": [],
       "badge": "gold",
-      "rank": 261
+      "rank": 261,
+      "look": "2431",
+      "original": true,
+      "name": "Kaikai"
     },
     {
       "handle": "leeknowwigandbuttcheekhairy",
@@ -24815,8 +24818,17 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-24T04:34:31Z",
+  "lastSync": "2026-11-24T05:37:39Z",
   "claims": [
+    {
+      "handle": "kaifuhtru_2012",
+      "look": "2431",
+      "at": "2026-11-24T04:58:18Z",
+      "reel": "https://www.instagram.com/p/DgGiCCkpn6_/",
+      "status": "locked",
+      "original": true,
+      "name": "Kaikai"
+    },
     {
       "handle": "fran.nigr",
       "look": "1244",
@@ -25051,6 +25063,13 @@
       "status": "locked",
       "original": true,
       "name": "Grace"
+    },
+    {
+      "handle": "word_to_bob",
+      "look": "3214",
+      "at": "2026-11-23T05:10:43Z",
+      "reel": "https://www.instagram.com/p/Df_u417pzfe/",
+      "status": "locked"
     },
     {
       "handle": "ocean__hooves",
@@ -25481,7 +25500,8 @@
     "3312": "valca_konicii",
     "3322": "aria_phillip19",
     "1124": "bays.over.baes_",
-    "2143": "1wbyi"
+    "2143": "1wbyi",
+    "2431": "kaifuhtru_2012"
   },
   "commentEntries": {
     "cailyneq22_": {
