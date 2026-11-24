@@ -18311,7 +18311,9 @@
       "races": 1,
       "medals": [],
       "badge": "silver",
-      "rank": 842
+      "rank": 842,
+      "look": "3122",
+      "original": true
     },
     {
       "handle": "lapos_ihidegantonia",
@@ -19034,7 +19036,7 @@
       "medals": [],
       "rank": 930,
       "badge": "silver",
-      "look": "3322",
+      "look": "3222",
       "original": true
     },
     {
@@ -25634,7 +25636,9 @@
       "races": 0,
       "medals": [],
       "rank": 1591,
-      "badge": "silver"
+      "badge": "silver",
+      "look": "3314",
+      "original": true
     },
     {
       "handle": "meeshyaaa",
@@ -25983,8 +25987,48 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-24T10:38:40Z",
+  "lastSync": "2026-11-24T11:41:56Z",
   "claims": [
+    {
+      "handle": "sina_fn09",
+      "look": "3314",
+      "at": "2026-11-24T11:30:51Z",
+      "reel": "https://www.instagram.com/p/DgGiCCkpn6_/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "just_a_grl_who_loves_horses",
+      "look": "3122",
+      "at": "2026-11-24T11:25:01Z",
+      "reel": "https://www.instagram.com/p/DgHvMispbq5/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "aria_phillip19",
+      "look": "3222",
+      "at": "2026-11-24T11:15:15Z",
+      "reel": "https://www.instagram.com/p/DgHvMispbq5/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "yanniss_wk",
+      "look": "3212",
+      "at": "2026-11-24T10:59:42Z",
+      "reel": "https://www.instagram.com/p/DgHvMispbq5/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "himc__",
+      "look": "3231",
+      "at": "2026-11-24T10:59:08Z",
+      "reel": "https://www.instagram.com/p/DgHvMispbq5/",
+      "status": "locked",
+      "original": true
+    },
     {
       "handle": "yanniss_wk",
       "look": "3212",
@@ -26220,6 +26264,15 @@
       "at": "2026-11-23T13:36:08Z",
       "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
       "status": "locked"
+    },
+    {
+      "handle": "bays.over.baes_",
+      "look": "1124",
+      "at": "2026-11-23T13:17:05Z",
+      "reel": "https://www.instagram.com/p/Df_u417pzfe/",
+      "status": "locked",
+      "original": true,
+      "name": "Atlas"
     },
     {
       "handle": "cailyneq22_",
@@ -26703,7 +26756,10 @@
     "3322": "aria_phillip19",
     "1124": "bays.over.baes_",
     "2143": "1wbyi",
-    "3212": "yanniss_wk"
+    "3212": "yanniss_wk",
+    "3222": "aria_phillip19",
+    "3122": "just_a_grl_who_loves_horses",
+    "3314": "sina_fn09"
   },
   "commentEntries": {
     "cailyneq22_": {
