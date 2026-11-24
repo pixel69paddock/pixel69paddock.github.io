@@ -24188,7 +24188,10 @@
       "races": 0,
       "medals": [],
       "rank": 1423,
-      "badge": "silver"
+      "badge": "silver",
+      "look": "2224",
+      "original": true,
+      "shed": "B78B"
     },
     {
       "handle": "derek2slix",
@@ -25987,8 +25990,23 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-24T11:41:56Z",
+  "lastSync": "2026-11-24T12:38:49Z",
   "claims": [
+    {
+      "handle": "janbell_rulez",
+      "look": "2224",
+      "at": "2026-11-24T12:31:57Z",
+      "reel": "https://www.instagram.com/p/DgHvMispbq5/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "dr_art_.1",
+      "look": "3313",
+      "at": "2026-11-24T12:21:46Z",
+      "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
+      "status": "waiting"
+    },
     {
       "handle": "sina_fn09",
       "look": "3314",
@@ -26759,7 +26777,8 @@
     "3212": "yanniss_wk",
     "3222": "aria_phillip19",
     "3122": "just_a_grl_who_loves_horses",
-    "3314": "sina_fn09"
+    "3314": "sina_fn09",
+    "2224": "janbell_rulez"
   },
   "commentEntries": {
     "cailyneq22_": {
