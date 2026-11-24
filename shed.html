@@ -295,7 +295,7 @@
     const freeze = P.has("t") ? +P.get("t") : null;
     const api = mount(document.body, {
       total: TOTAL, gold: GOLD_N, silver: SILVER_TO, looks: LOOKS, getStall: stateOf,
-      reel: { kind, info, k, plate, look: P.get("look") || "4211", saddle: 1, acc: [], freeze, comp, overlay: kind === "launch" ? overlayLaunch : overlay }
+      reel: { kind, info, k, plate, look: P.get("look") || "4211", saddle: 1, acc: [], freeze, comp, overlay: P.has("notext") ? null : kind === "launch" ? overlayLaunch : overlay }
     });
     const ctl = document.createElement("div"); ctl.className = "reel-ctl";
     ctl.innerHTML = `<button class="btn" id="rReplay">▶ Replay</button><button class="btn btn-neon" id="rRec">● Record 1080×1920</button><button class="btn" id="rHide">Hide buttons</button><a class="btn" href="shed.html">← Back to shed</a>
