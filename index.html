@@ -1380,7 +1380,7 @@
     let sel = spots.find(s => s.status === "open") || spots[0], V3 = null, brand = { text: "", logo: null };
     $("#reach").innerHTML = [
       [filled.toLocaleString(), "Followers, each with a horse"],
-      [SI.raceReelViews || "—", "Views per race reel so far"],
+      [SI.raceReelViews || "—", SI.reelRange ? `Average views per race reel (${SI.reelRange})` : "Average views per race reel"],
       [SI.bestReelViews || "—", "Our best reel"],
       [D.season ? D.season.days + " races" : "Daily", "One a day, every day"]
     ].map(([v, k]) => `<div class="stat"><div class="v">${esc(v)}</div><div class="k">${esc(k)}</div></div>`).join("");
