@@ -6,6 +6,8 @@ The link-in-bio page for [@dailyderby_horse](https://www.instagram.com/dailyderb
 
 ## Updating after each race
 
+**After every posted race day, run `shorts-pipeline/scripts/publish_results.py --day N --reel <shortcode>` (dry run, then `--write --push`).** It adds the race to `races[]`, recomputes every horse's races and medals, and moves `nextRace` on; the standings and points come from `races[]`, so this updates the rankings. The 5-hourly check-in runs it automatically if a posted race is missing.
+
 Edit `data/derby.json`, then commit and push. GitHub Pages republishes within about a minute.
 
 | Field | What to change |
