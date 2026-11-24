@@ -49,7 +49,17 @@
   nav.links{display:flex;gap:18px;font-size:14px}
   nav.links a{text-decoration:none;color:var(--muted)}
   nav.links a:hover{color:var(--ink)}
-  @media (max-width:760px){nav.links{display:none}}
+  nav.links a[aria-current="true"]{color:var(--ink)}
+  section{scroll-margin-top:72px}
+  @media (max-width:760px){
+    header.top .wrap{flex-wrap:wrap;height:auto;padding-top:8px;row-gap:0}
+    header.top .brand{height:44px}
+    nav.links{order:3;width:calc(100% + 32px);margin:0 -16px;padding:4px 16px 10px;gap:8px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-padding:0 16px;-webkit-mask-image:linear-gradient(90deg,#000 88%,transparent);mask-image:linear-gradient(90deg,#000 88%,transparent)}
+    nav.links::-webkit-scrollbar{display:none}
+    nav.links a{flex:none;font-size:13px;font-weight:500;padding:7px 13px;border:1px solid var(--line);border-radius:999px;background:var(--panel);color:var(--muted)}
+    nav.links a[aria-current="true"]{background:var(--neon);border-color:var(--neon);color:#fff}
+    section{scroll-margin-top:112px}
+  }
 
   /* hero */
   .hero{padding:40px 0 56px;border-top:0;background:radial-gradient(80% 60% at 70% 0%,#4a1f45 0%,transparent 70%)}
@@ -155,6 +165,12 @@
     th .lbl{display:none}
     td .who svg{display:none}
     td .who{word-break:break-all}
+    .race .full-res table,.my-races table{table-layout:fixed}
+    .race .full-res th:nth-child(1),.race .full-res td:nth-child(1){width:68px}
+    .race .full-res th:nth-child(3),.race .full-res td:nth-child(3){width:58px}
+    .race .full-res th:nth-child(4),.race .full-res td:nth-child(4){width:42px}
+    .race .full-res td .who{word-break:normal;min-width:0}
+    .race .full-res td .who,.race .full-res td .who .nm b,.race .full-res td .who .nm small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   }
   .m{display:inline-block;width:12px;height:12px;border-radius:50%;vertical-align:-1px;margin-right:4px}
   .m.g{background:var(--gold)} .m.s{background:var(--silver)} .m.b{background:var(--bronze)}
@@ -172,7 +188,7 @@
   .my-races{grid-column:1/-1}
   .my-races h4{margin:0 0 8px;font-size:15px;color:var(--gold)}
   .race > div{min-width:0}
-  @media (max-width:560px){.race{grid-template-columns:auto 1fr}.race .go{grid-column:1/-1}}
+  @media (max-width:560px){.race{grid-template-columns:1fr;gap:10px}.race .day{justify-self:start;min-width:0;padding:6px 10px;font-size:11px}.race .day br{display:none}.race .go{justify-self:start}}
 
   /* hall of fame */
   .hof{background:radial-gradient(60% 90% at 50% 0%,rgba(255,236,190,.13) 0%,transparent 70%),repeating-linear-gradient(0deg,#1d1630 0 38px,#171126 38px 40px),#1a1428;border-radius:8px;padding:28px 16px;border:1px solid var(--line)}
@@ -1150,7 +1166,7 @@
     $("#races").innerHTML = races.map(r => {
       const pod = (r.results || []).filter(x => x.place && x.place <= 3).sort((a, b) => a.place - b.place);
       return `<div class="card race">
-        <div class="day">DAY<br>${r.day}</div>
+        <div class="day">DAY<br> ${r.day}</div>
         <div>
           <h3>${esc(r.title || (r.track ? r.track : "Race " + r.day))}</h3>
           <p>${fmtDate(r.date)} · ${r.runners} runner${r.runners === 1 ? "" : "s"} · ${r.track ? "Track: " + esc(r.track) : "Track not named yet"}</p>
@@ -1355,6 +1371,14 @@
     if (scroll) document.getElementById("track").scrollIntoView({ behavior: "smooth" });
   }
   document.querySelectorAll(".hub-tab").forEach(t => t.addEventListener("click", () => show(t.dataset.panel, false)));
+  // phone top bar: highlight the section on screen and keep its chip in view
+  const navA = [...document.querySelectorAll("nav.links a")], navBox = document.querySelector("nav.links");
+  const mark = id => navA.forEach(a => {
+    const on = a.getAttribute("href") === "#" + id; a.setAttribute("aria-current", on);
+    if (on && navBox.scrollWidth > navBox.clientWidth) navBox.scrollTo({ left: a.offsetLeft - 16, behavior: "smooth" });
+  });
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) mark(e.target.id === "track" || ids.includes(e.target.id) ? (ids.find(x => !document.getElementById(x).hidden) || e.target.id) : e.target.id); }), { rootMargin: "-45% 0px -50% 0px" });
+  navA.map(a => document.getElementById(a.getAttribute("href").slice(1))).filter(Boolean).forEach(el => io.observe(el));
   document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener("click", e => {
     const id = a.getAttribute("href").slice(1);
     if (ids.includes(id)) { e.preventDefault(); show(id, true); }
