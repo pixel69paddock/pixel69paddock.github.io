@@ -29473,8 +29473,16 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-24T20:38:40Z",
+  "lastSync": "2026-11-24T21:38:48Z",
   "claims": [
+    {
+      "handle": "everleighkoval",
+      "look": "2214",
+      "at": "2026-11-24T21:09:28Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "waiting",
+      "name": "MY SPONSOR WILL BE"
+    },
     {
       "handle": "willowsummerhays",
       "look": "3223",
