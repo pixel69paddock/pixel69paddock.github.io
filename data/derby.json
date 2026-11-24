@@ -16678,7 +16678,10 @@
       "medals": [],
       "badge": "gold",
       "rank": 611,
-      "name": "Grey"
+      "name": "Grey",
+      "look": "3144",
+      "shed": "81UG",
+      "original": true
     },
     {
       "handle": "izzie_eq13",
@@ -29473,8 +29476,17 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-24T21:38:48Z",
+  "lastSync": "2026-11-24T22:39:54Z",
   "claims": [
+    {
+      "handle": "aliyaemiller",
+      "look": "3144",
+      "at": "2026-11-24T22:27:18Z",
+      "reel": "https://www.instagram.com/p/DgHvMispbq5/",
+      "status": "locked",
+      "original": true,
+      "name": "Grey"
+    },
     {
       "handle": "everleighkoval",
       "look": "2214",
@@ -30396,7 +30408,8 @@
     "3314": "sina_fn09",
     "3313": "dr_art_.1",
     "2232": "summer_solstce",
-    "3223": "willowsummerhays"
+    "3223": "willowsummerhays",
+    "3144": "aliyaemiller"
   },
   "commentEntries": {
     "cailyneq22_": {
