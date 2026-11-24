@@ -7,7 +7,17 @@
 <meta name="description" content="A pixel horse race every day on Instagram. Like the latest reel or follow, and a horse runs with your @name on it. Find your horse, see the rankings and the Hall of Fame.">
 <meta property="og:title" content="Daily Derby · The Pixel Paddock">
 <meta property="og:description" content="Your name. Your horse. A race every day.">
-<meta property="og:image" content="assets/k2_track.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Daily Derby">
+<meta property="og:url" content="https://pixel69paddock.github.io/">
+<meta property="og:image" content="https://pixel69paddock.github.io/assets/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Daily Derby: your name, your horse, every day. A pixel racecourse at dusk.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://pixel69paddock.github.io/">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <meta name="theme-color" content="#170f26">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -95,6 +105,39 @@
     .hero-shed{order:2;margin:0 auto 24px;aspect-ratio:4/5}
   }
 
+  /* pick 3 */
+  .pk-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:20px;align-items:start}
+  @media (max-width:820px){.pk-grid{grid-template-columns:minmax(0,1fr)}}
+  .pk-sugg{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;margin-top:10px}
+  .pk-sugg:empty{display:none}
+  .pk-opt{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:var(--night-2);border:1px solid var(--line);border-radius:6px;padding:8px 10px;color:var(--ink);font:500 15px var(--sans);cursor:pointer;min-height:48px}
+  .pk-opt:hover,.pk-opt:focus-visible{border-color:var(--cyan);outline:none}
+  .pk-opt .nm{flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden}
+  .pk-opt .nm b{font-family:var(--px);font-size:11px;color:var(--gold);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .pk-opt .nm small,.pk-opt .nm span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .pk-opt .pts{color:var(--muted);font-size:13px;white-space:nowrap}
+  .pk-quick{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 4px}
+  .pk-quick .btn{padding:10px 12px;font-size:14px;min-height:44px}
+  .pk-quick [hidden]{display:none}
+  .pk-slots{list-style:none;padding:0;margin:14px 0 0;display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
+  .pk-slot{display:flex;align-items:center;gap:10px;border:2px dashed var(--line);border-radius:6px;padding:8px 10px;min-height:56px;color:var(--dim)}
+  .pk-slot.full{border-style:solid;border-color:var(--gold);color:var(--ink);background:rgba(245,194,66,.06)}
+  .pk-slot .n{font-family:var(--px);font-size:12px;color:var(--gold);width:22px}
+  .pk-slot .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .pk-slot .x{background:none;border:0;color:var(--muted);font-size:22px;cursor:pointer;width:44px;height:44px}
+  .pk-out{margin-top:16px}
+  .pk-out[hidden],.pk-mine[hidden]{display:none}
+  .pk-code{font-family:var(--px);font-size:13px;line-height:1.8;color:var(--ink);background:var(--night);border:2px solid var(--gold);border-radius:6px;padding:12px;margin:8px 0 12px;overflow-wrap:anywhere}
+  .pk-rules{margin-top:16px;font-size:13px}
+  .pk-mine{margin-top:10px;color:var(--gold)}
+  .pk-board h3{margin:0 0 10px;font-size:17px}
+  .pk-board h3 + .pk-list + h3{margin-top:22px}
+  .pk-list{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:minmax(0,1fr);gap:6px}
+  .pk-list li{display:flex;align-items:center;gap:10px;font-size:15px}
+  .pk-list li .r{font-family:var(--px);font-size:11px;color:var(--dim);width:24px}
+  .pk-list li .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .pk-list li b{color:var(--gold)}
+  .pk-list .none{color:var(--muted)}
   /* find */
   .finder{display:flex;gap:10px;max-width:560px}
   .finder .field{flex:1;display:flex;align-items:center;background:var(--panel);border:2px solid var(--line);border-radius:4px;padding:0 12px}
@@ -105,6 +148,8 @@
   .card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:20px}
   .horse-card{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;max-width:640px}
   .horse-card h3{margin:0 0 4px;font-size:20px}
+  .share-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+  .share-row .btn{padding:10px 14px;font-size:14px;min-height:44px}
   /* horse builder */
   .builder{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:28px;align-items:start}
   @media (max-width:820px){.builder{grid-template-columns:1fr}}
@@ -237,6 +282,10 @@
   .s3d-tip{position:absolute;z-index:3;pointer-events:none;background:var(--night);border:1px solid var(--neon);border-radius:4px;padding:6px 8px;font-size:13px;white-space:nowrap;transform:translate(-50%,-130%);display:none}
   .s3d-tip b{display:block}
   .s3d-touch[hidden]{display:none}
+  .s3d-pick{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:12px;padding:12px 14px;background:var(--panel);border:1px solid var(--neon);border-radius:6px}
+  .s3d-pick[hidden]{display:none}
+  .s3d-pick .btn{padding:10px 14px;font-size:14px;min-height:44px}
+  @media (pointer:coarse){.s3d-hud button{min-height:40px;padding:10px 12px;font-size:13px}}
   .s3d-touch{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:2;white-space:nowrap;font-size:13px;padding:10px 14px}
   .spot-panel h3{margin:0 0 4px;font-size:20px}
   .spot-panel .where{color:var(--muted);margin:0 0 14px;font-size:14px}
@@ -389,6 +438,8 @@
   .sb-stalls{max-height:300px}
   .music{position:fixed;left:16px;bottom:16px;z-index:30;display:flex;align-items:center;gap:8px;background:var(--ink);color:var(--night);border:0;border-radius:999px;padding:10px 16px;font:700 14px var(--sans);box-shadow:0 6px 20px rgba(0,0,0,.4);cursor:pointer}
   .music[aria-pressed="true"]{background:var(--gold);color:#2a1d05}
+  /* phones: a small round button in the corner, so it never sits on the find box */
+  @media (max-width:640px){.music{left:auto;right:12px;bottom:12px;width:48px;height:48px;padding:0;justify-content:center}.music #musicLbl{display:none}.music::before{content:"🎺";font-size:20px}.music:not([aria-pressed="true"]) .eq{display:none}}
   .music .eq{display:inline-flex;gap:2px;align-items:flex-end;height:14px}
   .music .eq i{width:3px;background:currentColor;height:4px}
   .music[aria-pressed="true"] .eq i{animation:eq .6s infinite alternate}
@@ -410,6 +461,7 @@
       <a href="#top">Join</a>
       <a href="#stable">Stable</a>
       <a href="#build">Build</a>
+      <a href="#picks">Pick 3</a>
       <a href="#rankings">Standings</a>
       <a href="#history">Races</a>
       <a href="#hall">Hall of Fame</a>
@@ -549,9 +601,53 @@
     </div>
   </section>
 
+  <section id="picks">
+    <div class="wrap">
+      <p class="kicker">Daily game · free</p>
+      <h2 class="px" id="pkTitle">Pick 3</h2>
+      <p class="sub">Back three horses in the next race (yours can be one). You score the race points they earn: 20 for a win, at least 2 for finishing. Most points by Day 30 is the season's <b>top tipster</b>.</p>
+      <div class="pk-grid">
+        <div class="card pk-make">
+          <div class="finder" style="max-width:none;margin:0"><label class="field" for="pkSearch"><span>@</span><input id="pkSearch" placeholder="search a handle or horse name" autocapitalize="none" spellcheck="false" autocomplete="off" aria-label="Search the horses in the next race"></label></div>
+          <div class="pk-sugg" id="pkSugg" role="listbox" aria-label="Horses"></div>
+          <div class="pk-quick"><button class="btn btn-ghost" type="button" id="pkMe" hidden>+ My horse</button><button class="btn btn-ghost" type="button" id="pkForm">🔥 In form</button><button class="btn btn-ghost" type="button" id="pkLucky">🎲 Lucky dip</button></div>
+          <ol class="pk-slots" id="pkSlots" aria-label="Your picks"></ol>
+          <div class="pk-out" id="pkOut" hidden>
+            <p class="code-note">Comment this on the latest reel before the race:</p>
+            <div class="pk-code" id="pkCode"></div>
+            <div class="save-row"><button class="btn btn-gold" type="button" id="pkGo">Copy &amp; open the reel →</button></div>
+          </div>
+          <p class="code-note pk-rules">Your newest PICK comment before the race counts. Tagging a horse tells its owner you backed them. Picks are checked every hour.</p>
+          <p class="code-note pk-mine" id="pkMine" hidden></p>
+        </div>
+        <div class="card pk-board">
+          <h3>🏆 Top tipsters</h3>
+          <ol class="pk-list" id="pkTop"></ol>
+          <h3 id="pkHotH">🔥 Most backed</h3>
+          <ol class="pk-list" id="pkHot"></ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="track">
     <div class="wrap">
       <p class="kicker">The track</p>
+      <h2 class="px">Where every race is run</h2>
+      <p class="sub">Spin it, zoom in, watch the field go round. Every board on the course is for sale.</p>
+      <div id="s3dHome">
+      <div class="s3d" id="s3d">
+        <div class="s3d-hud" role="group" aria-label="Camera">
+          <button type="button" data-view="race">Race cam</button><button type="button" data-view="low">Trackside</button><button type="button" data-view="side">Side</button><button type="button" data-view="spin" aria-pressed="false">Auto-spin</button>
+        </div>
+        <p class="s3d-load">Loading the course…</p>
+        <p class="s3d-help" id="s3dHelp">Drag to spin · scroll to zoom · tap a board</p>
+        <button class="btn btn-gold s3d-touch" id="s3dTouch" type="button" hidden>Tap to look around</button>
+        <div class="s3d-tip" id="s3dTip"></div>
+      </div>
+      </div>
+      <div class="s3d-pick" id="s3dPick" hidden></div>
+      <p class="kicker" style="margin-top:36px">Standings &amp; races</p>
       <div class="hub-tabs" role="tablist" aria-label="Standings, medals, races and hall of fame">
         <button class="hub-tab" role="tab" aria-selected="true" data-panel="rankings">🏁 Standings</button>
         <button class="hub-tab" role="tab" aria-selected="false" data-panel="medals">🥇 Medals</button>
@@ -633,15 +729,7 @@
       <summary><span class="kicker">Sponsor the track</span><span class="px">Put your brand on the course</span></summary>
       <p class="sub">Every race reel is filmed on this course. Spin it around, tap a spot, and type your brand to see it there. Booked spots go into every race from the next day.</p>
       <div class="reach" id="reach"></div>
-      <div class="s3d" id="s3d">
-        <div class="s3d-hud" role="group" aria-label="Camera">
-          <button type="button" data-view="race">Race cam</button><button type="button" data-view="low">Trackside</button><button type="button" data-view="side">Side</button><button type="button" data-view="spin" aria-pressed="false">Auto-spin</button>
-        </div>
-        <p class="s3d-load">Loading the course…</p>
-        <p class="s3d-help" id="s3dHelp">Drag to spin · scroll to zoom · tap a board</p>
-        <button class="btn btn-gold s3d-touch" id="s3dTouch" type="button" hidden>Tap to look around</button>
-        <div class="s3d-tip" id="s3dTip"></div>
-      </div>
+      <div id="s3dSponsorSlot"></div>
       <div class="map" id="map" hidden>
         <img src="assets/k2_track.png" alt="The racecourse with sponsor spots highlighted" width="1080" height="1920">
       </div>
@@ -871,6 +959,9 @@
       LOOKS = L && L.parts; API = D.claimsApi || null;
       const D1 = await loadLive(D);
       render(D1); liveUpdate(D1); myStatus();
+      // a shared horse link (?h=handle) opens straight on that horse's card
+      const qh = norm(new URLSearchParams(location.search).get("h") || "");
+      if (qh) { $("#handle").value = qh; $("#finder").requestSubmit(); requestAnimationFrame(() => $("#findResult").scrollIntoView({ block: "center" })); }
       setInterval(() => getJSON("data/derby.json").then(loadLive).then(D2 => { liveUpdate(D2); myStatus(); }).catch(() => {}), API ? 30000 : 60000);
     })
     .catch(() => { $("#board").innerHTML = `<div class="empty">Couldn't load the race data. Try refreshing.</div>`; });
@@ -938,7 +1029,8 @@
           <p class="sc-name">${nm ? esc(nm.toUpperCase()) : "UNNAMED HORSE"}</p>
           <a class="sc-handle" href="https://www.instagram.com/${encodeURIComponent(who)}/" target="_blank" rel="noopener">@${esc(who)}</a>
           <div class="sc-facts"><span>Look <b>HORSE ${esc(validLook(h.look) ? h.look : look)}</b>${validLook(h.look) ? "" : " (default)"}</span>${orig ? `<span class="orig">✦ Original</span>` : ""}
-            <span><b>${st.points}</b> pts</span><span><b>${st.races}</b> race${st.races === 1 ? "" : "s"}</span>${st.gold ? `<span><b>${st.gold}</b> win${st.gold === 1 ? "" : "s"}</span>` : ""}</div>`;
+            <span><b>${st.points}</b> pts</span><span><b>${st.races}</b> race${st.races === 1 ? "" : "s"}</span>${st.gold ? `<span><b>${st.gold}</b> win${st.gold === 1 ? "" : "s"}</span>` : ""}</div>
+          ${shareRow(who)}`;
       }
       drawBarn();
     }                       // s = px per stall (10 = whole wall); x,y = top-left in stall units
@@ -1089,6 +1181,64 @@
     $("#boardName").textContent = named ? named.track.toUpperCase() : "TRACK NAME ???";
     $("#updated").textContent = "Updated " + fmtDate(D.updated) + ".";
 
+    // ---- sharing: a link per horse (?h=handle) and a 1080x1920 story image drawn on this device
+    const SITE = "https://pixel69paddock.github.io/";
+    const horseUrl = hd => SITE + "?h=" + encodeURIComponent(hd);
+    const tierOf = n => !n ? null : n <= GOLD_N ? ["GOLD FOUNDER", "#f5c242"] : n <= SILVER_TO ? ["SILVER", "#cfd6e3"] : ["BRONZE", "#d08a4e"];
+    async function storyImage(hd) {
+      const h = byH[norm(hd)] || { handle: hd }, st = stats(h), n = stallOf[norm(hd)], nm = horseName(h), look = horseLook(h);
+      try { await Promise.all([document.fonts.load('40px "Press Start 2P"'), document.fonts.load('700 40px "Space Grotesk"')]); } catch {}
+      const c = document.createElement("canvas"); c.width = 1080; c.height = 1920; const g = c.getContext("2d");
+      const bg = g.createRadialGradient(540, 700, 80, 540, 900, 1100); bg.addColorStop(0, "#3a1e4f"); bg.addColorStop(1, "#120b1e");
+      g.fillStyle = bg; g.fillRect(0, 0, 1080, 1920);
+      const PXF = s => `${s}px "Press Start 2P", monospace`, SANS = (s, w = 700) => `${w} ${s}px "Space Grotesk", sans-serif`;
+      const fit = (txt, font, max, size) => { for (; size > 14; size -= 2) { g.font = font(size); if (g.measureText(txt).width <= max) break; } return size; };
+      g.textAlign = "center"; g.textBaseline = "middle";
+      // everything sits inside x 110-970, y 250-1670 (IG story safe zone)
+      g.fillStyle = "#ff3d6e"; g.font = PXF(30); g.fillText("DAILY DERBY", 540, 290);
+      g.fillStyle = "#bfb3d6"; g.font = SANS(34, 500); g.fillText("The Pixel Paddock · a race every day", 540, 350);
+      const t = tierOf(n);
+      if (n) {
+        const label = `STALL #${n.toLocaleString()} · ${t[0]}`; g.font = PXF(26); const w = g.measureText(label).width + 60;
+        g.fillStyle = t[1]; g.fillRect(540 - w / 2, 420, w, 70); g.fillStyle = "#1b1230"; g.fillText(label, 540, 457);
+      }
+      // the horse, pixel for pixel
+      const spr = horseCanvas(look), S = 44, sw = 17 * S, sh = 13 * S, sx = 540 - sw / 2, sy = 540;
+      g.fillStyle = "rgba(0,0,0,.25)"; g.fillRect(sx + 60, sy + sh - 40, sw - 160, 30);
+      g.imageSmoothingEnabled = false; g.drawImage(spr, sx, sy, sw, sh);
+      const title = nm ? nm.toUpperCase() : "UNNAMED HORSE";
+      g.fillStyle = "#f5c242"; fit(title, PXF, 860, 60); g.fillText(title, 540, 1170);
+      g.fillStyle = "#f4ecdf"; fit("@" + h.handle, s => SANS(s), 860, 56); g.fillText("@" + h.handle, 540, 1260);
+      const best = (h.medals || []).length ? ["", "1st", "2nd", "3rd"][Math.min(...h.medals.map(m => m.place))] : "—";
+      [[st.points, "POINTS"], [st.races, "RACES"], [best, "BEST"]].forEach(([v, k], i) => {
+        const x = 250 + i * 290;
+        g.fillStyle = "rgba(255,255,255,.07)"; g.fillRect(x - 125, 1340, 250, 170);
+        g.fillStyle = "#ffffff"; g.font = PXF(44); g.fillText(String(v), x, 1405);
+        g.fillStyle = "#bfb3d6"; g.font = PXF(18); g.fillText(k, x, 1470);
+      });
+      g.fillStyle = "#ff3d6e"; g.fillRect(150, 1555, 780, 100);
+      g.fillStyle = "#ffffff"; fit("RACE ME · @DAILYDERBY_HORSE", PXF, 720, 28); g.fillText("RACE ME · @DAILYDERBY_HORSE", 540, 1606);
+      g.fillStyle = "#bfb3d6"; g.font = SANS(32, 500); g.fillText("pixel69paddock.github.io", 540, 1700);
+      return new Promise(res => c.toBlob(res, "image/png"));
+    }
+    async function shareHorse(hd, mode) {
+      const url = horseUrl(hd), text = `My horse in the Daily Derby 🐎 Race me: follow @${IG}`;
+      if (mode === "story") {
+        const blob = await storyImage(hd); if (!blob) return toast("Couldn't make the image on this device.");
+        const file = new File([blob], `dailyderby-${norm(hd)}.png`, { type: "image/png" });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          try { await navigator.share({ files: [file], text: text + " " + url }); return; } catch (e) { if (e.name === "AbortError") return; }
+        }
+        const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = file.name; document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+        return toast("Story image saved. Post it and tag @" + IG + "!");
+      }
+      if (navigator.share && matchMedia("(pointer:coarse)").matches) { try { await navigator.share({ title: "Daily Derby", text, url }); return; } catch (e) { if (e.name === "AbortError") return; } }
+      try { await navigator.clipboard.writeText(url); toast("Link copied: " + url.replace("https://", "")); } catch { prompt("Copy this link:", url); }
+    }
+    const shareRow = hd => `<div class="share-row"><button class="btn btn-gold" type="button" data-share="story" data-h="${esc(hd)}">📲 Share to story</button><button class="btn btn-ghost" type="button" data-share="link" data-h="${esc(hd)}">🔗 Copy link</button></div>`;
+    document.addEventListener("click", e => { const b = e.target.closest("[data-share]"); if (b) shareHorse(b.dataset.h, b.dataset.share); });
+
     // finder
     $("#finder").addEventListener("submit", e => {
       e.preventDefault();
@@ -1118,6 +1268,7 @@
             ${s.races === 0 ? `<span class="chip debut">DEBUT</span>` : ""}
             ${stallOf[q] ? `<span class="chip stallc">Stall #${stallOf[q]}</span>` : ""}
           </div>
+          ${shareRow(h.handle)}
         </div>
         ${(() => {
           const mine = races.map(r => ({ r, x: (r.results || []).find(y => norm(y.handle) === q) })).filter(o => o.x);
@@ -1218,6 +1369,9 @@
     // builder
     builder(D, horses);
 
+    // pick 3 (daily tipster game)
+    picks(D, horses, byH);
+
     // sponsors: 3D course viewer (falls back to the flat map), spot list with prices, brand preview
     const spots = D.sponsorSpots || [];
     const SI = D.sponsorInfo || {}, CUR = SI.currency || "$";
@@ -1260,6 +1414,12 @@
         V3.select(id, from !== "init");
         if (from === "list") { const r = $("#s3d").getBoundingClientRect(); if (r.bottom < 80 || r.top > innerHeight) $("#s3d").scrollIntoView({ behavior: "smooth", block: "center" }); }
       }
+      // tapped a board on the front-page course: a small "sponsor it" bar instead of jumping away
+      if (from === "3d" && !$("#sponsorFold").open) {
+        const bar = $("#s3dPick");
+        bar.innerHTML = `<span><b>${esc(sel.name)}</b> · ${sel.status === "taken" ? "Booked" + (sel.sponsor ? " by " + esc(sel.sponsor) : "") : (sel.price ? money(sel.price) + " a week" : money(sel.seasonPrice) + " a season")}</span><button class="btn btn-neon" type="button" data-spot="${esc(sel.id)}">${sel.status === "taken" ? "See spots" : "Sponsor it →"}</button>`;
+        bar.hidden = false;
+      }
     }
     if (sel) pick(sel.id, "init");
     const pushPreview = () => V3 && V3.preview(brand.text || brand.logo ? brand : null);
@@ -1295,7 +1455,7 @@
           }
         });
         box.classList.add("ready");
-        if (sel) V3.select(sel.id, false);
+        if (sel && fold.open) V3.select(sel.id, false);
         pushPreview();
         if (matchMedia("(pointer:coarse)").matches) { $("#s3dTouch").hidden = false; $("#s3dHelp").hidden = true; }
       }).catch(fallback);
@@ -1310,8 +1470,111 @@
       const on = V3.view(b.dataset.view);
       document.querySelectorAll(".s3d-hud button[data-view=spin]").forEach(x => x.setAttribute("aria-pressed", String(on)));
     }));
+    // The course lives up front in "The track"; opening the sponsor section moves the same scene in there
+    // (one WebGL scene, never two) and puts it back on close. It loads once it's about to scroll into view.
     const fold = $("#sponsorFold");
-    if (fold.open) start3d(); else fold.addEventListener("toggle", () => { if (fold.open) start3d(); });
+    const near = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { near.disconnect(); start3d(); } }, { rootMargin: "400px 0px" });
+    near.observe(box);
+    const pickBar = $("#s3dPick");
+    fold.addEventListener("toggle", () => {
+      if (fold.open) { $("#s3dSponsorSlot").appendChild(box); pickBar.hidden = true; start3d(); if (V3 && sel) V3.select(sel.id, false); }
+      else $("#s3dHome").appendChild(box);
+    });
+    if (fold.open) $("#s3dSponsorSlot").appendChild(box);
+    pickBar.addEventListener("click", e => {
+      const b = e.target.closest("[data-spot]"); if (!b) return;
+      fold.open = true; pick(b.dataset.spot, "init");
+      requestAnimationFrame(() => $("#spotPanel").scrollIntoView({ behavior: "smooth", block: "center" }));
+    });
+  }
+
+  // Pick 3: comment "PICK @a @b @c" on the latest reel before the race. The hourly sync files each person's newest
+  // PICK comment under the next race day in derby.json: picks = { "6": { "alice": { picks: ["a","b","c"], at } } }.
+  // A tipster scores the race points (same table as the standings) their picks earn that day.
+  function picks(D, horses, byH) {
+    const day = D.nextRace?.day, open = D.nextRace && D.nextRace.status !== "closed";
+    const P = D.picks || {};
+    const entrants = [...new Set((D.nextRace?.entrants || []).map(norm))];
+    const inRace = new Set(entrants);
+    const hOf = h => byH[norm(h)] || { handle: h };
+    $("#pkTitle").textContent = day ? `Pick 3 for Day ${day}` : "Pick 3";
+    $("#pkHotH").textContent = day ? `🔥 Most backed for Day ${day}` : "🔥 Most backed";
+
+    // ---- tipster table: season totals from every day that has a result
+    const resultOf = {};
+    (D.races || []).forEach(r => { const m = {}; (r.results || []).forEach(x => m[norm(x.handle)] = x); resultOf[r.day] = m; });
+    const T = {};
+    Object.entries(P).forEach(([d, byWho]) => {
+      const res = resultOf[d]; if (!res) return;
+      Object.entries(byWho || {}).forEach(([who, e]) => {
+        const pts = (e.picks || []).slice(0, 3).reduce((a, h) => a + (res[norm(h)] ? racePts(res[norm(h)]) : 0), 0);
+        const t = T[norm(who)] || (T[norm(who)] = { who, total: 0, days: 0, best: 0 });
+        t.total += pts; t.days++; t.best = Math.max(t.best, pts);
+      });
+    });
+    const top = Object.values(T).sort((a, b) => b.total - a.total || b.best - a.best || a.days - b.days).slice(0, 10);
+    $("#pkTop").innerHTML = top.length
+      ? top.map((t, i) => `<li><span class="r">${i + 1}</span>${spriteTag(horseLook(hOf(t.who)), 26)}<span class="nm">@${esc(t.who)}</span><span><b>${t.total}</b> pts</span></li>`).join("")
+      : `<li class="none">No races scored yet. The first picks count from Day ${day || 1}.</li>`;
+    const today = P[day] || {}, count = {};
+    Object.values(today).forEach(e => (e.picks || []).slice(0, 3).forEach(h => count[norm(h)] = (count[norm(h)] || 0) + 1));
+    const hot = Object.entries(count).sort((a, b) => b[1] - a[1]).slice(0, 5);
+    const nT = Object.keys(today).length;
+    $("#pkHot").innerHTML = hot.length
+      ? hot.map(([h, n], i) => `<li><span class="r">${i + 1}</span>${spriteTag(horseLook(hOf(h)), 26)}<span class="nm">${horseName(hOf(h)) ? `<b>${esc(horseName(hOf(h)).toUpperCase())}</b> ` : ""}@${esc(h)}</span><span>${n} pick${n === 1 ? "" : "s"}</span></li>`).join("") + `<li class="none">${nT} tipster${nT === 1 ? "" : "s"} so far</li>`
+      : `<li class="none">No picks yet for this race. Be the first.</li>`;
+
+    // ---- your picks already in?
+    let me = norm(savedHorse().handle || ""); if (!me) { try { me = norm(localStorage.getItem("dd-stall") || ""); } catch {} }
+    if (me && today[me]) { $("#pkMine").hidden = false; $("#pkMine").textContent = `✓ @${me}, your Day ${day} picks are in: ${(today[me].picks || []).map(h => "@" + h).join(" ")}`; }
+    if (me && inRace.has(me)) $("#pkMe").hidden = false;
+
+    // ---- the picker
+    let chosen = []; try { const s = JSON.parse(localStorage.getItem("dd-picks") || "{}"); if (s.day === day) chosen = (s.picks || []).filter(h => inRace.has(h)).slice(0, 3); } catch {}
+    const save = () => { try { localStorage.setItem("dd-picks", JSON.stringify({ day, picks: chosen })); } catch {} };
+    const label = h => { const x = hOf(h), n = horseName(x); return n ? `<b>${esc(n.toUpperCase())}</b><small>@${esc(x.handle || h)}</small>` : `<span>@${esc(x.handle || h)}</span>`; };
+    function drawSlots() {
+      $("#pkSlots").innerHTML = [0, 1, 2].map(i => {
+        const h = chosen[i];
+        return h ? `<li class="pk-slot full"><span class="n">${i + 1}</span>${spriteTag(horseLook(hOf(h)), 34)}<span class="nm">${label(h)}</span><span style="color:var(--muted);font-size:13px;white-space:nowrap">${stats(hOf(h)).points} pts</span><button class="x" type="button" data-rm="${i}" aria-label="Remove @${esc(h)}">×</button></li>`
+          : `<li class="pk-slot"><span class="n">${i + 1}</span>${i === chosen.length ? "Pick a horse above" : "Empty"}</li>`;
+      }).join("");
+      $("#pkOut").hidden = !chosen.length;
+      $("#pkCode").textContent = "PICK " + chosen.map(h => "@" + (hOf(h).handle || h)).join(" ");
+      $("#pkGo").textContent = chosen.length < 3 ? `Copy & open the reel (${chosen.length}/3) →` : "Copy & open the reel →";
+    }
+    const add = h => {
+      h = norm(h); if (!inRace.has(h)) return toast(`@${h} isn't in the Day ${day} race.`);
+      if (chosen.includes(h)) return toast("Already picked.");
+      if (chosen.length >= 3) return toast("That's three. Remove one first.");
+      chosen.push(h); save(); drawSlots();
+    };
+    $("#pkSlots").addEventListener("click", e => { const b = e.target.closest("[data-rm]"); if (b) { chosen.splice(+b.dataset.rm, 1); save(); drawSlots(); } });
+    // search the handles and horse names of everyone in the next race
+    const idx = entrants.map(h => ({ h, s: (h + " " + horseName(hOf(h))).toLowerCase() }));
+    const sugg = $("#pkSugg"), q = $("#pkSearch");
+    function suggest() {
+      const t = q.value.trim().toLowerCase().replace(/^@/, "");
+      if (!t) { sugg.innerHTML = ""; return; }
+      const hits = idx.filter(x => x.s.includes(t)).sort((a, b) => (a.h.startsWith(t) ? 0 : 1) - (b.h.startsWith(t) ? 0 : 1) || stats(hOf(b.h)).points - stats(hOf(a.h)).points).slice(0, 6);
+      sugg.innerHTML = hits.length ? hits.map(x => `<button class="pk-opt" type="button" role="option" data-add="${esc(x.h)}">${spriteTag(horseLook(hOf(x.h)), 34)}<span class="nm">${label(x.h)}</span><span class="pts">${stats(hOf(x.h)).points} pts</span></button>`).join("")
+        : `<p class="code-note">No horse in the Day ${day} race matches "${esc(t)}".</p>`;
+    }
+    q.addEventListener("input", suggest);
+    q.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); const b = sugg.querySelector("[data-add]"); if (b) b.click(); } });
+    sugg.addEventListener("click", e => { const b = e.target.closest("[data-add]"); if (!b) return; add(b.dataset.add); q.value = ""; sugg.innerHTML = ""; });
+    $("#pkMe").addEventListener("click", () => add(me));
+    $("#pkForm").addEventListener("click", () => {
+      const best = entrants.filter(h => !chosen.includes(h)).sort((a, b) => stats(hOf(b)).points - stats(hOf(a)).points || stats(hOf(b)).gold - stats(hOf(a)).gold);
+      const t = best[Math.floor(Math.random() * Math.min(12, best.length))]; if (t) add(t);
+    });
+    $("#pkLucky").addEventListener("click", () => { const left = entrants.filter(h => !chosen.includes(h)); if (left.length) add(left[Math.floor(Math.random() * left.length)]); });
+    $("#pkGo").addEventListener("click", async () => {
+      if (!open) return toast("Picks are closed while the race is being run.");
+      try { await navigator.clipboard.writeText($("#pkCode").textContent); toast("Copied! Paste it as a comment."); } catch { toast("Comment: " + $("#pkCode").textContent); }
+      setTimeout(() => window.open(D.latestReel || "https://www.instagram.com/" + IG + "/", "_blank", "noopener"), 350);
+    });
+    drawSlots();
   }
 
   function builder(D, horses) {

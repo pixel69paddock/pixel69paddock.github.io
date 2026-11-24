@@ -263,7 +263,10 @@ export function mount(el, spots, opts = {}) {
   controls.enableDamping = true; controls.dampingFactor = 0.08; controls.enablePan = false;
   controls.minDistance = 25; controls.maxDistance = 340; controls.maxPolarAngle = 1.42;
   controls.minAzimuthAngle = -1.25; controls.maxAzimuthAngle = 1.25;
-  camera.position.set(...VIEWS.race.cam); controls.target.set(...VIEWS.race.look); controls.update();
+  // tall (phone) frames are narrow, so the race cam backs off and looks a bit higher to keep the blimp in shot
+  const TALL_RACE = { cam: [0, 135, 220], look: [0, 55, -40] };
+  const raceView = () => (el.clientWidth / Math.max(1, el.clientHeight) < 1 ? TALL_RACE : VIEWS.race);
+  camera.position.set(...raceView().cam); controls.target.set(...raceView().look); controls.update();
   let fly = null;
   function flyTo(v) {
     if (!v) return;
@@ -333,10 +336,13 @@ export function mount(el, spots, opts = {}) {
     select(id, move = true) {
       selected = id; repaint();
       const lay = LAYOUT[id];
-      if (move && lay) flyTo(id === "blimp" ? { cam: [blimp.position.x + 55, 112, 40], look: [blimp.position.x, 100, -40] } : lay);
+      let v = lay && (id === "blimp" ? { cam: [blimp.position.x + 55, 112, 40], look: [blimp.position.x, 100, -40] } : lay);
+      // narrow (phone) frames: back the camera off along its line of sight so the whole board fits
+      if (v && el.clientWidth < el.clientHeight) v = { look: v.look, cam: v.cam.map((c, i) => v.look[i] + (c - v.look[i]) * 1.7) };
+      if (move && v) flyTo(v);
     },
     preview(p) { preview = p; repaint(); },
-    view(name) { if (name === "spin") { autoSpin = !autoSpin; return autoSpin; } autoSpin = false; flyTo(VIEWS[name]); return false; },
+    view(name) { if (name === "spin") { autoSpin = !autoSpin; return autoSpin; } autoSpin = false; flyTo(name === "race" ? raceView() : VIEWS[name]); return false; },
     interact(on) { controls.enabled = on; renderer.domElement.style.touchAction = on ? "none" : "pan-y"; },
     dispose() { cancelAnimationFrame(raf); ro.disconnect(); io.disconnect(); renderer.dispose(); }
   };
