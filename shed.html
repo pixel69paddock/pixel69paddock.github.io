@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<title>The Shed · Daily Derby</title>
+<meta name="description" content="Walk the LeBron Stable in 3D. Find your stall by @handle and style your horse: coat, mane, silks, saddle and more. Free.">
+<meta property="og:title" content="The Shed · Daily Derby">
+<meta property="og:description" content="Your name on the plate. Your horse in the stall. Style it free.">
+<meta name="theme-color" content="#1a0f09">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1a0f09; --panel:#24170e; --panel2:#2e1e12; --line:#4a3322; --ink:#f4ecdf; --muted:#c8b49a; --dim:#9c8670;
+    --neon:#ff3d6e; --gold:#f5c242; --silver:#cfd6e3; --bronze:#d08a4e; --cyan:#3ad6ff; --night:#170f26;
+    --px:"Press Start 2P", ui-monospace, monospace;
+    --sans:"Space Grotesk", system-ui, -apple-system, Segoe UI, sans-serif;
+    --sheet:0px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:16px/1.45 var(--sans);overflow:hidden;-webkit-tap-highlight-color:transparent}
+  button{font:inherit;color:inherit}
+  #stage{position:fixed;inset:0}
+  #stage canvas{display:block;width:100%;height:100%;cursor:grab}
+  #stage canvas:active{cursor:grabbing}
+  .px{font-family:var(--px)}
+
+  /* top bar */
+  .top{position:fixed;left:0;right:0;top:0;z-index:7;display:flex;align-items:center;gap:10px;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;
+    background:linear-gradient(#1a0f09ee,#1a0f0900);pointer-events:none}
+  .top > *{pointer-events:auto}
+  .back{flex:0 0 auto;display:grid;place-items:center;width:40px;height:40px;border:2px solid #000;border-radius:6px;background:var(--panel2);color:var(--gold);text-decoration:none;font-family:var(--px);font-size:14px;box-shadow:3px 3px 0 #000}
+  .sign{flex:0 0 auto;background:#1c120b;border:3px solid var(--gold);border-radius:4px;padding:8px 10px;font-family:var(--px);font-size:11px;line-height:1.3;color:var(--gold);box-shadow:3px 3px 0 #000;white-space:nowrap}
+  .sign small{display:block;font-size:8px;color:var(--muted);margin-top:4px}
+  .find{position:relative;flex:1 1 auto;max-width:420px;margin-left:auto}
+  .find label{display:flex;align-items:center;background:#120b06;border:2px solid var(--line);border-radius:6px;padding:0 10px;height:44px;box-shadow:3px 3px 0 #000}
+  .find label:focus-within{border-color:var(--cyan)}
+  .find span{color:var(--dim);font-weight:700}
+  .find input{flex:1;min-width:0;background:transparent;border:0;color:var(--ink);font:500 16px var(--sans);padding:0 6px;outline:none}
+  .find input::placeholder{color:var(--dim)}
+  .sugg{position:absolute;left:0;right:0;top:50px;background:#120b06;border:2px solid var(--line);border-radius:6px;overflow:hidden;box-shadow:0 12px 30px rgba(0,0,0,.6);display:none}
+  .sugg.show{display:block}
+  .sugg button{display:flex;width:100%;align-items:center;gap:10px;padding:10px 12px;background:none;border:0;border-bottom:1px solid #2a1c12;text-align:left;cursor:pointer;font-size:15px}
+  .sugg button:last-child{border-bottom:0}
+  .sugg button:hover,.sugg button.act{background:#2e1e12}
+  .sugg .no{margin-left:auto;font-family:var(--px);font-size:9px;color:var(--muted)}
+  .sugg .miss{padding:12px;color:var(--muted);font-size:14px}
+  .dot{width:10px;height:10px;border-radius:50%;border:1px solid #000;flex:0 0 auto}
+  .dot.g{background:var(--gold)} .dot.s{background:var(--silver)} .dot.b{background:var(--bronze)}
+
+  /* camera hud */
+  .hud{position:fixed;z-index:4;left:16px;bottom:calc(16px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:8px;align-items:flex-start;transition:bottom .25s}
+  .hud .row{display:flex;flex-wrap:wrap;gap:6px}
+  .hud button{background:rgba(28,18,11,.88);border:2px solid #000;border-radius:5px;color:#f4e4bc;font:600 13px var(--sans);padding:8px 11px;cursor:pointer;box-shadow:2px 2px 0 #000;min-height:38px}
+  .hud button:hover{background:#3a2718}
+  .hud button[aria-pressed="true"]{border-color:var(--neon);background:rgba(255,61,110,.35);color:#fff}
+  .hud .nav button{font-family:var(--px);font-size:12px;min-width:44px}
+  .hud .turn{display:inline-flex;gap:6px;margin-left:6px;padding-left:8px;border-left:2px solid rgba(0,0,0,.5)}
+  .hud .turn button[data-turn]{font-family:var(--sans);font-size:20px;line-height:1;touch-action:none;user-select:none;-webkit-user-select:none}
+  .hud .turn #faceMe{font-family:var(--sans);font-size:13px}
+  .hud .turn button.held{border-color:var(--cyan);background:rgba(58,214,255,.25)}
+  .hud .hint{color:#bfae93;font-size:12px;text-shadow:0 1px 2px #000}
+
+  /* panel: right column on desktop, bottom sheet on phones */
+  #panel{position:fixed;z-index:6;background:var(--panel);border:3px solid #000;box-shadow:0 0 0 2px var(--line),0 20px 60px rgba(0,0,0,.55);display:flex;flex-direction:column;overflow:hidden}
+  .ph{display:flex;align-items:center;gap:8px;padding:12px 14px 10px;background:repeating-linear-gradient(90deg,#5c3e26 0 22px,#4a311d 22px 24px);border-bottom:3px solid #000;cursor:default}
+  .ph .no{font-family:var(--px);font-size:12px;color:#fff6e0;text-shadow:2px 2px 0 #000}
+  .tier{font-weight:700;font-size:12px;padding:2px 9px;border-radius:999px;border:2px solid;white-space:nowrap}
+  .tier.g{color:#2a1d05;background:var(--gold);border-color:#8a6510} .tier.s{color:#2b2f3a;background:var(--silver);border-color:#7d8597} .tier.b{color:#2b1606;background:var(--bronze);border-color:#7a4a20}
+  .ph .grab{margin-left:auto;background:#1c120b;border:2px solid #000;border-radius:5px;width:38px;height:32px;cursor:pointer;color:var(--gold);font-size:14px}
+  .pb{overflow:auto;padding:14px 14px 18px;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+  .who h2{font-family:var(--px);font-size:16px;line-height:1.35;color:var(--gold);margin:0 0 4px;word-break:break-word}
+  .who .h{font-weight:700;font-size:17px;word-break:break-all}
+  .who .meta{display:flex;flex-wrap:wrap;gap:6px 12px;color:var(--muted);font-size:13px;margin-top:6px}
+  .who .meta b{color:var(--ink)}
+  .orig{color:var(--gold);font-weight:700}
+  .sec{margin-top:16px}
+  .sec h3{font:700 12px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 8px;display:flex;justify-content:space-between}
+  .sec h3 em{font-style:normal;letter-spacing:0;text-transform:none;color:var(--ink);font-weight:500}
+  .sw{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .sw button{position:relative;height:48px;border:2px solid #000;border-radius:5px;cursor:pointer;box-shadow:2px 2px 0 #000;image-rendering:pixelated;background-size:8px 8px}
+  .sw button[aria-pressed="true"]{outline:3px solid var(--cyan);outline-offset:2px}
+  .sw button span{position:absolute;left:0;right:0;bottom:-1px;font:600 10px var(--sans);color:#fff;text-shadow:0 1px 2px #000,0 0 3px #000;text-align:center}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chips button{background:#1c120b;border:2px solid var(--line);border-radius:999px;padding:7px 12px;cursor:pointer;font-size:14px;color:var(--ink);min-height:38px}
+  .chips button[aria-pressed="true"]{border-color:var(--cyan);background:rgba(58,214,255,.16)}
+  .code{margin-top:18px;background:#120b06;border:2px dashed var(--gold);border-radius:6px;padding:12px;text-align:center}
+  .code .c{font-family:var(--px);font-size:16px;color:var(--gold)}
+  .code p{margin:8px 0 0;font-size:13px;color:var(--muted)}
+  .code p b{color:var(--ink)}
+  .acts{display:grid;gap:8px;margin-top:12px}
+  .btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:46px;border:2px solid #000;border-radius:6px;font:700 15px var(--sans);cursor:pointer;text-decoration:none;color:var(--ink);background:var(--panel2);box-shadow:3px 3px 0 #000;padding:8px 12px}
+  .btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #000}
+  .btn-neon{background:var(--neon);color:#fff;box-shadow:3px 3px 0 #8f1438}
+  .btn-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .btn.soon{background:repeating-linear-gradient(135deg,#2a1d2e 0 10px,#241828 10px 20px);border:2px dashed #7a5a8a;color:#cdb8dd;box-shadow:none;cursor:not-allowed}
+  .btn.soon small{font-weight:500;color:#a993b8}
+  .fine{color:var(--dim);font-size:12px;margin:10px 0 0}
+  .peek-cta{display:none;width:100%;margin-top:12px}
+  .empty-st{color:var(--muted);margin:0}
+  .empty-st b{color:var(--ink)}
+
+  @media (min-width:900px){
+    #panel{right:16px;top:76px;bottom:16px;width:372px;border-radius:8px}
+    .ph .grab{display:none}
+  }
+  @media (max-width:899px){
+    .top{gap:8px}
+    .sign{font-size:9px;padding:7px 8px}
+    .sign small{display:none}
+    #panel{left:0;right:0;bottom:0;max-height:54dvh;border-radius:12px 12px 0 0;border-bottom:0;padding-bottom:env(safe-area-inset-bottom);transition:transform .28s cubic-bezier(.2,.8,.2,1)}
+    #panel.peek .pb .full{display:none}
+    #panel.peek .peek-cta{display:flex}
+    #panel.peek .pb{padding-bottom:14px}
+    .ph{cursor:pointer}
+    .ph::before{content:"";position:absolute;left:50%;top:4px;width:44px;height:4px;margin-left:-22px;border-radius:4px;background:#00000088}
+    .hud{bottom:calc(var(--sheet) + 12px)}
+    .hud .hint{display:none}
+    body.sheet-open #views{display:none}
+    .sw button{height:40px}
+    .sec{margin-top:12px}
+  }
+  @media (max-width:420px){ .sign{display:none} }
+  #panel[hidden]{display:none}
+
+  #toast{position:fixed;left:50%;top:calc(74px + env(safe-area-inset-top));transform:translate(-50%,-10px);z-index:9;background:#000;color:#fff;border:2px solid var(--gold);border-radius:6px;padding:10px 14px;font-size:14px;max-width:min(92vw,460px);text-align:center;opacity:0;pointer-events:none;transition:.2s}
+  #toast.show{opacity:1;transform:translate(-50%,0)}
+  .loading{position:fixed;inset:0;display:grid;place-items:center;z-index:8;background:var(--bg);font-family:var(--px);font-size:12px;color:var(--gold);transition:opacity .4s}
+  .loading.done{opacity:0;pointer-events:none;visibility:hidden}
+
+  /* reel mode: 1080x1920 film */
+  body.reel{display:grid;place-items:center;background:#000}
+  body.reel .top,body.reel .hud,body.reel #panel{display:none}
+  #reelComp{height:100vh;width:auto;aspect-ratio:9/16;max-width:100vw;display:block;image-rendering:auto}
+  .reel-ctl{position:fixed;right:16px;top:16px;display:flex;flex-direction:column;gap:8px;z-index:5;width:220px}
+  .reel-ctl p{color:#bbb;font-size:12px;margin:0}
+  body.clean .reel-ctl{display:none}
+  /* embed: the live card on the homepage */
+  body.embed .top,body.embed .hud,body.embed #panel,body.embed .loading,body.embed #toast{display:none!important}
+  body.embed #stage canvas{cursor:pointer}
+</style>
+</head>
+<body>
+<div class="loading" id="loading">LOADING THE BARN…</div>
+<div id="stage" aria-label="3D barn: drag to look around, scroll or pinch to zoom, tap a stall"></div>
+
+<header class="top">
+  <a class="back" href="./" title="Back to the paddock" aria-label="Back to the paddock">‹</a>
+  <div class="sign" id="sign">THE LEBRON STABLE<small id="signCount">— of 10,000 stalls filled</small></div>
+  <div class="find">
+    <label><span>@</span><input id="q" type="search" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Find your stall" aria-label="Find a stall by Instagram handle"></label>
+    <div class="sugg" id="sugg" role="listbox"></div>
+  </div>
+</header>
+
+<div class="hud" id="hud">
+  <div class="row nav">
+    <button type="button" id="prev" aria-label="Previous stall">‹</button>
+    <button type="button" id="next" aria-label="Next stall">›</button>
+    <button type="button" id="mine" style="font-family:var(--sans);font-size:13px">My stall</button>
+    <span class="turn" role="group" aria-label="Turn the horse">
+      <button type="button" data-turn="1" aria-label="Turn the horse left (hold to keep turning)" title="Turn left · hold to spin">⟲</button>
+      <button type="button" data-turn="-1" aria-label="Turn the horse right (hold to keep turning)" title="Turn right · hold to spin">⟳</button>
+      <button type="button" id="faceMe" title="Turn to face you">Face me</button>
+    </span>
+  </div>
+  <div class="row" id="views">
+    <button type="button" data-v="aisle">Aisle</button>
+    <button type="button" data-v="close" aria-pressed="true">Close-up</button>
+    <button type="button" data-v="side">Side</button>
+    <button type="button" data-v="spin">Auto-spin</button>
+  </div>
+  <div class="hint">Drag to look · scroll to zoom · tap a stall · ← → stalls · Q / E turn</div>
+</div>
+
+<aside id="panel" class="peek" hidden aria-live="polite">
+  <div class="ph" id="ph">
+    <span class="no" id="pNo">STALL #—</span><span class="tier" id="pTier"></span>
+    <button class="grab" id="grab" type="button" aria-label="Show or hide the style panel">▲</button>
+  </div>
+  <div class="pb" id="pb"></div>
+</aside>
+<div id="toast" role="status"></div>
+
+<script type="module">
+  import { mount, tierOf, ACC, SADDLES, POSES } from "./assets/shed3d.js";
+  const IG = "dailyderby_horse", IGP = "https://www.instagram.com/" + IG + "/";
+  const $ = (s, r = document) => r.querySelector(s);
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const norm = h => String(h || "").trim().replace(/^@+/, "").toLowerCase();
+  const validLook = c => /^[1-4]{4}$/.test(String(c || ""));
+  // same fallback look as index.html, so an unclaimed horse looks the same here and in the race art
+  const lookFor = h => { let x = 0; for (const c of norm(h)) x = (x * 31 + c.charCodeAt(0)) >>> 0; let o = ""; for (let i = 0; i < 4; i++) { o += (x % 4) + 1; x = Math.floor(x / 4); } return o; };
+  const toast = m => { const t = $("#toast"); t.textContent = m; t.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove("show"), 3400); };
+  const P = new URLSearchParams(location.search);
+  const getJSON = u => fetch(u + "?t=" + Date.now(), { cache: "no-store" }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
+  const store = { get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} } };
+
+  const [D, L] = await Promise.all([getJSON("data/derby.json"), getJSON("data/looks.json").catch(() => null)]);
+  const LOOKS = L && L.parts;
+  const horses = (D.horses || []).filter(h => h.status !== "removed");
+  // stall order = date followed (horses[].rank, 1 = first follower), same as the stable map on index.html
+  const STALLS = horses.filter(h => h.rank).sort((a, b) => a.rank - b.rank);
+  const FILLED = STALLS.length, TOTAL = (D.stable && D.stable.stalls) || 10000;
+  const GOLD_N = (D.founders && D.founders.goldCount) || 800, SILVER_TO = (D.founders && D.founders.silverTo) || 5000;
+  const stallOf = {}; STALLS.forEach((h, i) => stallOf[norm(h.handle)] = i + 1);
+  // first claimer of each look code (✦ Original)
+  const OWNER = {};
+  if (D.originals) Object.entries(D.originals).forEach(([c, h]) => { if (validLook(c)) OWNER[c] = norm(h); });
+  else horses.forEach(h => { if (validLook(h.look) && !OWNER[h.look]) OWNER[h.look] = norm(h.handle); });
+  const stName = D.stable && D.stable.name ? String(D.stable.name).toUpperCase().replace(/^THE\s+/, "").replace(/\s+STABLES?$/, "") : "LEBRON";
+  $("#sign").firstChild.textContent = `THE ${stName} STABLE`;
+  $("#signCount").textContent = `${FILLED.toLocaleString()} of ${TOTAL.toLocaleString()} stalls filled`;
+
+  // drafts: looks tried on this device, per handle (preview only; the claim is the comment)
+  let DRAFT = store.get("dd-shed", {});
+  const draftOf = h => DRAFT[norm(h)] || null;
+  const officialLook = h => validLook(h.look) ? h.look : lookFor(h.handle);
+  function stateOf(k) {
+    const h = STALLS[k - 1]; if (!h) return null;
+    const d = draftOf(h.handle) || {};
+    return { handle: h.handle, name: h.name || "", look: d.look || officialLook(h), saddle: d.saddle ?? 1, acc: d.acc || [], original: !!h.original, h };
+  }
+
+  // ------- reel mode: 1080x1920 move-in film -------
+  function runReel() {
+    document.body.classList.add("reel"); $("#loading").classList.add("done");
+    if (P.has("clean")) document.body.classList.add("clean");
+    const comp = document.createElement("canvas"); comp.id = "reelComp"; comp.width = 1080; comp.height = 1920; document.body.appendChild(comp);
+    const k = +P.get("stall") || FILLED + 1, plate = P.get("plate") || "@YOU";
+    const PXF = '"Press Start 2P", monospace';
+    const fade = (T, a, b, f = 0.35) => Math.max(0, Math.min(1, (T - a) / f, (b - T) / f));
+    const line = (x, s, y, size, col, a) => {
+      if (a <= 0) return; x.save(); x.globalAlpha = a; x.font = `${size}px ${PXF}`; x.textAlign = "center"; x.textBaseline = "middle";
+      x.lineJoin = "round"; x.lineWidth = size * 0.32; x.strokeStyle = "#000"; x.strokeText(s, 540, y);
+      x.fillStyle = col; x.fillText(s, 540, y); x.restore();
+    };
+    const band = (x, y0, y1, a) => { if (a <= 0) return; const g = x.createLinearGradient(0, y0 - 60, 0, y1 + 60); g.addColorStop(0, "rgba(10,5,3,0)"); g.addColorStop(0.25, `rgba(10,5,3,${0.62 * a})`); g.addColorStop(0.75, `rgba(10,5,3,${0.62 * a})`); g.addColorStop(1, "rgba(10,5,3,0)"); x.fillStyle = g; x.fillRect(0, y0 - 60, 1080, y1 - y0 + 120); };
+    const overlay = (x, T, Wd, Ht) => {
+      const v = x.createRadialGradient(540, 900, 500, 540, 900, 1250); v.addColorStop(0, "rgba(0,0,0,0)"); v.addColorStop(1, "rgba(0,0,0,.55)"); x.fillStyle = v; x.fillRect(0, 0, Wd, Ht);
+      let a = fade(T, 0.3, 4.9); band(x, 1150, 1340, a); line(x, "THIS HORSE", 1200, 64, "#fff6e0", a); line(x, "HAS NO OWNER", 1290, 64, "#ff3d6e", a);
+      a = fade(T, 5.2, 9.5); band(x, 1160, 1330, a); line(x, `STALL #${k.toLocaleString("en-US")}`, 1210, 48, "#f5c242", a); line(x, "STILL EMPTY", 1285, 32, "#e9d9bf", a);
+      a = fade(T, 9.8, 11.7); band(x, 1190, 1310, a); line(x, "NOT FOR LONG…", 1250, 48, "#fff6e0", a);
+      a = fade(T, 12.4, 16.6); band(x, 1120, 1420, a); line(x, "FOLLOW", 1165, 56, "#fff6e0", a); line(x, "@" + IG.toUpperCase(), 1245, 38, "#ff3d6e", a); line(x, "YOUR NAME. YOUR STALL.", 1320, 30, "#f5c242", a); line(x, "FREE.", 1375, 30, "#f5c242", a);
+      line(x, `THE ${stName} STABLE · ${TOTAL.toLocaleString("en-US")} STALLS`, 1470, 22, "#e9d9bf", 0.85);
+    };
+    const freeze = P.has("t") ? +P.get("t") : null;
+    const api = mount(document.body, {
+      total: TOTAL, gold: GOLD_N, silver: SILVER_TO, looks: LOOKS, getStall: stateOf,
+      reel: { k, plate, look: P.get("look") || "4211", saddle: 1, acc: [], freeze, comp, overlay }
+    });
+    const ctl = document.createElement("div"); ctl.className = "reel-ctl";
+    ctl.innerHTML = `<button class="btn" id="rReplay">▶ Replay</button><button class="btn btn-neon" id="rRec">● Record 1080×1920</button><button class="btn" id="rHide">Hide buttons</button><a class="btn" href="shed.html">← Back to shed</a>
+      <p>Or screen-record this window. <b>Hide buttons</b> first; press Esc to bring them back. ?plate=@NAME changes the plate; ?t=6 freezes a frame.</p>`;
+    document.body.appendChild(ctl);
+    $("#rReplay").onclick = () => api.restartReel();
+    $("#rHide").onclick = () => document.body.classList.add("clean");
+    addEventListener("keydown", e => { if (e.key === "Escape") document.body.classList.remove("clean"); });
+    $("#rRec").onclick = () => {
+      const types = ["video/mp4;codecs=avc1.640028", "video/mp4", "video/webm;codecs=vp9", "video/webm"];
+      const type = types.find(t => window.MediaRecorder && MediaRecorder.isTypeSupported(t));
+      if (!type) { toast("This browser can't record. Screen-record the window instead."); return; }
+      const rec = new MediaRecorder(comp.captureStream(30), { mimeType: type, videoBitsPerSecond: 14e6 }), parts = [];
+      rec.ondataavailable = e => e.data.size && parts.push(e.data);
+      rec.onstop = () => { const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob(parts, { type })); a.download = "stall-reel-1080x1920." + (type.includes("mp4") ? "mp4" : "webm"); a.click(); $("#rRec").textContent = "● Record 1080×1920"; };
+      api.restartReel(); rec.start(); $("#rRec").textContent = "Recording…";
+      setTimeout(() => rec.stop(), api.reelLength * 1000);
+    };
+  }
+
+  if (P.has("reel")) runReel(); else runShed();
+
+  // ------- the interactive shed -------
+  function runShed() {
+  let ME = norm(store.get("dd-stall-h", null) || (() => { try { return localStorage.getItem("dd-stall") || ""; } catch { return ""; } })());
+  const startH = norm(P.get("h") || "");
+  const EMBED = P.has("embed");
+  if (EMBED) document.body.classList.add("embed");
+  const start = +P.get("stall") || stallOf[startH] || (EMBED ? FILLED + 1 : stallOf[ME]) || FILLED;   // default: the newest follower, next to the first empty stall
+  let cur = start;
+
+  const api = mount($("#stage"), {
+    total: TOTAL, gold: GOLD_N, silver: SILVER_TO, looks: LOOKS, start, lite: EMBED, view: EMBED ? "aisle" : ["aisle", "close", "side"].includes(P.get("view")) ? P.get("view") : "close",
+    getStall: stateOf,
+    onPick: k => { if (k !== cur) go(k); else openSheet(true); },
+    onSpin: on => { const b = $('#views [data-v="spin"]'); b.setAttribute("aria-pressed", on); }
+  });
+  setTimeout(() => $("#loading").classList.add("done"), 250);
+
+  // views
+  $("#views").addEventListener("click", e => {
+    const b = e.target.closest("button"); if (!b) return;
+    const v = b.dataset.v, on = api.view(v);
+    document.querySelectorAll("#views button").forEach(x => x.setAttribute("aria-pressed", v === "spin" ? (x === b ? on : x.dataset.v === api.viewName && x.getAttribute("aria-pressed") === "true") : x === b));
+  });
+  // turn the horse: tap = 45°, hold = keep turning
+  document.querySelectorAll("[data-turn]").forEach(b => {
+    let t0 = 0;
+    const dir = +b.dataset.turn;
+    b.addEventListener("pointerdown", e => { e.preventDefault(); b.setPointerCapture(e.pointerId); t0 = performance.now(); b.classList.add("held"); b._hold = setTimeout(() => api.turn(cur, { dir }), 220); });
+    const end = () => { if (!t0) return; clearTimeout(b._hold); b.classList.remove("held"); if (performance.now() - t0 < 220) api.turn(cur, { step: dir * Math.PI / 4 }); else api.turn(cur, { dir: 0 }); t0 = 0; };
+    b.addEventListener("pointerup", end); b.addEventListener("pointercancel", end); b.addEventListener("lostpointercapture", end);
+    b.addEventListener("contextmenu", e => e.preventDefault());
+  });
+  $("#faceMe").onclick = () => api.turn(cur, { face: true });
+  $("#prev").onclick = () => go(Math.max(1, cur - 1));
+  $("#next").onclick = () => go(Math.min(TOTAL, cur + 1));
+  $("#mine").onclick = () => { if (ME && stallOf[ME]) go(stallOf[ME]); else { $("#q").focus(); toast("Type your @handle to find your stall."); } };
+  addEventListener("keydown", e => {
+    if (e.target.closest("input")) return;
+    if (e.key === "ArrowLeft") go(Math.max(1, cur - 1));
+    if (e.key === "ArrowRight") go(Math.min(TOTAL, cur + 1));
+    if (e.key === "q" || e.key === "Q") api.turn(cur, { step: Math.PI / 4 });
+    if (e.key === "e" || e.key === "E") api.turn(cur, { step: -Math.PI / 4 });
+  });
+
+  function go(k, view) {
+    cur = k; api.focus(k, { view }); render();
+  }
+
+  // search
+  const q = $("#q"), sg = $("#sugg"); let act = 0, list = [];
+  const ALL = STALLS.map((h, i) => ({ k: i + 1, n: norm(h.handle), h }));
+  function suggest() {
+    const s = norm(q.value); act = 0;
+    if (!s) { sg.classList.remove("show"); return; }
+    const a = ALL.filter(x => x.n.startsWith(s)), b = ALL.filter(x => !x.n.startsWith(s) && x.n.includes(s));
+    list = a.concat(b).slice(0, 7);
+    sg.innerHTML = list.length ? list.map((x, i) => `<button type="button" role="option" data-k="${x.k}" class="${i === act ? "act" : ""}"><i class="dot ${tierOf(x.k, GOLD_N, SILVER_TO)}"></i>@${esc(x.h.handle)}<span class="no">#${x.k.toLocaleString()}</span></button>`).join("")
+      : `<div class="miss">No stall for <b>@${esc(s)}</b> yet. Follow <b>@${IG}</b> and your stall appears at the next check-in (every 5 hours).</div>`;
+    sg.classList.add("show");
+  }
+  q.addEventListener("input", suggest);
+  q.addEventListener("focus", suggest);
+  q.addEventListener("keydown", e => {
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); act = (act + (e.key === "ArrowDown" ? 1 : -1) + list.length) % Math.max(1, list.length); [...sg.querySelectorAll("button")].forEach((b, i) => b.classList.toggle("act", i === act)); }
+    if (e.key === "Enter" && list[act]) pick(list[act].k);
+    if (e.key === "Escape") { sg.classList.remove("show"); q.blur(); }
+  });
+  sg.addEventListener("pointerdown", e => { const b = e.target.closest("button"); if (b) { e.preventDefault(); pick(+b.dataset.k); } });
+  document.addEventListener("pointerdown", e => { if (!e.target.closest(".find")) sg.classList.remove("show"); });
+  function pick(k) {
+    sg.classList.remove("show"); q.value = ""; q.blur();
+    const h = STALLS[k - 1];
+    if (h && !ME) { ME = norm(h.handle); store.set("dd-stall-h", ME); try { localStorage.setItem("dd-stall", ME); } catch {} }
+    go(k, "close"); openSheet(true);
+  }
+
+  // panel
+  const panel = $("#panel"), pb = $("#pb"), wide = matchMedia("(min-width:900px)");
+  let sheetOpen = false;
+  function openSheet(on) { sheetOpen = on; panel.classList.toggle("peek", !on); document.body.classList.toggle("sheet-open", on && !wide.matches); $("#grab").textContent = on ? "▼" : "▲"; layoutInset(); }
+  $("#ph").addEventListener("click", e => { if (!wide.matches) openSheet(!sheetOpen); });
+  function layoutInset() {
+    requestAnimationFrame(() => {
+      if (panel.hidden) { api.setInset({}); document.documentElement.style.setProperty("--sheet", "0px"); return; }
+      if (wide.matches) { api.setInset({ right: panel.offsetWidth + 24 }); document.documentElement.style.setProperty("--sheet", "0px"); }
+      else { const h = panel.offsetHeight; api.setInset({ bottom: h }); document.documentElement.style.setProperty("--sheet", h + "px"); }
+    });
+  }
+  wide.addEventListener("change", layoutInset);
+  new ResizeObserver(layoutInset).observe(panel);
+
+  const rgb = c => `rgb(${c.join(",")})`;
+  const TIERS = { g: "★ Gold founder", s: "★ Silver", b: "Bronze" };
+  function swatches(part, sel, fn) {
+    const p = LOOKS[part];
+    return `<div class="sw">${p.options.map((o, i) => {
+      let bg;
+      if (part === 0) bg = `background:linear-gradient(135deg,${rgb(o.rgb[0])} 0 33%,${rgb(o.rgb[1])} 33% 66%,${rgb(o.rgb[2])} 66%)`;
+      else if (part === 3) bg = patBg(i);
+      else bg = `background:${rgb(o.rgb[0])}`;
+      return `<button type="button" data-part="${part}" data-i="${i + 1}" aria-pressed="${sel === i + 1}" style="${bg}" aria-label="${esc(p.name)}: ${esc(o.name)}"><span>${esc(o.name)}</span></button>`;
+    }).join("")}</div>`;
+  }
+  let silkNow = [255, 77, 109];
+  function patBg(i) {
+    const s = rgb(silkNow), d = rgb(silkNow.map(v => Math.round(v * .62)));
+    if (i === 0) return `background:${s}`;
+    if (i === 1) return `background:linear-gradient(${s} 0 38%,#faf4e4 38% 58%,${s} 58%)`;
+    if (i === 2) return `background:radial-gradient(circle at 50% 45%,#faf4e4 0 22%,transparent 23%),${s}`;
+    return `background:conic-gradient(${d} 25%,${s} 0 50%,${d} 0 75%,${s} 0) 0 0/12px 12px`;
+  }
+  function statusLine(code, h) {
+    const o = OWNER[code];
+    if (o && o === norm(h.handle)) return `<span class="orig">✦ Original</span>: this look is <b>yours</b>. Nobody else gets the mark.`;
+    if (o) return `Worn first by <b>@${esc(o)}</b>, so they hold the ✦ Original. You can still wear it.`;
+    return `<b class="orig">✦ Unclaimed.</b> Claim it free and it's your Original forever.`;
+  }
+  function render() {
+    const k = cur, st = stateOf(k), tier = tierOf(k, GOLD_N, SILVER_TO);
+    panel.hidden = false;
+    $("#pNo").textContent = `STALL #${k.toLocaleString()}`;
+    const t = $("#pTier"); t.className = "tier " + tier; t.textContent = TIERS[tier];
+    if (!st) {
+      const next = k === FILLED + 1;
+      pb.innerHTML = `<div class="who"><h2>${next ? "NEXT: YOU?" : "EMPTY STALL"}</h2></div>
+        <p class="empty-st">${next ? `This is the <b>next free stall</b>. Follow <b>@${IG}</b> and it's yours at the next check-in: your @name on the plate and a horse that runs in every race.` : `Stalls fill in follow order. ${(k - FILLED).toLocaleString()} more followers until this one.`}</p>
+        <div class="acts"><a class="btn btn-neon" href="${IGP}" target="_blank" rel="noopener">Follow @${IG}</a>
+        <button class="btn" type="button" id="toNext">Go to the newest horse</button></div>`;
+      $("#toNext").onclick = () => go(FILLED);
+      layoutInset(); return;
+    }
+    const h = st.h, mine = ME === norm(h.handle), keep = pb.scrollTop;
+    silkNow = LOOKS[2].options[+st.look[2] - 1].rgb[0];
+    const code = st.look, edited = !!draftOf(h.handle);
+    const medals = (h.medals || []).length;
+    pb.innerHTML = `<div class="who">
+        ${h.name ? `<h2>${esc(h.name.toUpperCase())}</h2>` : ""}
+        <div class="h">@${esc(h.handle)} ${h.original ? `<span class="orig" title="First to claim this look">✦ Original</span>` : ""}</div>
+        <div class="meta"><span><b>${h.races || 0}</b> races</span><span><b>${medals}</b> medal${medals === 1 ? "" : "s"}</span>${h.joined ? `<span>since <b>${new Date(h.joined + "T12:00").toLocaleDateString(undefined, { day: "numeric", month: "short" })}</b></span>` : ""}${mine ? `<span style="color:var(--cyan);font-weight:700">● your stall</span>` : ""}</div>
+        <button class="btn btn-neon peek-cta" type="button" id="styleIt">🎨 Style this horse · free</button>
+      </div>
+      <div class="full">
+        <div class="sec"><h3>Pose <em>${esc(POSES.find(x => x.id === api.poseOf(k)).name)}</em></h3><div class="chips" id="pose">${POSES.map(x => `<button type="button" data-p="${x.id}" aria-pressed="${api.poseOf(k) === x.id}">${esc(x.name)}</button>`).join("")}</div></div>
+        <div class="sec"><h3>Coat <em>${esc(LOOKS[0].options[+code[0] - 1].name)}</em></h3>${swatches(0, +code[0])}</div>
+        <div class="sec"><h3>Mane &amp; tail <em>${esc(LOOKS[1].options[+code[1] - 1].name)}</em></h3>${swatches(1, +code[1])}</div>
+        <div class="sec"><h3>Silks <em>${esc(LOOKS[2].options[+code[2] - 1].name)}</em></h3>${swatches(2, +code[2])}</div>
+        <div class="sec"><h3>Pattern <em>${esc(LOOKS[3].options[+code[3] - 1].name)}</em></h3>${swatches(3, +code[3])}</div>
+        <div class="sec"><h3>Saddle <em>${esc(SADDLES[st.saddle])}</em></h3><div class="chips" id="sad">${SADDLES.map((s, i) => `<button type="button" data-s="${i}" aria-pressed="${st.saddle === i}">${esc(s)}</button>`).join("")}</div></div>
+        <div class="sec"><h3>Accessories</h3><div class="chips" id="acc">${ACC.map(a => `<button type="button" data-a="${a.id}" aria-pressed="${st.acc.includes(a.id)}">${esc(a.name)}</button>`).join("")}</div></div>
+        <div class="code"><div class="c">HORSE ${code}</div><p>${statusLine(code, h)}</p></div>
+        <div class="acts">
+          <button class="btn btn-neon" type="button" id="claim">Claim this look · free</button>
+          <div class="btn-row"><button class="btn" type="button" id="rand">🎲 Surprise me</button><button class="btn" type="button" id="reset"${edited ? "" : " disabled style='opacity:.5'"}>Reset</button></div>
+          ${mine ? "" : `<button class="btn" type="button" id="isme">This is me: set as my stall</button>`}
+          <button class="btn soon" type="button" id="premium" aria-disabled="true">🔒 Premium extras <small>coming soon</small></button>
+        </div>
+        <p class="fine">Every look is free. Claiming = comment the code on the latest reel from your account; the first to claim a look gets ✦ Original. Saddle &amp; accessories show in the shed only for now. Looks are cosmetic: every horse races equal.</p>
+      </div>`;
+    pb.querySelectorAll(".sw button").forEach(b => b.onclick = () => {
+      const c = [...code]; c[+b.dataset.part] = b.dataset.i; setDraft(h, { look: c.join("") });
+    });
+    pb.querySelectorAll("#pose button").forEach(b => b.onclick = () => { api.pose(cur, b.dataset.p); render(); });
+    pb.querySelectorAll("#sad button").forEach(b => b.onclick = () => setDraft(h, { saddle: +b.dataset.s }));
+    pb.querySelectorAll("#acc button").forEach(b => b.onclick = () => {
+      const s = new Set(st.acc); s.has(b.dataset.a) ? s.delete(b.dataset.a) : s.add(b.dataset.a); setDraft(h, { acc: [...s] });
+    });
+    $("#rand").onclick = () => setDraft(h, {
+      look: Array.from({ length: 4 }, () => 1 + Math.floor(Math.random() * 4)).join(""),
+      saddle: Math.floor(Math.random() * 4), acc: ACC.filter(() => Math.random() < 0.35).map(a => a.id)
+    });
+    $("#reset").onclick = () => { delete DRAFT[norm(h.handle)]; store.set("dd-shed", DRAFT); api.refresh(cur, true); render(); };
+    $("#claim").onclick = async () => {
+      const msg = `HORSE ${code}${h.name ? " " + h.name : ""}`;
+      let ok = false; try { await navigator.clipboard.writeText(msg); ok = true; } catch {}
+      toast(ok ? `Copied “${msg}”. Paste it as a comment on the latest reel.` : `Comment “${msg}” on the latest reel.`);
+      setTimeout(() => window.open(D.latestReel || IGP, "_blank", "noopener"), 900);
+    };
+    const im = $("#isme"); if (im) im.onclick = () => { ME = norm(h.handle); store.set("dd-stall-h", ME); try { localStorage.setItem("dd-stall", ME); } catch {} render(); toast(`Stall #${k.toLocaleString()} saved as yours on this device.`); };
+    $("#premium").onclick = () => logPremium(h, k);
+    pb.scrollTop = keep;
+    $("#styleIt").onclick = e => { e.stopPropagation(); openSheet(true); };
+    layoutInset();
+  }
+  function setDraft(h, part) {
+    const key = norm(h.handle), base = stateOf(stallOf[key]);
+    DRAFT[key] = { look: base.look, saddle: base.saddle, acc: base.acc, ...DRAFT[key], ...part };
+    store.set("dd-shed", DRAFT);
+    api.refresh(stallOf[key], true); render();
+  }
+  // demand gauge for paid extras: counts taps, no payments. Sent to the claims server once it has an /interest route.
+  function logPremium(h, k) {
+    const log = store.get("dd-premium", { taps: 0, first: null });
+    log.taps++; log.first = log.first || new Date().toISOString(); log.last = new Date().toISOString(); store.set("dd-premium", log);
+    const ev = { ev: "premium_tap", stall: k, handle: norm(h.handle), at: log.last, taps: log.taps };
+    console.info("[shed] premium interest", ev);
+    const url = D.interestApi || (D.claimsApi ? D.claimsApi.replace(/\/$/, "") + "/interest" : null);
+    if (url && navigator.sendBeacon) navigator.sendBeacon(url, JSON.stringify(ev));
+    toast("Premium extras aren't open yet. Thanks: your tap was counted, so we know you'd want them.");
+  }
+
+  if (EMBED) {
+    // homepage card: a slow tour. The next free stall ("NEXT: YOU?"), a random horse, your own stall if we know it.
+    const mineK = stallOf[ME], picks = () => 1 + Math.floor(Math.random() * FILLED);
+    const tour = [() => [FILLED + 1, "aisle"], () => [picks(), "side"], () => [mineK || picks(), "close"], () => [FILLED + 1, "aisle"], () => [picks(), "close"]];
+    let i = 0;
+    setInterval(() => { if (document.hidden) return; i = (i + 1) % tour.length; const [k, v] = tour[i](); cur = k; api.focus(k, { view: v }); }, 5200);
+    return;
+  }
+  render();
+  document.querySelectorAll("#views button").forEach(x => x.setAttribute("aria-pressed", x.dataset.v === api.viewName));
+  openSheet(wide.matches || P.get("sheet") === "1");
+  if (startH && !stallOf[startH]) toast(`No stall for @${startH} yet. Follow @${IG} to get one.`);
+  }
+</script>
+</body>
+</html>
