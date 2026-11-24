@@ -247,10 +247,25 @@
       a = fade(T, 12.4, 16.6); band(x, 1120, 1420, a); line(x, "FOLLOW", 1165, 56, "#fff6e0", a); line(x, "@" + IG.toUpperCase(), 1245, 38, "#ff3d6e", a); line(x, "YOUR NAME. YOUR STALL.", 1320, 30, "#f5c242", a); line(x, "FREE.", 1375, 30, "#f5c242", a);
       line(x, `THE ${stName} STABLE · ${TOTAL.toLocaleString("en-US")} STALLS`, 1470, 22, "#e9d9bf", 0.85);
     };
+    // launch film (?reel=launch): the stable, how empty it is, then the shed
+    const kind = P.get("reel") === "launch" ? "launch" : "movein", info = {};
+    const n = v => v.toLocaleString("en-US");
+    const overlayLaunch = (x, T, Wd, Ht) => {
+      const v = x.createRadialGradient(540, 900, 500, 540, 900, 1250); v.addColorStop(0, "rgba(0,0,0,0)"); v.addColorStop(1, "rgba(0,0,0,.5)"); x.fillStyle = v; x.fillRect(0, 0, Wd, Ht);
+      let a = fade(T, 0.2, 4.7);
+      band(x, 300, 400, a); line(x, `STALL #${n(info.stall || 1)}`, 350, 64, info.stall > FILLED ? "#ff3d6e" : "#fff6e0", a);
+      band(x, 1150, 1330, a); line(x, `THE ${stName} STABLE`, 1200, 52, "#fff6e0", a); line(x, `${n(TOTAL)} STALLS`, 1285, 44, "#f5c242", a);
+      a = fade(T, 4.9, 9.1); band(x, 1150, 1330, a); line(x, `ONLY ${n(FILLED)} FILLED`, 1200, 50, "#fff6e0", a); line(x, `${n(TOTAL - FILLED)} STILL EMPTY`, 1285, 40, "#ff3d6e", a);
+      a = fade(T, 9.6, 12.3); band(x, 1150, 1330, a); line(x, "NEW: THE SHED", 1200, 44, "#f5c242", a); line(x, "STYLE YOUR HORSE", 1285, 52, "#fff6e0", a);
+      a = fade(T, 12.4, 15.0); band(x, 1120, 1400, a); line(x, "COAT · MANE · SILKS", 1165, 36, "#fff6e0", a); line(x, "SADDLES · BLINKERS · MORE", 1230, 30, "#e9d9bf", a); line(x, "ALL FREE", 1300, 52, "#f5c242", a); line(x, "CUSTOM = +5–10% SPEED", 1365, 28, "#3ad6ff", a);
+      a = fade(T, 15.2, 19.8); band(x, 1150, 1330, a); line(x, "TURN IT. POSE IT.", 1200, 50, "#fff6e0", a); line(x, "WALK THE STABLE IN 3D", 1285, 34, "#f5c242", a);
+      a = fade(T, 20.0, 24.4); band(x, 1110, 1420, a); line(x, "FIND YOUR STALL", 1160, 52, "#fff6e0", a); line(x, "LINK IN BIO → THE SHED", 1240, 34, "#f5c242", a); line(x, "FOLLOW = YOUR STALL", 1315, 34, "#ff3d6e", a); line(x, "FREE.", 1375, 34, "#ff3d6e", a);
+      if (T > 4.7) line(x, "PIXEL69PADDOCK.GITHUB.IO/SHED", 1490, 22, "#e9d9bf", 0.85);
+    };
     const freeze = P.has("t") ? +P.get("t") : null;
     const api = mount(document.body, {
       total: TOTAL, gold: GOLD_N, silver: SILVER_TO, looks: LOOKS, getStall: stateOf,
-      reel: { k, plate, look: P.get("look") || "4211", saddle: 1, acc: [], freeze, comp, overlay }
+      reel: { kind, info, k, plate, look: P.get("look") || "4211", saddle: 1, acc: [], freeze, comp, overlay: kind === "launch" ? overlayLaunch : overlay }
     });
     const ctl = document.createElement("div"); ctl.className = "reel-ctl";
     ctl.innerHTML = `<button class="btn" id="rReplay">▶ Replay</button><button class="btn btn-neon" id="rRec">● Record 1080×1920</button><button class="btn" id="rHide">Hide buttons</button><a class="btn" href="shed.html">← Back to shed</a>
@@ -265,7 +280,7 @@
       if (!type) { toast("This browser can't record. Screen-record the window instead."); return; }
       const rec = new MediaRecorder(comp.captureStream(30), { mimeType: type, videoBitsPerSecond: 14e6 }), parts = [];
       rec.ondataavailable = e => e.data.size && parts.push(e.data);
-      rec.onstop = () => { const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob(parts, { type })); a.download = "stall-reel-1080x1920." + (type.includes("mp4") ? "mp4" : "webm"); a.click(); $("#rRec").textContent = "● Record 1080×1920"; };
+      rec.onstop = () => { const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob(parts, { type })); a.download = (kind === "launch" ? "shed-launch" : "stall-reel") + "-1080x1920." + (type.includes("mp4") ? "mp4" : "webm"); a.click(); $("#rRec").textContent = "● Record 1080×1920"; };
       api.restartReel(); rec.start(); $("#rRec").textContent = "Recording…";
       setTimeout(() => rec.stop(), api.reelLength * 1000);
     };

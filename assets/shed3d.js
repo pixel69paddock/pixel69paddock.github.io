@@ -471,7 +471,7 @@ export function mount(el, opts = {}) {
   };
 
   // slot pool
-  const N = reel ? 9 : coarse ? 13 : 17, HALF = (N - 1) >> 1;
+  const N = reel ? (reel.kind === "launch" ? 23 : 9) : coarse ? 13 : 17, HALF = (N - 1) >> 1;
   const slots = [];
   for (let i = 0; i < N; i++) {
     const s = makeSlot();
@@ -480,9 +480,12 @@ export function mount(el, opts = {}) {
     scene.add(s.g); slots.push(s);
   }
   const plateBusy = new Set(), poseOf = new Map();   // per stall: { pose, yaw } (this visit only)
-  function stallData(k) { return reel && k === reel.k ? null : (opts.getStall ? opts.getStall(k) : null); }
+  function stallData(k) {
+    if (reel && k === reel.k) return reel.kind === "launch" ? { handle: (reel.plate || "@YOU").replace(/^@/, ""), look: "1111", saddle: 1, acc: [] } : null;
+    return opts.getStall ? opts.getStall(k) : null;
+  }
   function fill(s, k, paint = true) {
-    s.k = k; s.g.visible = k >= 1 && k <= TOTAL; if (!s.g.visible) return;
+    s.k = k; s.lookIdx = null; s.g.visible = k >= 1 && k <= TOTAL; if (!s.g.visible) return;
     s.g.position.x = k * W;
     const st = stallData(k), tier = tierOf(k, GOLD, SILVER);
     s.st = st;
@@ -565,6 +568,7 @@ export function mount(el, opts = {}) {
 
   // reel film timeline (seconds). Horse walks down the aisle, turns into the empty stall, plate paints the name.
   const RH = reel ? makeHorse() : null;
+  if (RH && reel.kind === "launch") RH.root.visible = false;
   if (RH) { RH.setLook({ look: reel.look || "4211", saddle: reel.saddle ?? 1, acc: reel.acc || [] }, opts.looks); scene.add(RH.root); }
   const sm = (a, b, t) => { const x = Math.max(0, Math.min(1, (t - a) / (b - a))); return x * x * (3 - 2 * x); };
   const lerp = (a, b, t) => a + (b - a) * t;
@@ -626,18 +630,74 @@ export function mount(el, opts = {}) {
   const io = new IntersectionObserver(es => { visible = es[0].isIntersecting; if (visible) { last = performance.now(); loop(); } }); io.observe(el);
   const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
   const comp = reel && reel.comp ? reel.comp.getContext("2d") : null;
-  const REEL_LEN = 16;
+
+  // ---- launch film (reel.kind === "launch", 24 s): fly down 10,000 stalls, drone over the empty ones,
+  // then the shed: a horse restyled every half second, turned, reared; end on the aisle with "@YOU".
+  const LAUNCH_LOOKS = [
+    { look: "1111", saddle: 1, acc: [] }, { look: "4211", saddle: 1, acc: ["rosette"] }, { look: "3324", saddle: 2, acc: ["blinkers"] },
+    { look: "2443", saddle: 3, acc: ["bonnet", "wraps"] }, { look: "1132", saddle: 1, acc: ["wraps"] }, { look: "3412", saddle: 2, acc: ["bonnet"] },
+    { look: "4343", saddle: 3, acc: ["blinkers", "rosette"] }, { look: "2224", saddle: 0, acc: ["wraps"] }, { look: "4243", saddle: 3, acc: ["rosette", "wraps"] }
+  ];
+  const v3 = (x, y, z) => new THREE.Vector3(x, y, z);
+  const UP = v3(0, 1, 0), UPX = v3(1, 0, 0);
+  function launchAt(T) {
+    const K = reel.k, KX = K * W, info = reel.info || (reel.info = {});
+    let cam, look, up = UP.clone(), sx;
+    if (T < 4.6) {                                    // A: down the aisle from stall #1 to past the last filled one
+      const u = ease(Math.min(1, T / 4.6)); sx = 1 + (K + 12 - 1) * u;
+      const x = sx * W; cam = v3(x - 9, 6.2, 9.5); look = v3(x + 4, 3.6, -2.2);
+    } else if (T < 9.0) {                             // B: rise into a drone shot, roll so the row runs down the screen
+      const r = sm(4.6, 6.2, T), d = sm(5.0, 9.0, T); sx = (K + 12) - 16 * d;   // the filled/empty border drifts through the frame
+      const x = sx * W;
+      cam = v3(x - 9 * (1 - r), lerp(6.2, 44, r), lerp(9.5, 9, r)); look = v3(x + 4 * (1 - r), lerp(3.6, 0, r), lerp(-2.2, -3.4, r));
+      up = UP.clone().lerp(UPX, r).normalize();
+    } else if (T < 15.0) {                            // C: drop into the stall, close-up while the looks change
+      const r = sm(9.0, 10.4, T), x0 = (K - 4) * W;
+      sx = lerp(K - 4, K, r);
+      cam = v3(lerp(x0, KX + 3, r), lerp(44, 5.2, r), lerp(9, lerp(11.5, 10.2, sm(10.4, 15, T)), r)); look = v3(lerp(x0, KX + 0.2, r), lerp(0, 3.4, r), lerp(-3.4, -3, r));
+      up = UPX.clone().lerp(UP, sm(9.0, 9.9, T)).normalize();
+    } else if (T < 19.8) {                            // D: orbit while it turns and rears
+      const az = lerp(0.25, -0.55, sm(15, 19.8, T)), d = 11; sx = K;
+      look = v3(KX + 0.1, 3.5, -3); cam = look.clone().add(v3(d * Math.sin(1.33) * Math.sin(az), d * Math.cos(1.33), d * Math.sin(1.33) * Math.cos(az)));
+    } else {                                          // E: pull back to the aisle: plate + horse
+      const r = sm(19.8, 21.6, T), az = -0.55 * (1 - r), d = 11; sx = K;
+      const c0 = v3(KX + 0.1, 3.5, -3).add(v3(d * Math.sin(1.33) * Math.sin(az), d * Math.cos(1.33), d * Math.sin(1.33) * Math.cos(az)));
+      cam = c0.lerp(v3(KX + 1.2, 6.4, 19.5), r); look = v3(KX + 0.1, lerp(3.5, 4.9, r), lerp(-3, -1.2, r));
+    }
+    camera.up.copy(up); camera.position.copy(cam); camera.lookAt(look);
+    const fogN = Math.max(26, camera.position.y - 6); scene.fog.near = fogN; scene.fog.far = fogN + 50;
+    info.stall = Math.max(1, Math.round(sx));
+    // the showcase horse in stall K
+    const s = slots.find(q => q.k === K);
+    if (s && s.st) {
+      const idx = T < 10.0 ? 0 : T < 14.6 ? 1 + Math.floor((T - 10.0) / 0.55) % (LAUNCH_LOOKS.length - 1) : LAUNCH_LOOKS.length - 1;
+      if (s.lookIdx !== idx) { s.lookIdx = idx; s.horse.setLook(LAUNCH_LOOKS[idx], opts.looks); if (idx) s.horse.toss = 1; }
+      s.horse.pose = T > 17.4 && T < 19.9 ? "rear" : "idle";
+      const yw = T < 15.2 ? 0 : T < 17.2 ? ease((T - 15.2) / 2) * Math.PI * 2 : Math.PI * 2;
+      s.horse.yaw = yw; s.horse.root.rotation.y = yw;
+    }
+    return sx * W;
+  }
+  const LAUNCH = reel && reel.kind === "launch";
+  const REEL_LEN = LAUNCH ? 24 : 16;
   let reelT0 = performance.now();
   function frame(dt) {
     let walking = false, tx;
     if (reel) {
       const RT = reel.freeze != null ? reel.freeze : ((performance.now() - reelT0) / 1000) % REEL_LEN;
       T = RT; tx = reel.k * W;
-      ensurePool(reel.k, true);
-      walking = reelAt(RT);
-      sparkAt(RT, tx);
-      animateHorse(RH, RT, reel.freeze != null ? 0 : dt, walking);
-      if (reel.freeze != null && walking) { RH.walk = RT * 7.5; animateHorse(RH, RT, 0, true); }
+      if (LAUNCH) {
+        tx = launchAt(RT);
+        const c = Math.round(tx / W), fast = lastC != null && Math.abs(c - lastC) > 1 && reel.freeze == null;
+        ensurePool(c, !fast); lastC = c;
+        if (!fast) { let n = 0; for (const s of plateBusy) { if (n++ > 6) break; fill(s, s.k, true); } }
+      } else {
+        ensurePool(reel.k, true);
+        walking = reelAt(RT);
+        sparkAt(RT, tx);
+        animateHorse(RH, RT, reel.freeze != null ? 0 : dt, walking);
+        if (reel.freeze != null && walking) { RH.walk = RT * 7.5; animateHorse(RH, RT, 0, true); }
+      }
     } else {
       if (!reduce) T += dt;
       if (fly) {
@@ -670,7 +730,7 @@ export function mount(el, opts = {}) {
     });
     // fade whatever blocks the view of the focused horse
     { const hx = (reel ? reel.k : focusK) * W - 0.45, pts = [];   // a grid over the horse's footprint (any yaw)
-      for (const dx of [-2.6, -1.3, 0, 1.3, 2.6]) for (const z of [-5.2, -3.3, -1.4]) pts.push([hx + dx, z]);
+      if (!LAUNCH || T > 9.6) for (const dx of [-2.6, -1.3, 0, 1.3, 2.6]) for (const z of [-5.2, -3.3, -1.4]) pts.push([hx + dx, z]);   // (launch film: only once we're at the stall)
       const oK = reel ? reel.k : focusK;
       slots.forEach(s => {
         if (!s.g.visible) return;
@@ -696,7 +756,7 @@ export function mount(el, opts = {}) {
       slots.forEach(s => { if (!s.g.visible || !s.st || s.k === fk) { if (s.horse.fade < 1) s.horse.fade = fadeTo(s.horse.allMats, s.horse.fade, 1, 1); return; }
         const x = s.k * W - 0.45; s.horse.fade = fadeTo(s.horse.allMats, s.horse.fade, rectBlocks(x - 2.9, x + 2.9, -6, -0.6, pts) ? 0.18 : 1, dt); }); }
     // lights follow the action
-    const fx = reel ? reel.k * W : Math.round(tx / W) * W;
+    const fx = reel && !LAUNCH ? reel.k * W : Math.round(tx / W) * W;
     spot.position.set(fx + 1.2, 9.6, 5.2); spot.target.position.set(fx, 2.2, -3.0);
     sunset.target.position.set(fx, 0, 0); sunset.position.set(fx - 30, 40, -60);
     fillL.target.position.set(fx, 0, 0); fillL.position.set(fx + 10, 20, 40);
