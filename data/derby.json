@@ -15634,7 +15634,9 @@
       "races": 1,
       "medals": [],
       "badge": "gold",
-      "rank": 514
+      "rank": 514,
+      "look": "2114",
+      "shed": "B7IY"
     },
     {
       "handle": "millyyyyssss",
@@ -25658,7 +25660,10 @@
       "races": 0,
       "medals": [],
       "rank": 1568,
-      "badge": "silver"
+      "badge": "silver",
+      "look": "4314",
+      "original": true,
+      "shed": "00F1"
     },
     {
       "handle": "ariana.clark13",
@@ -27679,8 +27684,30 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-24T14:39:59Z",
+  "lastSync": "2026-11-24T15:39:53Z",
   "claims": [
+    {
+      "handle": "equestrian.emilia.g",
+      "look": "4314",
+      "at": "2026-11-24T15:28:11Z",
+      "reel": "https://www.instagram.com/p/DgHvMispbq5/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "billie_404__",
+      "look": "4243",
+      "at": "2026-11-24T14:53:54Z",
+      "reel": "https://www.instagram.com/p/DgHvMispbq5/",
+      "status": "waiting"
+    },
+    {
+      "handle": "dang.dang16",
+      "look": "2114",
+      "at": "2026-11-24T14:48:07Z",
+      "reel": "https://www.instagram.com/p/DgHvMispbq5/",
+      "status": "locked"
+    },
     {
       "handle": "kenji_oja1",
       "look": "4441",
@@ -28010,6 +28037,15 @@
       "at": "2026-11-23T13:36:08Z",
       "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
       "status": "locked"
+    },
+    {
+      "handle": "bays.over.baes_",
+      "look": "1124",
+      "at": "2026-11-23T13:17:05Z",
+      "reel": "https://www.instagram.com/p/Df_u417pzfe/",
+      "status": "locked",
+      "original": true,
+      "name": "Atlas"
     },
     {
       "handle": "cailyneq22_",
@@ -28477,7 +28513,8 @@
     "3314": "sina_fn09",
     "3313": "dr_art_.1",
     "2122": "prilotte_",
-    "4214": "fran.nigr"
+    "4214": "fran.nigr",
+    "4314": "equestrian.emilia.g"
   },
   "commentEntries": {
     "cailyneq22_": {
