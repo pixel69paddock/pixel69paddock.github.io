@@ -301,6 +301,8 @@ function barnMats() {
     window: new THREE.MeshBasicMaterial({ color: "#ffb36b", toneMapped: false, fog: false }),
     hit: new THREE.MeshBasicMaterial({ visible: false })
   };
+  // the ceiling has its own (shared) materials so it can fade when the camera looks down from above
+  MAT.ceilBeam = MAT.beam.clone(); MAT.ceilDark = MAT.dark.clone();
   return MAT;
 }
 function makeSlot() {
@@ -322,10 +324,11 @@ function makeSlot() {
   for (let i = 1; i < 9; i++) B.box(dI, 0.09, 2.4, 0.09, -W / 2, 5.35, -i * DEPTH / 9, 0, 0);
   B.box(dD, 0.6, 10.2, 0.6, -W / 2, 5.1, 0).build(s.div);
   s.divFade = 1;
-  // header beam (the nameplate hangs on it), cross beam over the aisle, ceiling
-  B.box(M.beam, W, 1.0, 0.6, 0, 7.55, 0)
-    .box(M.beam, 0.55, 0.7, 26, -W / 2, 10.1, 5)
-    .box(M.dark, W, 0.3, 26, 0, 10.6, 5)
+  // header beam (the nameplate hangs on it): own material, fades with the plate when it hides the horse from above
+  s.headMat = M.beam.clone(); s.headFade = 1;
+  B.box(s.headMat, W, 1.0, 0.6, 0, 7.55, 0)
+    .box(M.ceilBeam, 0.55, 0.7, 26, -W / 2, 10.1, 5)
+    .box(M.ceilDark, W, 0.3, 26, 0, 10.6, 5)
     .box(M.beam, W, 0.4, 0.5, 0, 9.9, -DEPTH + 0.3);
   // floors: straw in the stall, cobbles in the aisle
   B.box(M.straw, W, 0.1, DEPTH, 0, 0.0, -DEPTH / 2)
@@ -438,7 +441,7 @@ export function mount(el, opts = {}) {
   shaftTex.magFilter = THREE.LinearFilter; shaftTex.minFilter = THREE.LinearFilter;
   const shaftMat = new THREE.MeshBasicMaterial({ map: shaftTex, transparent: true, opacity: 0.13, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide, toneMapped: false });
   // barn end wall left of stall 1
-  const endMat = barnMats().plankV.clone(); let endFade = 1;
+  const endMat = barnMats().plankV.clone(); let endFade = 1, ceilFade = 1;
   { const B = builder(), g = new THREE.Group(); B.box(endMat, 0.5, 11, 30, 0, 5.5, 5).build(g); g.position.x = W / 2; scene.add(g); }
   // see-through walls: a wall fades when it sits between the camera and the horse
   const rectBlocks = (x0, x1, z0, z1, pts) => {
@@ -678,6 +681,16 @@ export function mount(el, opts = {}) {
         s.doorFade = fadeTo(s.doorMats, s.doorFade, doorB ? 0.16 : 1, dt);
       });
       endFade = fadeTo([endMat], endFade, blocks(W / 2, -10, 20, pts) ? 0.12 : 1, dt);
+      // header beam + nameplate: 3D test, the line of sight crosses the stall front at plate height
+      const cp = camera.position, h3 = [];
+      for (const [px, pz] of pts) for (const py of [1.2, 3.0, 4.8]) h3.push([px, py, pz]);
+      slots.forEach(s => {
+        if (!s.g.visible) return;
+        const x0 = s.k * W - W / 2 - 0.3, x1 = s.k * W + W / 2 + 0.3;
+        const hit = h3.some(([px, py, pz]) => { const t = (0.15 - cp.z) / (pz - cp.z); if (!(t > 0 && t < 1)) return false; const y = cp.y + (py - cp.y) * t, x = cp.x + (px - cp.x) * t; return y > 6.9 && y < 8.3 && x > x0 && x < x1; });
+        s.headFade = fadeTo([s.headMat, s.rimMat, s.plateM], s.headFade, hit ? 0.2 : 1, dt);
+      });
+      ceilFade = fadeTo([barnMats().ceilBeam, barnMats().ceilDark], ceilFade, camera.position.y > 9.4 ? 0.1 : 1, dt);
       // neighbouring horses that stand between the camera and the focused horse
       const fk = reel ? reel.k : focusK;
       slots.forEach(s => { if (!s.g.visible || !s.st || s.k === fk) { if (s.horse.fade < 1) s.horse.fade = fadeTo(s.horse.allMats, s.horse.fade, 1, 1); return; }
@@ -724,7 +737,7 @@ export function mount(el, opts = {}) {
     view(name) { if (name === "spin") { autoSpin = !autoSpin; fly = null; return autoSpin; } autoSpin = false; flyTo(focusK, name); return false; },
     get viewName() { return viewName; },
     _dbg() { return { cam: camera.position.toArray().map(v => +v.toFixed(2)), focusK, slots: slots.filter(s => s.g.visible).map(s => [s.k, +s.divFade.toFixed(2), +s.horse.fade.toFixed(2)]) }; },
-    angle(az, pol) { autoSpin = false; fly = null; const d = camera.position.distanceTo(controls.target); camera.position.copy(controls.target).add(sph(az, pol ?? 1.35, d)); controls.update(); },
+    angle(az, pol, dist) { autoSpin = false; fly = null; const d = dist || camera.position.distanceTo(controls.target); camera.position.copy(controls.target).add(sph(az, pol ?? 1.35, d)); controls.update(); },
     pose(k, name) { const ps = poseOf.get(k) || {}; ps.pose = name; poseOf.set(k, ps); const s = slots.find(q => q.k === k); if (s) s.horse.pose = name; },
     poseOf(k) { return (poseOf.get(k) || {}).pose || "idle"; },
     // dir: -1 / +1 starts a held spin, 0 stops; step: turn by that many radians
