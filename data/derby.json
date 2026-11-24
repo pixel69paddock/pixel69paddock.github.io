@@ -18372,7 +18372,10 @@
       "races": 1,
       "medals": [],
       "badge": "silver",
-      "rank": 819
+      "rank": 819,
+      "look": "3223",
+      "original": true,
+      "shed": "2CPM"
     },
     {
       "handle": "fiserova321",
@@ -29470,8 +29473,23 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-24T19:38:22Z",
+  "lastSync": "2026-11-24T20:38:40Z",
   "claims": [
+    {
+      "handle": "willowsummerhays",
+      "look": "3223",
+      "at": "2026-11-24T20:17:23Z",
+      "reel": "https://www.instagram.com/p/DgHvMispbq5/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "gabiii.esp",
+      "look": "1143",
+      "at": "2026-11-24T19:33:16Z",
+      "reel": "https://www.instagram.com/p/DgHvMispbq5/",
+      "status": "waiting"
+    },
     {
       "handle": "summer_solstce",
       "look": "2232",
@@ -30369,7 +30387,8 @@
     "3322": "_.nikol.vojackova._",
     "3314": "sina_fn09",
     "3313": "dr_art_.1",
-    "2232": "summer_solstce"
+    "2232": "summer_solstce",
+    "3223": "willowsummerhays"
   },
   "commentEntries": {
     "cailyneq22_": {
