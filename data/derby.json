@@ -17353,7 +17353,9 @@
       "races": 1,
       "medals": [],
       "badge": "gold",
-      "rank": 776
+      "rank": 776,
+      "look": "2324",
+      "name": "Odette"
     },
     {
       "handle": "paytoncasper8",
@@ -23550,8 +23552,48 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-24T02:38:10Z",
+  "lastSync": "2026-11-24T03:40:53Z",
   "claims": [
+    {
+      "handle": "1wbyi",
+      "look": "2143",
+      "at": "2026-11-24T03:09:35Z",
+      "reel": "https://www.instagram.com/p/DgB079spXvZ/",
+      "status": "waiting",
+      "name": "Raven"
+    },
+    {
+      "handle": "sophia_9112001",
+      "look": "2324",
+      "at": "2026-11-24T03:03:52Z",
+      "reel": "https://www.instagram.com/p/DgGiCCkpn6_/",
+      "status": "locked",
+      "name": "Odette"
+    },
+    {
+      "handle": "vvsmadz",
+      "look": "1321",
+      "at": "2026-11-24T02:49:37Z",
+      "reel": "https://www.instagram.com/p/DgGiCCkpn6_/",
+      "status": "waiting",
+      "name": "maki"
+    },
+    {
+      "handle": "imliterallymclovin_5oh9",
+      "look": "2321",
+      "at": "2026-11-24T02:40:29Z",
+      "reel": "https://www.instagram.com/p/DgGiCCkpn6_/",
+      "status": "waiting",
+      "name": "Jellybean"
+    },
+    {
+      "handle": "t0kioh0te1",
+      "look": "2331",
+      "at": "2026-11-24T02:36:52Z",
+      "reel": "https://www.instagram.com/p/DgGiCCkpn6_/",
+      "status": "waiting",
+      "name": "Pudding"
+    },
     {
       "handle": "madisonburckhardt25",
       "look": "4224",
