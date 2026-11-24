@@ -23481,7 +23481,10 @@
       "races": 0,
       "medals": [],
       "rank": 1347,
-      "badge": "silver"
+      "badge": "silver",
+      "look": "3311",
+      "original": true,
+      "shed": "2AM2"
     },
     {
       "handle": "javi.alejandro__",
@@ -26376,7 +26379,10 @@
       "races": 0,
       "medals": [],
       "rank": 1651,
-      "badge": "silver"
+      "badge": "silver",
+      "look": "1131",
+      "original": true,
+      "shed": "2TZM"
     },
     {
       "handle": "sie._.ge",
@@ -27687,12 +27693,42 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-24T16:39:29Z",
+  "lastSync": "2026-11-24T17:38:42Z",
   "claims": [
+    {
+      "handle": "7uis.x7",
+      "look": "2321",
+      "at": "2026-11-24T17:04:57Z",
+      "reel": "https://www.instagram.com/p/DgHvMispbq5/",
+      "status": "waiting"
+    },
+    {
+      "handle": "sarahvanloo12",
+      "look": "3244",
+      "at": "2026-11-24T16:54:45Z",
+      "reel": "https://www.instagram.com/p/DgHvMispbq5/",
+      "status": "waiting"
+    },
+    {
+      "handle": "mag.nina_",
+      "look": "3311",
+      "at": "2026-11-24T16:43:34Z",
+      "reel": "https://www.instagram.com/p/DgHvMispbq5/",
+      "status": "locked",
+      "original": true
+    },
     {
       "handle": "charlotte.the.penguin",
       "look": "3323",
       "at": "2026-11-24T15:51:49Z",
+      "reel": "https://www.instagram.com/p/DgHvMispbq5/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "dylanfromm08",
+      "look": "1131",
+      "at": "2026-11-24T15:49:50Z",
       "reel": "https://www.instagram.com/p/DgHvMispbq5/",
       "status": "locked",
       "original": true
@@ -28526,7 +28562,9 @@
     "2122": "prilotte_",
     "4214": "fran.nigr",
     "4314": "equestrian.emilia.g",
-    "3323": "charlotte.the.penguin"
+    "3323": "charlotte.the.penguin",
+    "1131": "dylanfromm08",
+    "3311": "mag.nina_"
   },
   "commentEntries": {
     "cailyneq22_": {
