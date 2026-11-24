@@ -29470,7 +29470,7 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-24T18:37:06Z",
+  "lastSync": "2026-11-24T19:38:22Z",
   "claims": [
     {
       "handle": "summer_solstce",
@@ -33266,6 +33266,14 @@
     "reelRange": "833–2.7k"
   },
   "picks": {
-    "6": {}
+    "6": {
+      "aliyaemiller": {
+        "picks": [
+          "halelujah_2007",
+          "aliyaemiller"
+        ],
+        "at": "2026-11-24T19:02:35Z"
+      }
+    }
   }
 }
