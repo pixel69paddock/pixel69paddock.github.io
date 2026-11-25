@@ -405,7 +405,8 @@
 
   const api = mount($("#stage"), {
     total: TOTAL, gold: GOLD_N, silver: SILVER_TO, looks: LOOKS, start, lite: EMBED, view: EMBED ? "aisle" : ["aisle", "close", "side"].includes(P.get("view")) ? P.get("view") : "close",
-    getStall: stateOf,
+    // homepage card: the visitor's own stall reads YOU on the plate
+    getStall: EMBED ? k => { const st = stateOf(k); return st && ME && norm(st.handle) === ME ? { ...st, handle: "YOU", name: "" } : st; } : stateOf,
     onPick: k => { if (k !== cur) go(k); else openSheet(true); },
     onSpin: on => { const b = $('#views [data-v="spin"]'); b.setAttribute("aria-pressed", on); }
   });
@@ -696,13 +697,17 @@
   }
 
   if (EMBED) {
-    // homepage card: a slow tour. The next free stall ("NEXT: YOU?"), a random horse, your own stall if we know it.
-    // prefer stalls people really decorated (saved shed codes); otherwise any filled stall
-    const decorated = STALLS.map((h, i) => h.shed ? i + 1 : 0).filter(Boolean);
-    const mineK = stallOf[ME], picks = () => decorated.length && Math.random() < 0.75 ? decorated[Math.floor(Math.random() * decorated.length)] : 1 + Math.floor(Math.random() * FILLED);
-    const tour = [() => [FILLED + 1, "aisle"], () => [picks(), "side"], () => [mineK || picks(), "close"], () => [FILLED + 1, "aisle"], () => [picks(), "close"]];
-    let i = 0;
-    setInterval(() => { if (document.hidden) return; i = (i + 1) % tour.length; const [k, v] = tour[i](); cur = k; api.focus(k, { view: v }); }, 5200);
+    // homepage card: your own stall first (if you've found it before), then stalls people customised (commented a look
+    // or saved a shed), shuffled, then plain stalls. A new stall every 4 seconds.
+    const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+    const mineK = stallOf[ME];
+    const custom = shuffle(STALLS.map((h, i) => h.shed || validLook(h.look) ? i + 1 : 0).filter(k => k && k !== mineK));
+    let order = [...(mineK ? [mineK] : []), ...custom], i = 0, plain = 0;
+    const next = () => i < order.length ? order[i++] : (plain++ % 4 === 3 ? FILLED + 1 : 1 + Math.floor(Math.random() * FILLED));
+    const views = ["close", "side", "close", "aisle"];
+    const show = () => { const k = next(); cur = k; api.focus(k, { view: k === FILLED + 1 ? "aisle" : views[i % views.length] }); };
+    show();
+    setInterval(() => { if (!document.hidden) show(); }, 4000);
     return;
   }
   render();
