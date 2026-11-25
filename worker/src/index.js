@@ -9,12 +9,15 @@
 //   GET /check?handle=name    -> fresh scan (at most one every 15s), then that handle's status
 //   GET /followers            -> { followers, at }  live follower count (cached 60s)
 //   cron (twice a day)        -> renews the Instagram access token every ~7 days
+//   /shop, /checkout, /order, /stripe/webhook -> the Stripe shop (shop.js)
 //
 // Secrets / vars (wrangler.toml + `wrangler secret put IG_TOKEN`):
 //   IG_TOKEN    long-lived Instagram user access token (only used until the first renewal; then KV holds it)
 //   SITE_DATA   URL of the site's derby.json (for removed horses and who is in the stable)
 //   ORIGINS     comma-separated origins allowed to call this (the site, localhost)
 // KV binding: DERBY
+
+import { shopRoute } from "./shop.js";
 
 const API = "https://graph.instagram.com/v25.0";
 // [2] = optional 3D-shed code: "HORSE 4243+0A1B" (see shed.html shedEncode)
@@ -30,6 +33,9 @@ export default {
     const cors = corsHeaders(req, env);
     if (req.method === "OPTIONS") return new Response(null, { headers: cors });
     try {
+      // shop: tips + limited skins through Stripe (see shop.js)
+      const shop = await shopRoute(req, env, url, cors, json);
+      if (shop) return shop;
       if (url.pathname === "/state") {
         const st = await getState(env, false);
         return json(publicState(st), cors, 15);
@@ -202,7 +208,8 @@ function corsHeaders(req, env) {
   const allowed = String(env.ORIGINS || "").split(",").map(s => s.trim()).filter(Boolean);
   return {
     "Access-Control-Allow-Origin": allowed.includes(origin) ? origin : (allowed[0] || "*"),
-    "Access-Control-Allow-Methods": "GET, OPTIONS",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
     "Vary": "Origin",
   };
 }

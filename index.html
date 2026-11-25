@@ -448,6 +448,7 @@
   @media (prefers-reduced-motion:reduce){.music .eq i{animation:none!important}}
   @media (max-width:560px){.join .btn{padding:9px 11px}.join small{font-size:12px}}
 </style>
+<link rel="stylesheet" href="assets/shop.css">
 </head>
 <body>
 
@@ -465,6 +466,7 @@
       <a href="#rankings">Standings</a>
       <a href="#history">Races</a>
       <a href="#hall">Hall of Fame</a>
+      <a href="#shop">Shop</a>
       <a href="#sponsor">Sponsor</a>
     </nav>
     <a class="btn btn-neon" style="padding:9px 14px;font-size:14px" href="https://www.instagram.com/dailyderby_horse/" target="_blank" rel="noopener">Follow</a>
@@ -704,11 +706,15 @@
     </div>
   </section>
 
+  <section id="shop" hidden>
+    <div class="wrap" id="shopWrap"></div>
+  </section>
+
   <section id="how">
     <div class="wrap">
       <details class="fold">
       <summary><span class="kicker">How it works</span><span class="px">How to race, odds &amp; points</span></summary>
-      <p class="sub">Free to enter. There's no betting and no money involved.</p>
+      <p class="sub">Free to enter, and there's no betting. Optional tips and skins in the shop are cosmetic and never change race results.</p>
       <div class="steps">
         <div class="card step"><div class="n">01</div><h3>Like or follow</h3><p><b>Follow</b> @dailyderby_horse and you race every day, automatically. <b>Like</b> any reel, or <b>comment 🐎 on the latest race</b>, and you're in. Your @name goes on your horse's tag.</p></div>
         <div class="card step"><div class="n">02</div><h3>Comment</h3><p>Comment anything on the latest reel. The earlier you comment, the better your place in a tie.</p></div>
@@ -760,7 +766,7 @@
 
 <footer>
   <div class="wrap">
-    <p><b style="color:var(--ink)">Daily Derby · The Pixel Paddock</b> · a fan-made game on Instagram. Not a betting service; nothing here can be bought or wagered.</p>
+    <p><b style="color:var(--ink)">Daily Derby · The Pixel Paddock</b> · a fan-made game on Instagram. Free to play and not a betting service: nothing can be wagered, and shop items are cosmetic only. <a href="terms.html">Shop terms &amp; refunds</a>.</p>
     <p>Liking a reel or following means your @handle can appear on a horse. Want it removed? DM <a href="https://ig.me/m/dailyderby_horse" target="_blank" rel="noopener">@dailyderby_horse</a> and it's gone.</p>
     <p id="updated"></p>
   </div>
@@ -839,8 +845,13 @@
   const cleanName = s => String(s || "").replace(/[^\p{L}\p{N} '.\-]/gu, "").replace(/\s+/g, " ").trim().slice(0, 18);
   const horseName = h => { const sv = savedHorse(); return (sv.done && sv.handle === norm(h.handle) && sv.name) ? sv.name : (h.name || ""); };
   const badge = h => h.badge ? `<i class="bdg ${h.badge}" title="${h.badge} member"></i>` : "";
-  const whoCell = (h, size = 30) => { const n = horseName(h); return `<span class="who">${spriteTag(horseLook(h), size)}${badge(h)}${n ? `<span class="nm"><b>${esc(n.toUpperCase())}</b><small>@${esc(h.handle)}</small></span>` : `@${esc(h.handle)}`}</span>`; };
+  // paid cosmetic skins (assets/shop.js fills window.DD_SKINS from the shop server)
+  const skinOf = h => ((window.DD_SKINS || {})[norm(h.handle)] || [])[0] || null;
+  const skinWrap = (h, svg) => { const k = skinOf(h); return k ? `<span class="skin-${esc(k.id)}" style="display:inline-flex">${svg}</span><i class="skin-chip" title="Limited skin #${k.n}">#${k.n}</i>` : svg; };
+  const whoCell = (h, size = 30) => { const n = horseName(h); return `<span class="who">${skinWrap(h, spriteTag(horseLook(h), size))}${badge(h)}${n ? `<span class="nm"><b>${esc(n.toUpperCase())}</b><small>@${esc(h.handle)}</small></span>` : `@${esc(h.handle)}`}</span>`; };
   let REBOARD = () => {};
+  window.ddReboard = () => REBOARD();
+  window.DD = { spriteTag, lookOf: h => lookFor(norm(h) || "dailyderby") };
   document.querySelectorAll("svg.sprite").forEach(s => sprite(s, s.dataset.colour));
 
   const toast = msg => { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove("show"), 3200); };
@@ -969,6 +980,7 @@
 
   function render(D) {
     const horses = (D.horses || []).filter(h => h.status !== "removed");
+    window.DD.lookOf = hd => { const h = horses.find(x => norm(x.handle) === norm(hd)); return h ? horseLook(h) : lookFor(norm(hd) || "dailyderby"); };
     const entrants = new Set((D.nextRace?.entrants || []).map(norm));
     const races = (D.races || []).slice().sort((a, b) => b.day - a.day);
 
@@ -1735,5 +1747,6 @@
   if (want) document.addEventListener("pointerdown", function first(e) { document.removeEventListener("pointerdown", first); if (!on && e.target !== btn && !btn.contains(e.target)) start(); });
 })();
 </script>
+<script src="assets/shop.js" defer></script>
 </body>
 </html>

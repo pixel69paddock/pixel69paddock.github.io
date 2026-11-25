@@ -37,3 +37,38 @@ The same server answers `GET /followers` with the account's follower count (offi
 ## Upkeep
 - The token lasts 60 days; the server renews it by itself about every 7 days (cron twice a day). If a renewal ever fails, `GET /health` still answers and the site falls back to the hourly data; generate a new token (step 1.5) and run `npx wrangler secret put IG_TOKEN` again.
 - Instagram rate limits: the server caches each scan for 15–60 s and re-reads comments on reels older than 3 days only every 10 min.
+
+---
+
+# Shop: tips + limited skins (Stripe)
+
+The same worker runs the shop (`src/shop.js`). Payment happens on Stripe's hosted checkout page (Apple Pay, Google Pay,
+cards). Prices are in US$; Adaptive Pricing shows each buyer their own currency. Keys never go in the site or this repo.
+
+| Secret | What | How |
+|---|---|---|
+| `STRIPE_SECRET_KEY` | Stripe secret key (test: `sk_test_…`, or a restricted key `rk_test_…` with Checkout Sessions: write and Refunds: write) | `npx wrangler secret put STRIPE_SECRET_KEY` (you paste it at the prompt) |
+| `STRIPE_WEBHOOK_SECRET` | signing secret of the webhook endpoint (`whsec_…`) | `npx wrangler secret put STRIPE_WEBHOOK_SECRET` |
+
+## Turn it on (test mode first)
+1. `npx wrangler deploy` (in `worker/`). Note the URL, e.g. `https://dailyderby-claims.<you>.workers.dev`.
+2. `npx wrangler secret put STRIPE_SECRET_KEY`, paste the **test** key.
+3. Stripe Dashboard (test mode) → Developers → Webhooks → Add endpoint: `<worker URL>/stripe/webhook`, events
+   `checkout.session.completed` and `checkout.session.async_payment_succeeded`. Copy its signing secret, then
+   `npx wrangler secret put STRIPE_WEBHOOK_SECRET`.
+4. Stripe Dashboard → Settings → Adaptive Pricing: turn on (the worker also asks for it per checkout).
+5. Stripe Dashboard → Settings → Public details: business name "Daily Derby", support link/email, and the terms URL
+   `https://pixel69paddock.github.io/terms.html`.
+6. Set `"shop": {"api": "<worker URL>"}` in `data/derby.json` and push. The shop buttons switch from "Opening soon" to live.
+7. Test: buy Neon Gold for your own handle with card `4242 4242 4242 4242`. You should come back to the site with
+   "Thank you! @you now owns Neon Gold #1 of 50", and the gold #1 chip on the standings.
+8. Going live: repeat steps 2–3 with the live key and a live-mode webhook, set `"testMode": false`, push.
+
+## Day to day
+- Prices, the tip range and drops live in `data/derby.json` → `shop` (the worker reads them from the site, so buyers
+  can't change a price). A drop's `status`: `open`, `closed` (shows sold out), or `hidden`.
+- Stock and owners: `GET <worker URL>/shop`. Every order (with handle, amount, refunds): KV key `shop:log`
+  (`npx wrangler kv key get --binding DERBY shop:log --remote`).
+- Sold out while paying, or buying a skin the handle already owns: refunded in full automatically.
+- Local test without Stripe: `worker/.dev.vars` (fake keys, git-ignored), `npx wrangler dev --local --port 8787`, then
+  open the site on localhost with `?shopapi=http://127.0.0.1:8787`.

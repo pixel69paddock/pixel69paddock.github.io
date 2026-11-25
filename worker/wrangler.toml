@@ -8,9 +8,11 @@ crons = ["0 */12 * * *"]
 
 [vars]
 SITE_DATA = "https://pixel69paddock.github.io/data/derby.json"
-ORIGINS = "https://pixel69paddock.github.io,http://localhost:8765"
+ORIGINS = "https://pixel69paddock.github.io,http://localhost:8765,http://localhost:8767"
+SITE_URL = "https://pixel69paddock.github.io"
+# Shop secrets (never in this file): `npx wrangler secret put STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET`
 
 # Filled in by `npx wrangler kv namespace create DERBY` (see SETUP.md).
 [[kv_namespaces]]
 binding = "DERBY"
-id = "REPLACE_WITH_KV_ID"
+id = "dc93cf465a2446c68335336ce26cd2e7"

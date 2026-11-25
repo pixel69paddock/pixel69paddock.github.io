@@ -34337,5 +34337,29 @@
         "at": "2026-11-24T19:02:35Z"
       }
     }
+  },
+  "shop": {
+    "api": "https://dailyderby-claims.chris0209lee.workers.dev",
+    "testMode": true,
+    "currency": "usd",
+    "tips": {
+      "amounts": [
+        200,
+        500,
+        1000
+      ],
+      "min": 200,
+      "max": 20000
+    },
+    "drops": [
+      {
+        "id": "neon-gold",
+        "name": "Neon Gold",
+        "price": 300,
+        "limit": 50,
+        "status": "open",
+        "blurb": "A glowing gold trim and a numbered plate for your horse. Only 50 will ever exist. Cosmetic only."
+      }
+    ]
   }
 }
