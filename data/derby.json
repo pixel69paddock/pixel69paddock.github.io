@@ -27270,7 +27270,10 @@
       "races": 0,
       "medals": [],
       "rank": 1722,
-      "badge": "silver"
+      "badge": "silver",
+      "look": "2123",
+      "shed": "3LQH",
+      "original": true
     },
     {
       "handle": "keiraa.white_7",
@@ -30403,8 +30406,16 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-24T23:36:38Z",
+  "lastSync": "2026-11-25T00:34:58Z",
   "claims": [
+    {
+      "handle": "roman.a12.1",
+      "look": "2123",
+      "at": "2026-11-24T23:58:42Z",
+      "reel": "https://www.instagram.com/p/DgHvMispbq5/",
+      "status": "locked",
+      "original": true
+    },
     {
       "handle": "stefanie1893",
       "look": "2323",
@@ -31342,7 +31353,8 @@
     "3322": "_.nikol.vojackova._",
     "3314": "sina_fn09",
     "3313": "dr_art_.1",
-    "2214": "everleighkoval"
+    "2214": "everleighkoval",
+    "2123": "roman.a12.1"
   },
   "commentEntries": {
     "cailyneq22_": {
