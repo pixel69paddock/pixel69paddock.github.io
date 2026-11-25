@@ -32,3 +32,12 @@
 .shop-receipt{margin-top:16px;padding:14px;border-radius:6px;border:1px solid var(--line);background:var(--panel)}
 .shop-receipt.ok{border-color:#2f7a43;background:#12301c}
 .skin-chip{display:inline-block;font:700 10px/1 var(--px);color:#2a1d05;background:var(--gold);border-radius:3px;padding:3px 4px;margin-left:4px;vertical-align:middle;box-shadow:0 0 6px #f5c242}
+
+.shed-more{text-decoration:none;color:inherit}
+.shed-more:hover{border-color:var(--gold)}
+.more-art{font-size:34px;line-height:1.4;text-align:center}
+.skin-galaxy svg{filter:drop-shadow(0 0 3px #b07cff) drop-shadow(0 0 8px #3a2a7a) hue-rotate(220deg) saturate(1.4)}
+.skin-zebra svg{filter:grayscale(1) contrast(1.6) drop-shadow(0 0 3px #fff)}
+.skin-flame-mane svg{filter:drop-shadow(0 0 3px #ff8a2a) drop-shadow(0 0 7px #ff3d00)}
+.skin-glow-hooves svg{filter:drop-shadow(0 0 4px #3ad6ff)}
+.skin-neon-sign svg{filter:drop-shadow(0 0 4px #ff3d6e)}

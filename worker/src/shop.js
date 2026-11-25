@@ -46,10 +46,13 @@ async function checkout(req, env, cors, json) {
   const handle = norm(b.handle);
   if (handle && !HANDLE_RE.test(handle)) return json({ error: "That doesn't look like an Instagram handle." }, cors, 0, 400);
   const site = (env.SITE_URL || "https://pixel69paddock.github.io").replace(/\/$/, "");
+  const stall = Math.floor(Number(b.stall));
+  const shedBack = b.ret === "shed" && stall >= 1 && stall <= 10000;
   const f = {
     mode: "payment",
-    success_url: `${site}/?paid={CHECKOUT_SESSION_ID}#shop`,
-    cancel_url: `${site}/#shop`,
+    // shed purchases come back to the buyer's stall; everything else to the site's shop section
+    success_url: shedBack ? `${site}/shed.html?stall=${stall}&paid={CHECKOUT_SESSION_ID}` : `${site}/?paid={CHECKOUT_SESSION_ID}#shop`,
+    cancel_url: shedBack ? `${site}/shed.html?stall=${stall}` : `${site}/#shop`,
     "line_items[0][quantity]": "1",
     "line_items[0][price_data][currency]": cat.currency || "usd",
     "metadata[kind]": b.kind,
@@ -77,11 +80,11 @@ async function checkout(req, env, cors, json) {
     const skins = (await env.DERBY.get("shop:skins", "json")) || {};
     if ((skins[handle] || []).some(s => s.id === d.id)) return json({ error: `@${handle} already owns ${d.name}.` }, cors, 0, 409);
     f["line_items[0][price_data][unit_amount]"] = String(d.price);
-    f["line_items[0][price_data][product_data][name]"] = `${d.name} skin for @${handle}`;
+    f["line_items[0][price_data][product_data][name]"] = `${d.name} for @${handle}'s horse`;
     f["line_items[0][price_data][product_data][description]"] = `Limited to ${d.limit}. Cosmetic only: it never changes race results.`;
     f["metadata[item]"] = d.id;
     f["payment_intent_data[metadata][item]"] = d.id;
-    f["custom_text[submit][message]"] = `This skin goes to @${handle}'s horse.`;
+    f["custom_text[submit][message]"] = `Saved on @${handle}'s horse as soon as you pay. No comment needed.`;
   } else {
     return json({ error: "bad request" }, cors, 0, 400);
   }

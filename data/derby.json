@@ -34355,10 +34355,57 @@
       {
         "id": "neon-gold",
         "name": "Neon Gold",
+        "kind": "coat",
         "price": 300,
         "limit": 50,
         "status": "open",
-        "blurb": "A glowing gold trim and a numbered plate for your horse. Only 50 will ever exist. Cosmetic only."
+        "featured": true,
+        "blurb": "A glowing gold coat and a numbered plate for your horse. Only 50 will ever exist. Cosmetic only."
+      },
+      {
+        "id": "galaxy",
+        "name": "Galaxy coat",
+        "kind": "coat",
+        "price": 300,
+        "limit": 100,
+        "status": "open",
+        "blurb": "Deep space purple with twinkling stars."
+      },
+      {
+        "id": "zebra",
+        "name": "Zebra coat",
+        "kind": "coat",
+        "price": 200,
+        "limit": 100,
+        "status": "open",
+        "blurb": "Bold black and white stripes."
+      },
+      {
+        "id": "flame-mane",
+        "name": "Flame mane",
+        "kind": "effect",
+        "price": 200,
+        "limit": 100,
+        "status": "open",
+        "blurb": "A flickering fire mane and tail."
+      },
+      {
+        "id": "glow-hooves",
+        "name": "Glow hooves",
+        "kind": "effect",
+        "price": 100,
+        "limit": 200,
+        "status": "open",
+        "blurb": "Electric blue hooves."
+      },
+      {
+        "id": "neon-sign",
+        "name": "Neon name sign",
+        "kind": "stall",
+        "price": 300,
+        "limit": 50,
+        "status": "open",
+        "blurb": "Your @name in pink neon on your stall's back wall."
       }
     ]
   }

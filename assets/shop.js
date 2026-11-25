@@ -36,8 +36,11 @@
   }
 
   function render() {
-    const drops = (S.drops || []).filter(d => d.status !== "hidden");
-    const test = API ? LIVE.testMode !== false && (LIVE.testMode || S.testMode) : S.testMode;
+    const drops = (S.drops || []).filter(d => d.status !== "hidden" && d.featured);
+    const more = (S.drops || []).filter(d => d.status !== "hidden" && !d.featured);
+    // the test-mode notice is for the owner only: localhost or ?test in the address
+    const showTest = new URLSearchParams(location.search).has("test") || /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+    const test = showTest && (API ? LIVE.testMode !== false && (LIVE.testMode || S.testMode) : S.testMode);
     const me = myHandle();
     box.innerHTML = `
       <p class="kicker">Shop</p>
@@ -46,6 +49,7 @@
       ${test ? `<div class="shop-test"><b>Test mode.</b> No real money is taken. Pay with Stripe's test card 4242 4242 4242 4242, any future date, any CVC.</div>` : ""}
       <div class="shop-grid">
         ${drops.map(dropCard).join("")}
+        ${more.length ? `<a class="card shop-card shed-more" href="shed.html${myHandle() ? "?h=" + encodeURIComponent(myHandle()) : ""}"><div class="shop-art more-art" aria-hidden="true">🌌🔥🦓<br>💠🪧</div><h3>More in the Shed <small>${more.length} limited extras</small></h3><p class="shop-desc">Galaxy and Zebra coats, a flame mane, glow hooves and a neon name sign for your stall. Try them on your own horse in 3D for free.</p><span class="btn btn-ghost shop-buy">Open the Shed →</span></a>` : ""}
         <div class="card shop-card tip">
           <div class="shop-art jar" aria-hidden="true">🫙<span>🐎</span></div>
           <h3>Tip jar</h3>

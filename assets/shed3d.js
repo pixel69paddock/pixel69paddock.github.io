@@ -24,6 +24,16 @@ export const ACC = [
   { id: "rosette", name: "Rosette" }
 ];
 export const SADDLES = ["None", "Leather", "Racing black", "Royal gold"];
+// Premium items (paid, limited, cosmetic only: they never change speed). Prices and stock live in derby.json "shop".
+// kind: coat (replaces the coat; one at a time), effect (adds on), stall (decorates the stall)
+export const PREMIUM = [
+  { id: "neon-gold", kind: "coat", name: "Neon Gold", icon: "✨" },
+  { id: "galaxy", kind: "coat", name: "Galaxy", icon: "🌌" },
+  { id: "zebra", kind: "coat", name: "Zebra", icon: "🦓" },
+  { id: "flame-mane", kind: "effect", name: "Flame mane", icon: "🔥" },
+  { id: "glow-hooves", kind: "effect", name: "Glow hooves", icon: "💠" },
+  { id: "neon-sign", kind: "stall", name: "Neon name sign", icon: "🪧" }
+];
 
 // ---------- pixel textures (nearest-neighbour, generated, cached) ----------
 function rng(seed) { let s = seed >>> 0 || 1; return () => (s = (s * 16807) % 2147483647) / 2147483647; }
@@ -81,6 +91,23 @@ function coatTex(i, rgb) {
     x.fillStyle = mid; x.fillRect(0, 0, 16, 16);
     for (let p = 0; p < 34; p++) { x.fillStyle = R() > 0.5 ? hi : lo; x.globalAlpha = 0.35; x.fillRect(Math.floor(R() * 16), Math.floor(R() * 16), 1, 1); }
     x.globalAlpha = 1;
+  });
+}
+function premiumCoatTex(id) {
+  return pixTex("pcoat-" + id, 16, 16, (x) => {
+    const R = rng(id.length * 97);
+    if (id === "neon-gold") {
+      x.fillStyle = "#e0a822"; x.fillRect(0, 0, 16, 16);
+      for (let p = 0; p < 40; p++) { x.fillStyle = R() > 0.5 ? "#fff2a8" : "#b67a10"; x.fillRect(Math.floor(R() * 16), Math.floor(R() * 16), 1, 1); }
+    } else if (id === "galaxy") {
+      x.fillStyle = "#1c1240"; x.fillRect(0, 0, 16, 16);
+      for (let p = 0; p < 26; p++) { x.fillStyle = ["#3a2a7a", "#5a2a6e", "#22306e"][Math.floor(R() * 3)]; x.fillRect(Math.floor(R() * 16), Math.floor(R() * 16), 2, 1); }
+      for (let p = 0; p < 9; p++) { x.fillStyle = R() > 0.3 ? "#ffffff" : "#ffd6f0"; x.fillRect(Math.floor(R() * 16), Math.floor(R() * 16), 1, 1); }
+    } else if (id === "zebra") {
+      x.fillStyle = "#f4f1ea"; x.fillRect(0, 0, 16, 16);
+      x.fillStyle = "#16141a";
+      for (let col = 0; col < 16; col++) for (let row = 0; row < 16; row++) if (((col + Math.round(Math.sin(row * 0.7) * 1.5)) % 5) < 2) x.fillRect(col, row, 1, 1);
+    }
   });
 }
 function silkTex(si, pat, rgb) {
@@ -206,7 +233,7 @@ function makeHorse() {
   const tail = new THREE.Group(); tail.position.set(-2.35, 3.95, 0); body.add(tail);
   B.box(mats.mane, 0.36, 0.5, 0.34, -0.15, -0.05, 0, 0.5, 0.6).box(mats.mane, 0.44, 1.7, 0.4, -0.38, -1.05, 0, 0.12, 0.6).box(mats.mane, 0.34, 0.5, 0.3, -0.45, -2.0, 0, 0, 0.6).build(tail);
 
-  const H = { root, body, neck, head, tail, legs, mats, acc, saddles, toss: 0, phase: Math.random() * 10, walk: 0, rear: 0, pose: "idle", yaw: null, yawVel: 0, fade: 1 };
+  const H = { fixed: FIXED, root, body, neck, head, tail, legs, mats, acc, saddles, toss: 0, phase: Math.random() * 10, walk: 0, rear: 0, pose: "idle", yaw: null, yawVel: 0, fade: 1 };
   const all = new Set(); root.traverse(o => { if (o.material) all.add(o.material); }); H.allMats = [...all];
   H.setLook = (look, parts) => setHorseLook(H, look, parts);
   return H;
@@ -230,6 +257,23 @@ function setHorseLook(H, st, parts) {
   H.acc.bonnet.visible = acc.has("bonnet");
   H.acc.rosette.visible = acc.has("rosette");
   H.acc.wraps.forEach(w => w.visible = acc.has("wraps"));
+  // premium (owned or being tried on): reset every time, because stall slots are reused for other horses
+  const pr = new Set(st.premium || []);
+  const coatId = ["neon-gold", "galaxy", "zebra"].find(id => pr.has(id));
+  m.coat.emissive.set("#000000"); m.coatDark.emissive.set("#000000");
+  if (coatId) {
+    m.coat.map = premiumCoatTex(coatId); m.coat.needsUpdate = true;
+    m.coatDark.map = m.coat.map; m.coatDark.color.set(coatId === "zebra" ? "#cfcac2" : "#c9c0d8"); m.coatDark.needsUpdate = true;
+    if (coatId === "neon-gold") { m.coat.emissive.set("#7a5200"); m.coatDark.emissive.set("#4a3200"); m.mane.color.set("#fff2a8"); }
+    if (coatId === "galaxy") { m.coat.emissive.set("#1a0e3a"); m.mane.color.set("#b07cff"); }
+    if (coatId === "zebra") m.mane.color.set("#16141a");
+  }
+  H.flame = pr.has("flame-mane");
+  m.mane.emissive.set(H.flame ? "#ff5a00" : "#000000");
+  if (H.flame) m.mane.color.set("#ff8a2a");
+  const hoof = H.fixed.hoof;
+  hoof.emissive.set(pr.has("glow-hooves") ? "#1ab8ff" : "#000000");
+  hoof.color.set(pr.has("glow-hooves") ? "#7fe0ff" : "#2a2018");
 }
 // poses: idle (default), graze, walk (on the spot), rear, prance (walk + head toss). Yaw turns the horse on its spot.
 export const POSES = [
@@ -282,6 +326,7 @@ function animateHorse(H, t, dt, walking) {
     H.tail.rotation.x = Math.sin(p * 1.7) * (0.1 + Math.max(0, Math.sin(p * 0.37)) * 0.35);
   }
   H.body.scale.y = 0.86 * (1 + Math.sin(p * 1.3) * 0.008);
+  if (H.flame) H.mats.mane.emissiveIntensity = 0.75 + Math.sin(p * 11) * 0.18 + Math.sin(p * 23) * 0.1;
 }
 
 
@@ -417,6 +462,11 @@ function makeSlot() {
     else { mesh.position.set(sx, sy, -DEPTH + 0.02); mesh.rotation.z = ((sx * 7) % 3 - 1) * 0.08; g.add(mesh); }
     s.stickers[id] = mesh;
   });
+  // premium stall item: neon name sign on the back wall (hidden unless owned)
+  s.neonC = document.createElement("canvas"); s.neonC.width = 256; s.neonC.height = 64;
+  s.neonT = new THREE.CanvasTexture(s.neonC); s.neonT.colorSpace = THREE.SRGBColorSpace;
+  s.neon = new THREE.Mesh(new THREE.PlaneGeometry(3.0, 0.75), new THREE.MeshBasicMaterial({ map: s.neonT, transparent: true, toneMapped: false }));
+  s.neon.position.set(-1.75, 8.15, -DEPTH + 0.03); s.neon.visible = false; g.add(s.neon);
   // nameplate: tier rim + painted board (canvas)
   s.rimMat = lam({ color: "#666", emissive: "#000" });
   const rim = new THREE.Mesh(vbox(4.1, 1.05, 0.14, 0), s.rimMat); rim.position.set(0, 7.6, 0.36); g.add(rim);
@@ -466,6 +516,17 @@ export function paintPlate(c, k, st, tier, extra = {}) {
   } else {
     pxText(x, "EMPTY", 128, 40, 16, "#6b5848", 236);
   }
+}
+
+// neon sign: pink tube lettering with a soft glow
+function paintNeon(c, text) {
+  const x = c.getContext("2d"); x.clearRect(0, 0, 256, 64);
+  x.fillStyle = "rgba(20,8,30,.85)"; x.fillRect(4, 6, 248, 52);
+  x.strokeStyle = "#3ad6ff"; x.lineWidth = 3; x.shadowColor = "#3ad6ff"; x.shadowBlur = 10; x.strokeRect(6, 8, 244, 48);
+  let size = 22; for (; size > 8; size -= 2) { x.font = `${size}px ${PX}`; if (x.measureText(text).width <= 228) break; }
+  x.font = `${size}px ${PX}`; x.textAlign = "center"; x.textBaseline = "middle";
+  x.shadowColor = "#ff3d6e"; x.shadowBlur = 14; x.fillStyle = "#ff7aa0"; x.fillText(text, 128, 33);
+  x.shadowBlur = 0; x.fillStyle = "#ffe0ea"; x.fillText(text, 128, 33);
 }
 
 // ---------- mount ----------
@@ -564,6 +625,9 @@ export function mount(el, opts = {}) {
     if (s.paint !== wallI) { s.backMat.map = paintTex(wallI); s.backMat.needsUpdate = true; s.paint = wallI; }
     const stk = new Set((st && st.stickers) || []);
     STICKERS.forEach(({ id }) => s.stickers[id].visible = stk.has(id));
+    const sign = !!(st && (st.premium || []).includes("neon-sign"));
+    s.neon.visible = sign;
+    if (sign && s.neonFor !== st.handle) { paintNeon(s.neonC, "@" + st.handle); s.neonT.needsUpdate = true; s.neonFor = st.handle; }
     s.next = !st && opts.getStall && opts.getStall(k - 1) && !opts.getStall(k);
     if (paint) { paintPlate(s.plateC, k, st, tier, { next: s.next }); s.plateT.needsUpdate = true; plateBusy.delete(s); }
     else plateBusy.add(s);
