@@ -110,13 +110,41 @@ function premiumCoatTex(id) {
     }
   });
 }
+// palette pass patterns (option 5-20), same order as data/palette.json
+export const PAT_EXTRA = ["hoops", "diamonds", "chevrons", "spots", "quarters", "halves", "sash", "crossbelts", "diagonal", "zigzag", "hearts", "lightning", "triangles", "waves", "bigstar", "braces"];
+function drawPattern(x, id, cream, dark) {
+  const px = (a, b, c = cream) => { if (a >= 0 && a < 16 && b >= 0 && b < 16) { x.fillStyle = c; x.fillRect(a, b, 1, 1); } };
+  for (let a = 0; a < 16; a++) for (let b = 0; b < 16; b++) {
+    let on = false;
+    switch (id) {
+      case "hoops": on = b % 5 < 2; break;
+      case "diamonds": on = (Math.abs((a % 8) - 4) + Math.abs((b % 8) - 4)) <= 2; break;
+      case "chevrons": on = ((b + Math.abs((a % 8) - 4)) % 6) < 2; break;
+      case "spots": on = ((a % 6) - 2) ** 2 + ((b % 6) - 2) ** 2 <= 2; break;
+      case "quarters": on = (a < 8) === (b < 8); break;
+      case "halves": on = a < 8; break;
+      case "sash": on = Math.abs(a - b) < 3; break;
+      case "crossbelts": on = Math.abs(a - b) < 2 || Math.abs(a + b - 15) < 2; break;
+      case "diagonal": on = (a + b) % 6 < 2; break;
+      case "zigzag": on = (b - (Math.abs((a % 6) - 3)) + 16) % 6 === 0 || (b - (Math.abs((a % 6) - 3)) + 16) % 6 === 1; break;
+      case "waves": on = (b - Math.round(Math.sin(a * 0.8) * 1.5) + 16) % 6 < 2; break;
+      case "triangles": on = (b % 8) >= Math.abs((a % 8) - 4) + 4; break;
+      case "braces": on = (a >= 3 && a <= 4) || (a >= 11 && a <= 12); break;
+    }
+    if (on) px(a, b);
+  }
+  if (id === "hearts") [[3, 4], [11, 10]].forEach(([cx, cy]) => [".x.x.", "xxxxx", ".xxx.", "..x.."].forEach((r, j) => [...r].forEach((ch, i) => ch === "x" && px(cx - 2 + i, cy - 1 + j, "#ff8fb0"))));
+  if (id === "lightning") ["....xx", "...xx.", "..xx..", ".xxxx.", "...xx.", "..xx..", ".xx...", "xx...."].forEach((r, j) => [...r].forEach((ch, i) => ch === "x" && px(5 + i, 4 + j, "#ffe14a")));
+  if (id === "bigstar") ["...x...", "...x...", "..xxx..", "xxxxxxx", ".xxxxx.", "..xxx..", ".xx.xx.", "x.....x"].forEach((r, j) => [...r].forEach((ch, i) => ch === "x" && px(4 + i, 4 + j, cream)));
+}
 function silkTex(si, pat, rgb) {
-  return pixTex(`silk${si}${pat}`, 16, 16, (x) => {
+  return pixTex(`silk${si}_${pat}`, 16, 16, (x) => {
     const base = `rgb(${rgb})`, dark = shade(base, 0.62), cream = "#faf4e4";
     x.fillStyle = base; x.fillRect(0, 0, 16, 16);
     if (pat === 1) { x.fillStyle = cream; x.fillRect(0, 6, 16, 3); }
     if (pat === 2) { x.fillStyle = cream; x.fillRect(7, 4, 2, 8); x.fillRect(4, 7, 8, 2); x.fillRect(6, 6, 4, 4); }
     if (pat === 3) { x.fillStyle = dark; for (let a = 0; a < 16; a += 2) for (let b = 0; b < 16; b += 2) if ((a + b) % 4 === 0) x.fillRect(a, b, 2, 2); }
+    if (pat >= 4) drawPattern(x, PAT_EXTRA[pat - 4], cream, dark);
     x.fillStyle = "#f5c242"; x.fillRect(0, 15, 16, 1); x.fillRect(0, 0, 16, 1);   // gold piping
   }, false);
 }
@@ -239,7 +267,7 @@ function makeHorse() {
   return H;
 }
 function setHorseLook(H, st, parts) {
-  const d = [...(st.look || "1111")].map(n => Math.max(0, Math.min(3, +n - 1)));
+  const d = (st.idx || [...(st.look || "1111")].map(Number)).map(n => Math.max(0, Math.min(19, (n | 0) - 1)));
   const P = i => parts && parts[i] && parts[i].options[d[i]];
   const coat = P(0) ? P(0).rgb : [[150, 106, 72], [120, 82, 54], [78, 52, 34]];
   const mane = P(1) ? P(1).rgb[0] : [38, 26, 20];

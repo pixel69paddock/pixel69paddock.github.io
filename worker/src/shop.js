@@ -22,9 +22,10 @@ export async function shopRoute(req, env, url, cors, json) {
     const drops = [];
     for (const d of cat.drops || []) {
       const sold = await soldCount(env, d.id);
-      drops.push({ id: d.id, sold, left: Math.max(0, (d.limit || 0) - sold) });
+      drops.push({ id: d.id, sold, left: d.unlimited ? null : Math.max(0, (d.limit || 0) - sold) });
     }
-    return json({ testMode: isTest(env), drops, skins }, cors, 10);
+    const styles = (await env.DERBY.get("shop:styles", "json")) || {};
+    return json({ testMode: isTest(env), drops, skins, styles }, cors, 10);
   }
   if (p === "/checkout" && req.method === "POST") return checkout(req, env, cors, json);
   if (p === "/order" && req.method === "GET") {
@@ -34,6 +35,7 @@ export async function shopRoute(req, env, url, cors, json) {
     return json(o || { status: "pending" }, cors, 0);
   }
   if (p === "/stripe/webhook" && req.method === "POST") return webhook(req, env);
+  if (p === "/style" && req.method === "POST") return saveStyle(req, env, cors, json);
   return null;
 }
 
@@ -76,12 +78,13 @@ async function checkout(req, env, cors, json) {
     const d = (cat.drops || []).find(x => x.id === b.id);
     if (!d || d.status !== "open") return json({ error: "That drop isn't on sale." }, cors, 0, 400);
     if (!handle) return json({ error: "Type the Instagram handle whose horse gets it." }, cors, 0, 400);
-    if ((await soldCount(env, d.id)) >= d.limit) return json({ error: `${d.name} is sold out.` }, cors, 0, 409);
+    if (!d.unlimited && (await soldCount(env, d.id)) >= d.limit) return json({ error: `${d.name} is sold out.` }, cors, 0, 409);
     const skins = (await env.DERBY.get("shop:skins", "json")) || {};
-    if ((skins[handle] || []).some(s => s.id === d.id)) return json({ error: `@${handle} already owns ${d.name}.` }, cors, 0, 409);
+    const has = (skins[handle] || []).map(s => s.id);
+    if (has.includes(d.id) || (d.part && has.includes("unlock-all"))) return json({ error: `@${handle} already has ${d.name}.` }, cors, 0, 409);
     f["line_items[0][price_data][unit_amount]"] = String(d.price);
     f["line_items[0][price_data][product_data][name]"] = `${d.name} for @${handle}'s horse`;
-    f["line_items[0][price_data][product_data][description]"] = `Limited to ${d.limit}. Cosmetic only: it never changes race results.`;
+    f["line_items[0][price_data][product_data][description]"] = d.unlimited ? `Unlocks for @${handle}'s horse for good. Cosmetic only: it never changes race results.` : `Limited to ${d.limit}. Cosmetic only: it never changes race results.`;
     f["metadata[item]"] = d.id;
     f["payment_intent_data[metadata][item]"] = d.id;
     f["custom_text[submit][message]"] = `Saved on @${handle}'s horse as soon as you pay. No comment needed.`;
@@ -126,7 +129,7 @@ export async function fulfil(env, s) {
     const sold = await soldCount(env, d.id);
     const skins = (await env.DERBY.get("shop:skins", "json")) || {};
     const owned = (skins[handle] || []).some(x => x.id === d.id);
-    if (sold >= d.limit || owned) {
+    if ((!d.unlimited && sold >= d.limit) || owned) {
       // sold out (two people paid for the last one at once) or already owned: refund in full
       await stripe(env, "/refunds", { payment_intent: s.payment_intent, "metadata[reason]": owned ? "already owned" : "sold out" });
       order = { ...base, item: d.id, name: d.name, status: "refunded", reason: owned ? "already owned" : "sold out" };
@@ -135,7 +138,8 @@ export async function fulfil(env, s) {
       await env.DERBY.put("shop:sold:" + d.id, String(n));
       skins[handle] = [...(skins[handle] || []), { id: d.id, n, at: base.at }];
       await env.DERBY.put("shop:skins", JSON.stringify(skins));
-      order = { ...base, item: d.id, name: d.name, n, limit: d.limit, status: "paid" };
+      order = { ...base, item: d.id, name: d.name, n, limit: d.unlimited ? null : d.limit, status: "paid" };
+      if (handle) order.key = await newKey(env, handle);
     }
   } else {
     order = { ...base, status: "paid" };
@@ -164,6 +168,67 @@ function timingSafeEqual(a, b) {
   let x = 0;
   for (let i = 0; i < a.length; i++) x |= a.charCodeAt(i) ^ b.charCodeAt(i);
   return x === 0;
+}
+
+// ---------------------------------------------------------------- style keys + saved styles
+// A purchase gives the buying device a random key (only its SHA-256 is stored). With it, that device can save the
+// horse's look (paid colours and stall extras) without commenting. Several devices = several keys.
+async function sha(t) { return [...new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(t)))].map(b => b.toString(16).padStart(2, "0")).join(""); }
+async function newKey(env, handle) {
+  const raw = [...crypto.getRandomValues(new Uint8Array(18))].map(b => b.toString(16).padStart(2, "0")).join("");
+  const list = (await env.DERBY.get("shop:keys:" + handle, "json")) || [];
+  list.push(await sha(raw));
+  await env.DERBY.put("shop:keys:" + handle, JSON.stringify(list.slice(-10)));
+  return raw;
+}
+// shed code (same bits as shed.html shedEncode): saddle 2 | accessories 4 | wall 3 | plate 2 | stickers 8
+const ACC_IDS = ["blinkers", "bonnet", "wraps", "rosette"];
+const ST_IDS = ["horseshoe", "trophy", "flowers", "flag", "star", "heart", "carrot", "bolt"];
+export function shedDecode(code) {
+  const v = parseInt(String(code || ""), 36);
+  if (!/^[0-9A-Z]{4}$/i.test(String(code || "")) || !(v < 1 << 19)) return null;
+  return { saddle: v & 3, acc: ACC_IDS.filter((_, i) => v >> 2 & 1 << i), wall: v >> 6 & 7, plate: v >> 9 & 3, stickers: ST_IDS.filter((_, i) => v >> 11 & 1 << i) };
+}
+// what a style needs: palette for colours 5-20; one unlock per stall part beyond the free defaults
+export function needs(st, grand) {
+  const g = grand ? shedDecode(grand) : null, out = [];
+  if ((st.idx || []).some(n => n > 4)) out.push("palette");
+  if (![0, 1].includes(st.saddle) && !(g && g.saddle === st.saddle)) out.push("unlock-saddle");
+  if ((st.acc || []).some(a => !(g && g.acc.includes(a)))) out.push("unlock-acc");
+  if (st.wall && !(g && g.wall === st.wall)) out.push("unlock-paint");
+  if (st.plate && !(g && g.plate === st.plate)) out.push("unlock-plate");
+  if ((st.stickers || []).some(t => !(g && g.stickers.includes(t)))) out.push("unlock-stickers");
+  return out;
+}
+function cleanStyle(x) {
+  const idx = Array.isArray(x.idx) && x.idx.length === 4 && x.idx.every(n => Number.isInteger(n) && n >= 1 && n <= 20) ? x.idx : null;
+  if (!idx) return null;
+  const int = (v, max) => Number.isInteger(v) && v >= 0 && v <= max ? v : 0;
+  return {
+    idx, saddle: int(x.saddle, 3), wall: int(x.wall, 5), plate: int(x.plate, 3),
+    acc: ACC_IDS.filter(a => (x.acc || []).includes(a)), stickers: ST_IDS.filter(t => (x.stickers || []).includes(t)),
+    name: typeof x.name === "string" ? x.name.replace(/[^\p{L}\p{N} '.\-]/gu, "").replace(/\s+/g, " ").trim().slice(0, 18) : undefined
+  };
+}
+async function saveStyle(req, env, cors, json) {
+  let b; try { b = await req.json(); } catch { return json({ error: "bad request" }, cors, 0, 400); }
+  const handle = norm(b.handle);
+  if (!HANDLE_RE.test(handle) || typeof b.key !== "string" || b.key.length < 20) return json({ error: "bad request" }, cors, 0, 400);
+  const keys = (await env.DERBY.get("shop:keys:" + handle, "json")) || [];
+  if (!keys.includes(await sha(b.key))) return json({ error: `This device can't save @${handle}'s horse. Buy from this device, or DM us to move your key.` }, cors, 0, 403);
+  const st = cleanStyle(b.style || {});
+  if (!st) return json({ error: "bad style" }, cors, 0, 400);
+  const cat = await catalog(env);
+  const owned = ((await env.DERBY.get("shop:skins", "json")) || {})[handle] || [];
+  const ids = new Set(owned.map(o => o.id));
+  if (ids.has("unlock-all")) ["unlock-saddle", "unlock-acc", "unlock-paint", "unlock-plate", "unlock-stickers"].forEach(i => ids.add(i));
+  const missing = needs(st, (cat.grandfathered || {})[handle]).filter(n => !ids.has(n));
+  if (missing.length) return json({ error: "Not unlocked yet: " + missing.join(", "), missing }, cors, 0, 402);
+  const styles = (await env.DERBY.get("shop:styles", "json")) || {};
+  styles[handle] = { ...st, at: new Date().toISOString() };
+  if (!st.name) delete styles[handle].name;
+  await env.DERBY.put("shop:styles", JSON.stringify(styles));
+  return json({ ok: true, style: styles[handle] }, cors, 0);
 }
 
 // ---------------------------------------------------------------- helpers

@@ -44214,7 +44214,115 @@
         "limit": 50,
         "status": "open",
         "blurb": "Your @name in pink neon on your stall's back wall."
+      },
+      {
+        "id": "unlock-all",
+        "name": "Everything pass",
+        "kind": "pass",
+        "price": 500,
+        "unlimited": true,
+        "limit": 0,
+        "status": "open",
+        "blurb": "Unlocks every saddle, accessory, wall paint, nameplate and sticker for this horse. Half the price of buying them one by one."
+      },
+      {
+        "id": "unlock-saddle",
+        "name": "Saddles",
+        "kind": "unlock",
+        "part": "saddle",
+        "price": 200,
+        "unlimited": true,
+        "limit": 0,
+        "status": "open",
+        "blurb": "Racing black and Royal gold saddles."
+      },
+      {
+        "id": "unlock-acc",
+        "name": "Accessories",
+        "kind": "unlock",
+        "part": "acc",
+        "price": 200,
+        "unlimited": true,
+        "limit": 0,
+        "status": "open",
+        "blurb": "Blinkers, ear bonnet, leg wraps and rosette."
+      },
+      {
+        "id": "unlock-paint",
+        "name": "Wall paint",
+        "kind": "unlock",
+        "part": "wall",
+        "price": 200,
+        "unlimited": true,
+        "limit": 0,
+        "status": "open",
+        "blurb": "All 5 stall wall colours."
+      },
+      {
+        "id": "unlock-plate",
+        "name": "Nameplates",
+        "kind": "unlock",
+        "part": "plate",
+        "price": 200,
+        "unlimited": true,
+        "limit": 0,
+        "status": "open",
+        "blurb": "Gold, Neon and Ice nameplates."
+      },
+      {
+        "id": "unlock-stickers",
+        "name": "Stickers",
+        "kind": "unlock",
+        "part": "stickers",
+        "price": 200,
+        "unlimited": true,
+        "limit": 0,
+        "status": "open",
+        "blurb": "All 8 stall stickers."
+      },
+      {
+        "id": "palette",
+        "name": "Palette pass",
+        "kind": "palette",
+        "price": 300,
+        "unlimited": true,
+        "limit": 0,
+        "status": "open",
+        "blurb": "16 more coats, manes and silks and 16 more patterns: 20 of each. Change them any time."
       }
-    ]
+    ],
+    "grandfathered": {
+      "himc__": "6THD",
+      "yanniss_wk": "2DVF",
+      "dang.dang16": "B7IY",
+      "prilotte_": "03KU",
+      "aliyaemiller": "81UG",
+      "everleighkoval": "ACCE",
+      "willowsummerhays": "2CPM",
+      "just_a_grl_who_loves_horses": "1CB6",
+      "aria_phillip19": "17A1",
+      "schutzjude": "5N45",
+      "charlotte.the.penguin": "2BM9",
+      "mag.nina_": "2AM2",
+      "fran.nigr": "4NMB",
+      "janbell_rulez": "B78B",
+      "equestrian.emilia.g": "00F1",
+      "wrld.of_kenz": "4ZMM",
+      "summer_solstce": "B7V6",
+      "kenji_oja1": "60W2",
+      "dylanfromm08": "2TZM",
+      "dr_art_.1": "B708",
+      "roman.a12.1": "3LQH",
+      "stefanie1893": "1H6B",
+      "x.jada_exe": "0R2Y",
+      "ilsje2005": "02HM",
+      "kefah_rabah1234": "58VU",
+      "billie_404__": "B80P",
+      "9.15.2026": "8IBS",
+      "sarahvanloo12": "007T",
+      "fernando__tra_terrestial_being": "B804",
+      "gabiii.esp": "5ROE"
+    },
+    "grandfatheredAt": "2026-11-25"
   }
 }
