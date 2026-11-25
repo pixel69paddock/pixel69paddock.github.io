@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-25",
+  "updated": "2026-11-26",
   "account": "dailyderby_horse",
   "latestReel": "https://www.instagram.com/reel/DgJexEsp3Ck/",
   "nextRace": {
@@ -7,6 +7,33 @@
     "date": "2026-11-26",
     "status": "open",
     "entrants": [
+      "smkalsowaidi",
+      "lillyr__prvst",
+      "joshuawelsch_",
+      "kxrla_eq",
+      "emmillyyy9614",
+      "jonnysimsy11",
+      "marian.b_23",
+      "alla.misin",
+      "seth_zwcc",
+      "brzezinska_kelly",
+      "starloverorcaheart",
+      "lys.hartland",
+      "karma.xcs",
+      "marie_mag_kekse_11",
+      "kati_heimstadt7",
+      "ataridoomi2",
+      "zitto1023",
+      "lidzia_mp3",
+      "kapo_301",
+      "tasfiaparvez",
+      "baruu.f",
+      "mecha_m4niac",
+      "kara_geldenhuys",
+      "klara_olga_2010",
+      "nanna_h_baunsgaard",
+      "shelbyann.xo16",
+      "lukic_.dunja",
       "haruuraraofficial",
       "kenzieellem",
       "leetje41",
@@ -2448,7 +2475,14 @@
       "poni.unelmia013",
       "radzbeta",
       "ryz.freehand.art",
-      "sansqwer125"
+      "sansqwer125",
+      "_.lucuska",
+      "hanvolongho",
+      "kholeckovaa",
+      "madeleine_leigh_2010",
+      "mr_kiwi_s",
+      "nick_is_him345",
+      "phoenix_rising121212"
     ],
     "track": "To be announced in the Day 6 reel"
   },
@@ -39982,7 +40016,10 @@
       "races": 1,
       "medals": [],
       "rank": 2021,
-      "badge": "silver"
+      "badge": "silver",
+      "look": "2332",
+      "original": true,
+      "shed": "0001"
     },
     {
       "handle": "ellie.marshall12",
@@ -41055,6 +41092,271 @@
       "races": 0,
       "medals": [],
       "via": "comment"
+    },
+    {
+      "handle": "lukic_.dunja",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "rank": 2144,
+      "badge": "silver"
+    },
+    {
+      "handle": "shelbyann.xo16",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "rank": 2145,
+      "badge": "silver"
+    },
+    {
+      "handle": "nanna_h_baunsgaard",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "rank": 2146,
+      "badge": "silver"
+    },
+    {
+      "handle": "klara_olga_2010",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "rank": 2147,
+      "badge": "silver"
+    },
+    {
+      "handle": "kara_geldenhuys",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "rank": 2148,
+      "badge": "silver"
+    },
+    {
+      "handle": "mecha_m4niac",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "rank": 2149,
+      "badge": "silver"
+    },
+    {
+      "handle": "baruu.f",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "rank": 2150,
+      "badge": "silver"
+    },
+    {
+      "handle": "tasfiaparvez",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "rank": 2151,
+      "badge": "silver"
+    },
+    {
+      "handle": "kapo_301",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "rank": 2152,
+      "badge": "silver"
+    },
+    {
+      "handle": "lidzia_mp3",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "rank": 2153,
+      "badge": "silver"
+    },
+    {
+      "handle": "zitto1023",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "rank": 2154,
+      "badge": "silver"
+    },
+    {
+      "handle": "ataridoomi2",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "rank": 2155,
+      "badge": "silver"
+    },
+    {
+      "handle": "kati_heimstadt7",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "rank": 2156,
+      "badge": "silver"
+    },
+    {
+      "handle": "marie_mag_kekse_11",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "rank": 2157,
+      "badge": "silver"
+    },
+    {
+      "handle": "karma.xcs",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "rank": 2158,
+      "badge": "silver"
+    },
+    {
+      "handle": "lys.hartland",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "rank": 2159,
+      "badge": "silver"
+    },
+    {
+      "handle": "starloverorcaheart",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "rank": 2160,
+      "badge": "silver"
+    },
+    {
+      "handle": "brzezinska_kelly",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "rank": 2161,
+      "badge": "silver"
+    },
+    {
+      "handle": "seth_zwcc",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "rank": 2162,
+      "badge": "silver"
+    },
+    {
+      "handle": "alla.misin",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "rank": 2163,
+      "badge": "silver"
+    },
+    {
+      "handle": "marian.b_23",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "rank": 2164,
+      "badge": "silver"
+    },
+    {
+      "handle": "jonnysimsy11",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "rank": 2165,
+      "badge": "silver"
+    },
+    {
+      "handle": "emmillyyy9614",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "rank": 2166,
+      "badge": "silver"
+    },
+    {
+      "handle": "kxrla_eq",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "rank": 2167,
+      "badge": "silver"
+    },
+    {
+      "handle": "joshuawelsch_",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "rank": 2168,
+      "badge": "silver"
+    },
+    {
+      "handle": "lillyr__prvst",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "rank": 2169,
+      "badge": "silver"
+    },
+    {
+      "handle": "smkalsowaidi",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "rank": 2170,
+      "badge": "silver"
+    },
+    {
+      "handle": "_.lucuska",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "hanvolongho",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "kholeckovaa",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "madeleine_leigh_2010",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "mr_kiwi_s",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "nick_is_him345",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
+    },
+    {
+      "handle": "phoenix_rising121212",
+      "joined": "2026-11-25",
+      "races": 0,
+      "medals": [],
+      "via": "comment"
     }
   ],
   "sponsorSpots": [
@@ -41209,8 +41511,16 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-25T09:11:28Z",
+  "lastSync": "2026-11-25T13:09:27Z",
   "claims": [
+    {
+      "handle": "coscowater",
+      "look": "2332",
+      "at": "2026-11-25T09:43:26Z",
+      "reel": "https://www.instagram.com/p/DgJexEsp3Ck/",
+      "status": "locked",
+      "original": true
+    },
     {
       "handle": "bipolityt",
       "look": "3433",
@@ -42166,6 +42476,7 @@
     "3321": "luna_for_horses",
     "2124": "_dorothy_0907",
     "3433": "bipolityt",
+    "2332": "coscowater",
     "2433": "idk1863eg",
     "2423": "leo____chi2010",
     "2214": "everleighkoval",
@@ -42374,8 +42685,8 @@
       "reel": "DgB079spXvZ"
     },
     "addiandthehorses": {
-      "day": 4,
-      "reel": "DgB079spXvZ"
+      "day": 6,
+      "reel": "DgJexEsp3Ck"
     },
     "taiharley": {
       "day": 4,
@@ -42774,8 +43085,8 @@
       "reel": "DgB079spXvZ"
     },
     "bobbylobby143": {
-      "day": 4,
-      "reel": "DgB079spXvZ"
+      "day": 6,
+      "reel": "DgJexEsp3Ck"
     },
     "z.chr0sciel": {
       "day": 4,
@@ -43790,8 +44101,8 @@
       "reel": "DgCpWRkJ0J5"
     },
     "harman_saandhu": {
-      "day": 5,
-      "reel": "DgCpWRkJ0J5"
+      "day": 6,
+      "reel": "DgJexEsp3Ck"
     },
     "aeon.of_elation": {
       "day": 5,
@@ -45264,6 +45575,66 @@
     "i_love_azucar_09": {
       "day": 6,
       "reel": "DgHvMispbq5"
+    },
+    "0._c.dora_0": {
+      "day": 6,
+      "reel": "DgJexEsp3Ck"
+    },
+    "hanvolongho": {
+      "day": 6,
+      "reel": "DgJexEsp3Ck"
+    },
+    "mr_kiwi_s": {
+      "day": 6,
+      "reel": "DgJexEsp3Ck"
+    },
+    "nick_is_him345": {
+      "day": 6,
+      "reel": "DgJexEsp3Ck"
+    },
+    "phoenix_rising121212": {
+      "day": 6,
+      "reel": "DgJexEsp3Ck"
+    },
+    "napsi_szk": {
+      "day": 6,
+      "reel": "DgJexEsp3Ck"
+    },
+    "madeleine_leigh_2010": {
+      "day": 6,
+      "reel": "DgJexEsp3Ck"
+    },
+    "kholeckovaa": {
+      "day": 6,
+      "reel": "DgJexEsp3Ck"
+    },
+    "katnotcatfr": {
+      "day": 6,
+      "reel": "DgJexEsp3Ck"
+    },
+    "_.lucuska": {
+      "day": 6,
+      "reel": "DgJexEsp3Ck"
+    },
+    "tacosalad319": {
+      "day": 6,
+      "reel": "DgJexEsp3Ck"
+    },
+    "meganlc.ben": {
+      "day": 6,
+      "reel": "DgJexEsp3Ck"
+    },
+    "natytrcalkova": {
+      "day": 6,
+      "reel": "DgJexEsp3Ck"
+    },
+    "bad_fish.2": {
+      "day": 6,
+      "reel": "DgJexEsp3Ck"
+    },
+    "art_buffshark": {
+      "day": 6,
+      "reel": "DgJexEsp3Ck"
     }
   },
   "sponsorInfo": {
