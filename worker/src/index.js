@@ -1,7 +1,7 @@
 // Daily Derby claims server (Cloudflare Worker).
 //
 // Reads "HORSE dddd" comments on every @dailyderby_horse reel through the Instagram API
-// (Instagram Login; permissions instagram_business_basic + instagram_business_manage_comments),
+// (IGAA token: Instagram Login, graph.instagram.com; EAA token: Facebook/Unified login, graph.facebook.com),
 // works out who owns which look (first to comment a code gets it; a newer code from the same
 // person swaps their look), and serves that to the site so "Check my horse" is instant.
 //
@@ -19,7 +19,8 @@
 
 import { shopRoute } from "./shop.js";
 
-const API = "https://graph.instagram.com/v25.0";
+const API = "https://graph.instagram.com/v25.0";        // IGAA tokens (Instagram Login; older apps)
+const FB_API = "https://graph.facebook.com/v25.0";      // EAA tokens (Facebook / Unified login; every app made since 2026)
 // [2] = optional 3D-shed code: "HORSE 4243+0A1B" (see shed.html shedEncode)
 const CODE_RE = /horse\s*#?\s*([1-4]{4})(?![0-9])(?:\s*\+\s*([0-9a-z]{4})(?![0-9a-z]))?/i;
 const STALE_MS = 60_000;      // /state rescans when the cached scan is older than this
@@ -50,8 +51,9 @@ export default {
         // live follower count (the API gives the count, never the list); cached 60s for every visitor
         const c = await env.DERBY.get("followers", "json");
         if (c && Date.now() - c.t < 60_000) return json({ followers: c.n, at: new Date(c.t).toISOString() }, cors, 30);
-        const token = ((await env.DERBY.get("token")) || env.IG_TOKEN || "").trim().replace(/^["']|["']$/g, "");   // pasted tokens can carry spaces/quotes
-        const r = await fetch(`${API}/me?fields=followers_count&access_token=${enc(token)}`);
+        const { token, base, me } = await igAuth(env);
+        if (!token) throw new Error("no Instagram token configured");
+        const r = await fetch(`${base}/${me}?fields=followers_count&access_token=${enc(token)}`);
         const j = await r.json();
         if (!r.ok || typeof j.followers_count !== "number") {
           if (c) return json({ followers: c.n, at: new Date(c.t).toISOString(), stale: true }, cors, 30);
@@ -86,10 +88,10 @@ async function getState(env, fresh) {
 }
 
 async function scan(env, prev) {
-  const token = ((await env.DERBY.get("token")) || env.IG_TOKEN || "").trim().replace(/^["']|["']$/g, "");   // pasted tokens can carry spaces/quotes
+  const { token, base, me } = await igAuth(env);
   if (!token) throw new Error("no Instagram token configured");
   const cache = (await env.DERBY.get("commentCache", "json")) || {};
-  const media = await pages(`${API}/me/media?fields=id,permalink,timestamp&limit=50&access_token=${enc(token)}`, 4);
+  const media = await pages(`${base}/${me}/media?fields=id,permalink,timestamp&limit=50&access_token=${enc(token)}`, 4);
   const found = [];
   const now = Date.now();
   const newCache = {};
@@ -99,7 +101,7 @@ async function scan(env, prev) {
     let comments;
     if (old && hit && now - hit.at < OLD_MEDIA_TTL) comments = hit.items;
     else {
-      const raw = await pages(`${API}/${m.id}/comments?fields=id,text,username,timestamp,replies{id,text,username,timestamp}&limit=50&access_token=${enc(token)}`, 10);
+      const raw = await pages(`${base}/${m.id}/comments?fields=id,text,username,timestamp,replies{id,text,username,timestamp}&limit=50&access_token=${enc(token)}`, 10);
       comments = [];
       for (const c of raw) {
         comments.push(slim(c));
@@ -169,12 +171,39 @@ async function siteData(env) {
   }
 }
 
+// ---------------------------------------------------------------- which Instagram API the saved token talks to
+// IGAA… tokens use graph.instagram.com with /me. EAA… tokens use graph.facebook.com with the Instagram account's id,
+// found once (IG_USER_ID var, else the first Page/asset that has an Instagram account, else /me) and kept in KV.
+async function igAuth(env) {
+  const token = ((await env.DERBY.get("token")) || env.IG_TOKEN || "").trim().replace(/^["']|["']$/g, "");   // pasted tokens can carry spaces/quotes
+  if (!token) return { token };
+  if (/^IG/.test(token)) return { token, base: API, me: "me", fb: false };
+  let me = env.IG_USER_ID || (await env.DERBY.get("igUserId"));
+  if (!me) {
+    const want = (env.IG_USERNAME || "dailyderby_horse").toLowerCase();
+    const r = await fetch(`${FB_API}/me/accounts?fields=instagram_business_account{id,username}&limit=100&access_token=${enc(token)}`);
+    const j = await r.json();
+    const igs = (j.data || []).map(p => p.instagram_business_account).filter(Boolean);
+    const hit = igs.find(a => (a.username || "").toLowerCase() === want) || igs[0];
+    if (hit) me = hit.id;
+    else {   // system-user / Instagram-asset tokens: /me is the Instagram account itself
+      const r2 = await fetch(`${FB_API}/me?fields=id,username&access_token=${enc(token)}`);
+      const j2 = await r2.json();
+      if (j2.username) me = j2.id;
+    }
+    if (!me) throw new Error("EAA token: no Instagram account found (set IG_USER_ID)" + (j.error ? `: ${j.error.message}` : ""));
+    await env.DERBY.put("igUserId", me);
+  }
+  return { token, base: FB_API, me, fb: true };
+}
+
 // ---------------------------------------------------------------- token renewal
 async function renewToken(env) {
   const meta = (await env.DERBY.get("tokenMeta", "json")) || {};
   if (meta.renewedAt && Date.now() - meta.renewedAt < 7 * 86400_000) return;
   const token = ((await env.DERBY.get("token")) || env.IG_TOKEN || "").trim().replace(/^["']|["']$/g, "");   // pasted tokens can carry spaces/quotes
   if (!token) return;
+  if (!/^IG/.test(token)) return;   // EAA tokens: system-user tokens never expire; a user token is replaced by hand (wrangler secret put IG_TOKEN)
   const r = await fetch(`https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=${enc(token)}`);
   const j = await r.json();
   if (j.access_token) {
