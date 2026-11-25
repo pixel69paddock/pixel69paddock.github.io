@@ -234,9 +234,10 @@ function makeHorse() {
   // accessories on the head
   const acc = {};
   acc.blinkers = new THREE.Group(); head.add(acc.blinkers);
-  B.box(mats.silkSolid, 0.62, 0.55, 0.9, 0.2, 0.18, 0, 0, 0).box(mats.silkSolid, 0.22, 0.3, 0.12, 0.5, 0.1, 0.48, 0, 0).box(mats.silkSolid, 0.22, 0.3, 0.12, 0.5, 0.1, -0.48, 0, 0).build(acc.blinkers);
+  // hood sits clearly outside the eyes and browband (0.98 wide), or their faces fight and flicker
+  B.box(mats.silkSolid, 0.62, 0.55, 1.06, 0.2, 0.18, 0, 0, 0).box(mats.silkSolid, 0.22, 0.3, 0.12, 0.5, 0.1, 0.58, 0, 0).box(mats.silkSolid, 0.22, 0.3, 0.12, 0.5, 0.1, -0.58, 0, 0).build(acc.blinkers);
   acc.bonnet = new THREE.Group(); head.add(acc.bonnet);
-  B.box(mats.silkSolid, 0.26, 0.5, 0.22, -0.1, 0.68, 0.24, 0, 0).box(mats.silkSolid, 0.26, 0.5, 0.22, -0.1, 0.68, -0.24, 0, 0).box(FIXED.white, 0.2, 0.2, 0.2, 0.15, 0.6, 0, 0, 0).build(acc.bonnet);
+  B.box(mats.silkSolid, 0.3, 0.56, 0.26, -0.12, 0.68, 0.25, 0.5, 0).box(mats.silkSolid, 0.3, 0.56, 0.26, -0.12, 0.68, -0.25, 0.5, 0).box(FIXED.white, 0.2, 0.2, 0.2, 0.15, 0.6, 0, 0, 0).build(acc.bonnet);
   acc.rosette = new THREE.Group(); head.add(acc.rosette);
   B.box(FIXED.gold, 0.34, 0.34, 0.06, 0.58, 0.32, 0.44, 0.785, 0).box(FIXED.pink, 0.2, 0.2, 0.08, 0.58, 0.32, 0.45, 0, 0)
     .box(FIXED.pink, 0.08, 0.32, 0.04, 0.52, 0.06, 0.45, 0, 0).box(FIXED.gold, 0.08, 0.28, 0.04, 0.64, 0.08, 0.45, 0, 0).build(acc.rosette);
