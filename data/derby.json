@@ -20294,7 +20294,9 @@
       "races": 6,
       "medals": [],
       "badge": "gold",
-      "rank": 3
+      "rank": 3,
+      "look": "3231",
+      "shed": "0001"
     },
     {
       "handle": "micro_facts_information",
@@ -27445,7 +27447,10 @@
       "races": 2,
       "medals": [],
       "badge": "gold",
-      "rank": 717
+      "rank": 717,
+      "look": "4443",
+      "original": true,
+      "name": "Sativa"
     },
     {
       "handle": "the_heart_takes_what_it_wants",
@@ -31371,7 +31376,11 @@
       "races": 1,
       "medals": [],
       "rank": 1072,
-      "badge": "silver"
+      "badge": "silver",
+      "look": "4112",
+      "original": true,
+      "name": "Gentildonna",
+      "shed": "0001"
     },
     {
       "handle": "pbrbuchovaa",
@@ -37258,7 +37267,11 @@
       "races": 1,
       "medals": [],
       "rank": 1743,
-      "badge": "silver"
+      "badge": "silver",
+      "look": "2112",
+      "original": true,
+      "name": "Kraft",
+      "shed": "0001"
     },
     {
       "handle": "t1lly.10",
@@ -37972,7 +37985,10 @@
       "races": 1,
       "medals": [],
       "rank": 1783,
-      "badge": "silver"
+      "badge": "silver",
+      "look": "3321",
+      "original": true,
+      "shed": "0001"
     },
     {
       "handle": "kendeh_bendeguz",
@@ -40221,8 +40237,50 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-25T03:38:16Z",
+  "lastSync": "2026-11-25T05:36:27Z",
   "claims": [
+    {
+      "handle": "luna_for_horses",
+      "look": "3321",
+      "at": "2026-11-25T05:21:21Z",
+      "reel": "https://www.instagram.com/p/DgJexEsp3Ck/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "kadin_sensei78",
+      "look": "4112",
+      "at": "2026-11-25T05:01:17Z",
+      "reel": "https://www.instagram.com/p/DgJexEsp3Ck/",
+      "status": "locked",
+      "original": true,
+      "name": "Gentildonna"
+    },
+    {
+      "handle": "__choi_12",
+      "look": "3231",
+      "at": "2026-11-25T04:08:11Z",
+      "reel": "https://www.instagram.com/p/DgJexEsp3Ck/",
+      "status": "locked"
+    },
+    {
+      "handle": "kraft_univr",
+      "look": "2112",
+      "at": "2026-11-25T03:40:58Z",
+      "reel": "https://www.instagram.com/p/DgJexEsp3Ck/",
+      "status": "locked",
+      "original": true,
+      "name": "Kraft"
+    },
+    {
+      "handle": "danger.ramen",
+      "look": "4443",
+      "at": "2026-11-25T03:35:19Z",
+      "reel": "https://www.instagram.com/p/DgJexEsp3Ck/",
+      "status": "locked",
+      "original": true,
+      "name": "Sativa"
+    },
     {
       "handle": "pankyonshii",
       "look": "2122",
@@ -41216,7 +41274,11 @@
     "3313": "dr_art_.1",
     "2214": "everleighkoval",
     "2123": "roman.a12.1",
-    "2414": "full_court_miss"
+    "2414": "full_court_miss",
+    "4443": "danger.ramen",
+    "2112": "kraft_univr",
+    "4112": "kadin_sensei78",
+    "3321": "luna_for_horses"
   },
   "commentEntries": {
     "cailyneq22_": {
