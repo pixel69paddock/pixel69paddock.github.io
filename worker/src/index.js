@@ -50,7 +50,7 @@ export default {
         // live follower count (the API gives the count, never the list); cached 60s for every visitor
         const c = await env.DERBY.get("followers", "json");
         if (c && Date.now() - c.t < 60_000) return json({ followers: c.n, at: new Date(c.t).toISOString() }, cors, 30);
-        const token = (await env.DERBY.get("token")) || env.IG_TOKEN;
+        const token = ((await env.DERBY.get("token")) || env.IG_TOKEN || "").trim().replace(/^["']|["']$/g, "");   // pasted tokens can carry spaces/quotes
         const r = await fetch(`${API}/me?fields=followers_count&access_token=${enc(token)}`);
         const j = await r.json();
         if (!r.ok || typeof j.followers_count !== "number") {
@@ -86,7 +86,7 @@ async function getState(env, fresh) {
 }
 
 async function scan(env, prev) {
-  const token = (await env.DERBY.get("token")) || env.IG_TOKEN;
+  const token = ((await env.DERBY.get("token")) || env.IG_TOKEN || "").trim().replace(/^["']|["']$/g, "");   // pasted tokens can carry spaces/quotes
   if (!token) throw new Error("no Instagram token configured");
   const cache = (await env.DERBY.get("commentCache", "json")) || {};
   const media = await pages(`${API}/me/media?fields=id,permalink,timestamp&limit=50&access_token=${enc(token)}`, 4);
@@ -173,7 +173,7 @@ async function siteData(env) {
 async function renewToken(env) {
   const meta = (await env.DERBY.get("tokenMeta", "json")) || {};
   if (meta.renewedAt && Date.now() - meta.renewedAt < 7 * 86400_000) return;
-  const token = (await env.DERBY.get("token")) || env.IG_TOKEN;
+  const token = ((await env.DERBY.get("token")) || env.IG_TOKEN || "").trim().replace(/^["']|["']$/g, "");   // pasted tokens can carry spaces/quotes
   if (!token) return;
   const r = await fetch(`https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=${enc(token)}`);
   const j = await r.json();
