@@ -29568,7 +29568,9 @@
       "races": 0,
       "medals": [],
       "rank": 1955,
-      "badge": "silver"
+      "badge": "silver",
+      "look": "2222",
+      "shed": "B804"
     },
     {
       "handle": "anick.a1113",
@@ -30406,8 +30408,15 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-25T00:34:58Z",
+  "lastSync": "2026-11-25T01:38:18Z",
   "claims": [
+    {
+      "handle": "fernando__tra_terrestial_being",
+      "look": "2222",
+      "at": "2026-11-25T01:03:45Z",
+      "reel": "https://www.instagram.com/p/DgHvMispbq5/",
+      "status": "locked"
+    },
     {
       "handle": "roman.a12.1",
       "look": "2123",
