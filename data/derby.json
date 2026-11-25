@@ -44148,7 +44148,7 @@
   },
   "shop": {
     "api": "https://dailyderby-claims.chris0209lee.workers.dev",
-    "testMode": true,
+    "testMode": false,
     "currency": "usd",
     "tips": {
       "amounts": [
