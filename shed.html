@@ -209,7 +209,7 @@
 <div id="toast" role="status"></div>
 
 <script type="module">
-  import { mount, tierOf, ACC, SADDLES, POSES, PAINTS, PLATES, STICKERS, stickerIcon, PREMIUM } from "./assets/shed3d.js?v=prem2";
+  import { mount, tierOf, ACC, SADDLES, POSES, PAINTS, PLATES, STICKERS, stickerIcon, PREMIUM } from "./assets/shed3d.js?v=prem3";
   const IG = "dailyderby_horse", IGP = "https://www.instagram.com/" + IG + "/";
   const $ = (s, r = document) => r.querySelector(s);
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -244,13 +244,16 @@
   const SHOP = D.shop || {};
   let SAPI = (SHOP.api || "").replace(/\/$/, "") || null;
   if (P.get("shopapi") && /^(localhost|127\.0\.0\.1)$/.test(location.hostname)) SAPI = P.get("shopapi");
-  let OWN = {}, STOCK = {}, TRY = {};
+  let OWN = {}, STOCK = {}, TRY = {}, OFF = {};
+  let KEYS = store.get("dd-keys", {});   // keys for horses this device paid for: change paid items without commenting
+  if (P.get("setkey") && P.get("h")) { KEYS[norm(P.get("h"))] = P.get("setkey"); store.set("dd-keys", KEYS); history.replaceState(null, "", location.pathname + "?h=" + encodeURIComponent(P.get("h"))); }
   const SHOW_TEST = P.has("test") || /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
   const ownedOf = h => (OWN[norm(h)] || []);
   const PREM = Object.fromEntries(PREMIUM.map(p => [p.id, p]));
   const COATS = new Set(PREMIUM.filter(p => p.kind === "coat").map(p => p.id));
   function premiumOf(h) {
-    const owned = ownedOf(h).slice().sort((a, b) => String(a.at).localeCompare(String(b.at))).map(x => x.id);
+    const off = OFF[norm(h)] || [];
+    const owned = ownedOf(h).slice().sort((a, b) => String(a.at).localeCompare(String(b.at))).map(x => x.id).filter(id => !off.includes(id));
     let ids = [], coat = null;
     owned.forEach(id => { if (COATS.has(id)) coat = id; else if (!ids.includes(id)) ids.push(id); });   // newest coat wins
     const t = TRY[norm(h)];
@@ -541,6 +544,17 @@
       TRY[key] = TRY[key] === id ? null : id; api.refresh(k, true); render();
     });
     pb.querySelectorAll("[data-buy]").forEach(b => b.onclick = () => buy(b, h, k, b.dataset.buy));
+    pb.querySelectorAll("[data-wear]").forEach(b => b.onclick = async () => {
+      const key = norm(h.handle), id = b.dataset.wear, cur0 = OFF[key] || [];
+      const off = cur0.includes(id) ? cur0.filter(x => x !== id) : [...cur0, id];
+      b.disabled = true;
+      try {
+        const j = await fetch(SAPI + "/equip", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ handle: key, key: KEYS[key], off }) }).then(r => r.json());
+        if (j.ok) { OFF[key] = j.off; api.refresh(k, true); render(); toast(off.includes(id) ? "Taken off. Put it back on any time." : "Wearing it again."); }
+        else toast(j.error || "Couldn't save that.");
+      } catch { toast("Couldn't reach the shop."); }
+      b.disabled = false;
+    });
     pb.scrollTop = keep;
     $("#styleIt").onclick = e => { e.stopPropagation(); openSheet(true); };
     layoutInset();
@@ -557,7 +571,7 @@
         const out = d.status === "closed" || left <= 0;
         return `<div class="pi${o ? " mine" : ""}"><div class="ic">${p.icon}</div>
           <div><b>${esc(d.name)}</b><small>${p.kind === "coat" ? "Coat" : p.kind === "stall" ? "Stall" : "Effect"} · ${out ? "sold out" : `${left} of ${d.limit} left`} · ${money(d.price)}</small></div>
-          <div class="pa">${o ? `<span class="own">Owned #${o.n}</span>`
+          <div class="pa">${o ? (KEYS[norm(h.handle)] ? `<button type="button" data-wear="${d.id}" aria-pressed="${!(OFF[norm(h.handle)] || []).includes(d.id)}">${(OFF[norm(h.handle)] || []).includes(d.id) ? "Put on" : "Wearing ✓"}</button><span class="own">#${o.n}</span>` : `<span class="own">Owned #${o.n}</span>`)
             : `<button type="button" data-try="${d.id}" aria-pressed="${t === d.id}">${t === d.id ? "Take off" : "Try on"}</button><button type="button" class="buy" data-buy="${d.id}" ${SAPI && !out ? "" : "disabled"}>${out ? "Sold out" : SAPI ? "Buy" : "Soon"}</button>`}</div></div>`;
       }).join("")}
       <p class="fine" style="margin-top:8px">Try anything on for free. Buy it and it's saved on @${esc(h.handle)}'s horse straight away, numbered, no comment needed. Apple Pay, Google Pay or card; prices in US$, paid in your own currency.</p></div>`;
@@ -566,7 +580,7 @@
     if (!SAPI) return;
     try {
       const j = await fetch(SAPI + "/shop", { cache: "no-store" }).then(r => r.json());
-      OWN = j.skins || {};
+      OWN = j.skins || {}; OFF = j.off || {};
       STOCK = Object.fromEntries((j.drops || []).map(d => [d.id, d]));
       if (api.refreshAll) api.refreshAll();
       render();
@@ -588,7 +602,7 @@
     for (let i = 0; i < 12; i++) {
       try {
         const o = await fetch(SAPI + "/order?session=" + encodeURIComponent(id), { cache: "no-store" }).then(r => r.json());
-        if (o.status === "paid") { TRY = {}; await loadShop(); openSheet(true); toast(`🎉 ${o.name} #${o.n} of ${o.limit} is saved on @${o.handle}'s horse.`); return; }
+        if (o.status === "paid") { if (o.key && o.handle) { KEYS[o.handle] = o.key; store.set("dd-keys", KEYS); } TRY = {}; await loadShop(); openSheet(true); toast(`🎉 ${o.name} #${o.n} of ${o.limit} is saved on @${o.handle}'s horse.`); return; }
         if (o.status === "refunded") { toast(`${o.name} sold out just before your payment, so you've been refunded in full.`); return; }
       } catch {}
       await new Promise(r => setTimeout(r, 2000));

@@ -25,7 +25,8 @@ export async function shopRoute(req, env, url, cors, json) {
       drops.push({ id: d.id, sold, left: d.unlimited ? null : Math.max(0, (d.limit || 0) - sold) });
     }
     const styles = (await env.DERBY.get("shop:styles", "json")) || {};
-    return json({ testMode: isTest(env), drops, skins, styles }, cors, 10);
+    const off = (await env.DERBY.get("shop:off", "json")) || {};
+    return json({ testMode: isTest(env), drops, skins, styles, off }, cors, 10);
   }
   if (p === "/checkout" && req.method === "POST") return checkout(req, env, cors, json);
   if (p === "/order" && req.method === "GET") {
@@ -36,6 +37,7 @@ export async function shopRoute(req, env, url, cors, json) {
   }
   if (p === "/stripe/webhook" && req.method === "POST") return webhook(req, env);
   if (p === "/style" && req.method === "POST") return saveStyle(req, env, cors, json);
+  if (p === "/equip" && req.method === "POST") return equip(req, env, cors, json);
   return null;
 }
 
@@ -209,6 +211,19 @@ function cleanStyle(x) {
     acc: ACC_IDS.filter(a => (x.acc || []).includes(a)), stickers: ST_IDS.filter(t => (x.stickers || []).includes(t)),
     name: typeof x.name === "string" ? x.name.replace(/[^\p{L}\p{N} '.\-]/gu, "").replace(/\s+/g, " ").trim().slice(0, 18) : undefined
   };
+}
+// take owned items off / put them back on (needs the buying device's key)
+async function equip(req, env, cors, json) {
+  let b; try { b = await req.json(); } catch { return json({ error: "bad request" }, cors, 0, 400); }
+  const handle = norm(b.handle);
+  if (!HANDLE_RE.test(handle) || typeof b.key !== "string") return json({ error: "bad request" }, cors, 0, 400);
+  const keys = (await env.DERBY.get("shop:keys:" + handle, "json")) || [];
+  if (!keys.includes(await sha(b.key))) return json({ error: `This device can't change @${handle}'s horse. Use the device you bought on.` }, cors, 0, 403);
+  const owned = new Set((((await env.DERBY.get("shop:skins", "json")) || {})[handle] || []).map(o => o.id));
+  const offAll = (await env.DERBY.get("shop:off", "json")) || {};
+  offAll[handle] = (Array.isArray(b.off) ? b.off : []).filter(id => owned.has(id));
+  await env.DERBY.put("shop:off", JSON.stringify(offAll));
+  return json({ ok: true, off: offAll[handle] }, cors, 0);
 }
 async function saveStyle(req, env, cors, json) {
   let b; try { b = await req.json(); } catch { return json({ error: "bad request" }, cors, 0, 400); }
