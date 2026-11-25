@@ -724,7 +724,8 @@ export function mount(el, opts = {}) {
     const d1 = fitDist(v);
     const dk = Math.abs(to.x - from.x) / W;
     if (instant) { controls.target.copy(to); camera.position.copy(to).add(sph(v.az, v.pol, d1)); controls.update(); fly = null; return; }
-    fly = { t: 0, dur: 0.85 + Math.min(1.5, Math.log2(1 + dk) * 0.17), from, to, az0: s0.theta, pol0: s0.phi, d0: s0.radius, az1: v.az, pol1: v.pol, d1, bump: Math.min(0.9, Math.log10(1 + dk) * 0.33) };
+    fly = { t: 0, dur: opts.lite ? 0.5 : 0.85 + Math.min(1.5, Math.log2(1 + dk) * 0.17),   // homepage card: snappy 0.5 s hops
+      from, to, az0: s0.theta, pol0: s0.phi, d0: s0.radius, az1: v.az, pol1: v.pol, d1, bump: Math.min(0.9, Math.log10(1 + dk) * 0.33) };
   }
   controls.addEventListener("start", () => { fly = null; autoSpin = false; if (opts.onSpin) opts.onSpin(false); });
 
