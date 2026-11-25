@@ -27292,7 +27292,7 @@
       "badge": "gold",
       "rank": 698,
       "look": "1144",
-      "name": "Xena Hehe",
+      "name": "Xena",
       "original": true
     },
     {
@@ -34029,7 +34029,9 @@
       "races": 1,
       "medals": [],
       "rank": 1363,
-      "badge": "silver"
+      "badge": "silver",
+      "look": "2414",
+      "original": true
     },
     {
       "handle": "athena.bluesky",
@@ -35822,7 +35824,8 @@
       "badge": "silver",
       "look": "3341",
       "original": true,
-      "shed": "4ZMM"
+      "shed": "4ZMM",
+      "name": "a tornado"
     },
     {
       "handle": "sasik_lasik",
@@ -35950,7 +35953,8 @@
       "races": 1,
       "medals": [],
       "rank": 1588,
-      "badge": "silver"
+      "badge": "silver",
+      "look": "2122"
     },
     {
       "handle": "olivia_magnolia",
@@ -37081,7 +37085,8 @@
       "badge": "silver",
       "look": "2123",
       "shed": "3LQH",
-      "original": true
+      "original": true,
+      "name": "Tokai Teio"
     },
     {
       "handle": "keiraa.white_7",
@@ -40216,8 +40221,47 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-25T02:40:29Z",
+  "lastSync": "2026-11-25T03:38:16Z",
   "claims": [
+    {
+      "handle": "pankyonshii",
+      "look": "2122",
+      "at": "2026-11-25T03:31:25Z",
+      "reel": "https://www.instagram.com/p/DgJexEsp3Ck/",
+      "status": "locked"
+    },
+    {
+      "handle": "cailyneq22_",
+      "look": "1144",
+      "at": "2026-11-25T03:21:31Z",
+      "reel": "https://www.instagram.com/p/DgJexEsp3Ck/",
+      "status": "locked",
+      "name": "Xena"
+    },
+    {
+      "handle": "full_court_miss",
+      "look": "2414",
+      "at": "2026-11-25T03:16:52Z",
+      "reel": "https://www.instagram.com/p/DgJexEsp3Ck/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "wrld.of_kenz",
+      "look": "3341",
+      "at": "2026-11-25T03:06:16Z",
+      "reel": "https://www.instagram.com/p/DgJexEsp3Ck/",
+      "status": "locked",
+      "name": "a tornado"
+    },
+    {
+      "handle": "roman.a12.1",
+      "look": "2123",
+      "at": "2026-11-25T02:50:46Z",
+      "reel": "https://www.instagram.com/p/DgJexEsp3Ck/",
+      "status": "locked",
+      "name": "Tokai Teio"
+    },
     {
       "handle": "fernando__tra_terrestial_being",
       "look": "2222",
@@ -41171,7 +41215,8 @@
     "3314": "sina_fn09",
     "3313": "dr_art_.1",
     "2214": "everleighkoval",
-    "2123": "roman.a12.1"
+    "2123": "roman.a12.1",
+    "2414": "full_court_miss"
   },
   "commentEntries": {
     "cailyneq22_": {
@@ -44144,7 +44189,8 @@
         ],
         "at": "2026-11-24T19:02:35Z"
       }
-    }
+    },
+    "7": {}
   },
   "shop": {
     "api": "https://dailyderby-claims.chris0209lee.workers.dev",
