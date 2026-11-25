@@ -137,8 +137,16 @@ function drawPattern(x, id, cream, dark) {
   if (id === "lightning") ["....xx", "...xx.", "..xx..", ".xxxx.", "...xx.", "..xx..", ".xx...", "xx...."].forEach((r, j) => [...r].forEach((ch, i) => ch === "x" && px(5 + i, 4 + j, "#ffe14a")));
   if (id === "bigstar") ["...x...", "...x...", "..xxx..", "xxxxxxx", ".xxxxx.", "..xxx..", ".xx.xx.", "x.....x"].forEach((r, j) => [...r].forEach((ch, i) => ch === "x" && px(4 + i, 4 + j, cream)));
 }
-function silkTex(si, pat, rgb) {
-  return pixTex(`silk${si}_${pat}`, 16, 16, (x) => {
+function silkTex(si, pat, rgb) { return pixTex(`silk${si}_${pat}`, 16, 16, x => drawSilk(x, pat, rgb), false); }
+// picker tile for a pattern in the current silks colour (the same 16x16 pixels the saddle cloth wears)
+const ICONS = new Map();
+export function patternIcon(rgb, pat) {
+  const key = rgb.join() + "_" + pat;
+  if (!ICONS.has(key)) { const c = document.createElement("canvas"); c.width = c.height = 16; drawSilk(c.getContext("2d"), pat, rgb); ICONS.set(key, c.toDataURL()); }
+  return ICONS.get(key);
+}
+function drawSilk(x, pat, rgb) {
+  {
     const base = `rgb(${rgb})`, dark = shade(base, 0.62), cream = "#faf4e4";
     x.fillStyle = base; x.fillRect(0, 0, 16, 16);
     if (pat === 1) { x.fillStyle = cream; x.fillRect(0, 6, 16, 3); }
@@ -146,7 +154,7 @@ function silkTex(si, pat, rgb) {
     if (pat === 3) { x.fillStyle = dark; for (let a = 0; a < 16; a += 2) for (let b = 0; b < 16; b += 2) if ((a + b) % 4 === 0) x.fillRect(a, b, 2, 2); }
     if (pat >= 4) drawPattern(x, PAT_EXTRA[pat - 4], cream, dark);
     x.fillStyle = "#f5c242"; x.fillRect(0, 15, 16, 1); x.fillRect(0, 0, 16, 1);   // gold piping
-  }, false);
+  }
 }
 
 // a box whose UVs tile the texture at a constant density, so pixels stay the same size on every face
@@ -215,12 +223,14 @@ function makeHorse() {
     .box(mats.coat, 0.2, 0.46, 0.18, -0.12, 0.66, 0.25, 0.5) // ears
     .box(mats.coat, 0.2, 0.46, 0.18, -0.12, 0.66, -0.25, 0.5)
     .box(mats.mane, 0.32, 0.3, 0.42, 0.32, 0.52, 0, 0, 0.6) // forelock
-    .box(FIXED.eye, 0.16, 0.16, 0.86, 0.38, 0.14, 0)
-    .box(FIXED.glint, 0.06, 0.06, 0.88, 0.42, 0.18, 0)
-    .box(FIXED.eye, 0.08, 0.1, 0.68, 1.74, -0.05, 0)        // nostril
-    .box(FIXED.strap, 0.12, 0.66, 0.7, 1.12, -0.18, 0)      // noseband
-    .box(FIXED.strap, 0.12, 0.12, 0.86, 0.55, 0.4, 0)       // browband
+    // eyes, straps and nostrils stick out a little past the head boxes: equal widths made their faces flicker (z-fighting)
+    .box(FIXED.eye, 0.16, 0.16, 0.92, 0.38, 0.14, 0)
+    .box(FIXED.glint, 0.06, 0.06, 0.98, 0.42, 0.18, 0)
+    .box(FIXED.eye, 0.08, 0.1, 0.76, 1.74, -0.05, 0)        // nostril
+    .box(FIXED.strap, 0.12, 0.66, 0.8, 1.12, -0.18, 0)      // noseband
+    .box(FIXED.strap, 0.12, 0.12, 0.94, 0.55, 0.4, 0)       // browband
     .build(head);
+  const nose = new THREE.Object3D(); nose.position.set(1.9, -0.2, 0); head.add(nose);
   // accessories on the head
   const acc = {};
   acc.blinkers = new THREE.Group(); head.add(acc.blinkers);
@@ -260,8 +270,10 @@ function makeHorse() {
   // tail
   const tail = new THREE.Group(); tail.position.set(-2.35, 3.95, 0); body.add(tail);
   B.box(mats.mane, 0.36, 0.5, 0.34, -0.15, -0.05, 0, 0.5, 0.6).box(mats.mane, 0.44, 1.7, 0.4, -0.38, -1.05, 0, 0.12, 0.6).box(mats.mane, 0.34, 0.5, 0.3, -0.45, -2.0, 0, 0, 0.6).build(tail);
+  const tailTip = new THREE.Object3D(); tailTip.position.set(-0.6, -1.2, 0); tail.add(tailTip);
+  const rump = new THREE.Object3D(); rump.position.set(-2.45, 3.4, 0); body.add(rump);
 
-  const H = { fixed: FIXED, root, body, neck, head, tail, legs, mats, acc, saddles, toss: 0, phase: Math.random() * 10, walk: 0, rear: 0, pose: "idle", yaw: null, yawVel: 0, fade: 1 };
+  const H = { fixed: FIXED, root, body, neck, head, tail, legs, mats, acc, saddles, tips: [nose, tailTip, rump], toss: 0, phase: Math.random() * 10, walk: 0, rear: 0, pose: "idle", yaw: null, yawVel: 0, fade: 1 };
   const all = new Set(); root.traverse(o => { if (o.material) all.add(o.material); }); H.allMats = [...all];
   H.setLook = (look, parts) => setHorseLook(H, look, parts);
   return H;
@@ -309,6 +321,25 @@ export const POSES = [
   { id: "prance", name: "Prance" }, { id: "rear", name: "Rear up" }
 ];
 const HIP = -1.29;   // hind-hoof pivot (body x, after the 0.86 scale) for rearing
+// Turning on the spot swings the head and tail past the walls (the horse is longer than the stall is deep), so slide the
+// horse within its stall until its nose, tail and rump clear the dividers, the back wall and the front. Eases back home.
+const HOME = { x: -0.45, z: -3.3 }, PAD = 0.42;
+const ROOM = { x0: -W / 2 + 0.18 + PAD, x1: W / 2 - 0.18 - PAD, z0: -DEPTH + PAD, z1: -0.2 };
+const _tp = new THREE.Vector3();
+function keepInStall(H, dt) {
+  const r = H.root; if (!r.parent) return;
+  r.updateMatrixWorld(true);
+  let x0 = Infinity, x1 = -Infinity, z0 = Infinity, z1 = -Infinity;
+  for (const t of H.tips) {
+    r.parent.worldToLocal(t.getWorldPosition(_tp));
+    const dx = _tp.x - r.position.x, dz = _tp.z - r.position.z;
+    x0 = Math.min(x0, dx); x1 = Math.max(x1, dx); z0 = Math.min(z0, dz); z1 = Math.max(z1, dz);
+  }
+  const fit = (home, lo, hi, a, b) => hi - lo < b - a ? (lo + hi - a - b) / 2 : Math.min(hi - b, Math.max(lo - a, home));
+  const tx = fit(HOME.x, ROOM.x0, ROOM.x1, x0, x1), tz = fit(HOME.z, ROOM.z0, ROOM.z1, z0, z1);
+  const k = dt > 0 ? Math.min(1, dt * 10) : 1;
+  r.position.x += (tx - r.position.x) * k; r.position.z += (tz - r.position.z) * k;
+}
 function animateHorse(H, t, dt, walking) {
   const p = t + H.phase, pose = H.pose || "idle";
   // turning: held buttons spin, taps ease to the target yaw
@@ -886,7 +917,7 @@ export function mount(el, opts = {}) {
       if (!s.g.visible) return;
       const want = s.k === openK ? 1.56 : 0;
       s.door.rotation.y += (want - s.door.rotation.y) * Math.min(1, dt * 4);
-      if (s.st) animateHorse(s.horse, T, dt, false);
+      if (s.st) { animateHorse(s.horse, T, dt, false); keepInStall(s.horse, dt); }
       if (s.next) s.plateM.color.setScalar(0.75 + 0.25 * Math.sin(T * 4));
       else s.plateM.color.setScalar(1);
     });
@@ -958,6 +989,14 @@ export function mount(el, opts = {}) {
     focus(k, { instant = false, view } = {}) { focusK = k; autoSpin = false; flyTo(k, view || viewName, instant); },
     view(name) { if (name === "spin") { autoSpin = !autoSpin; fly = null; return autoSpin; } autoSpin = false; flyTo(focusK, name); return false; },
     get viewName() { return viewName; },
+    _cam(k, p, t) {   // QA: put the camera at p looking at t, both in stall k's own coordinates
+      const s = slots.find(q => q.k === k); if (!s) return; autoSpin = false; fly = null;
+      camera.position.copy(s.g.localToWorld(new THREE.Vector3(...p))); controls.target.copy(s.g.localToWorld(new THREE.Vector3(...t))); controls.update();
+    },
+    _tips(k) {   // QA: how far the horse's nose/tail/rump sit inside the stall walls (negative = poking through)
+      const s = slots.find(q => q.k === k); if (!s || !s.st) return null; const r = s.horse.root;
+      return s.horse.tips.map(t => { r.parent.worldToLocal(t.getWorldPosition(_tp)); return +Math.min(_tp.x + W / 2 - 0.18, W / 2 - 0.18 - _tp.x, _tp.z + DEPTH, -_tp.z).toFixed(2); });
+    },
     _dbg() { return { cam: camera.position.toArray().map(v => +v.toFixed(2)), focusK, slots: slots.filter(s => s.g.visible).map(s => [s.k, +s.divFade.toFixed(2), +s.horse.fade.toFixed(2)]) }; },
     angle(az, pol, dist) { autoSpin = false; fly = null; const d = dist || camera.position.distanceTo(controls.target); camera.position.copy(controls.target).add(sph(az, pol ?? 1.35, d)); controls.update(); },
     pose(k, name) { const ps = poseOf.get(k) || {}; ps.pose = name; poseOf.set(k, ps); const s = slots.find(q => q.k === k); if (s) s.horse.pose = name; },

@@ -223,7 +223,7 @@
 <div id="toast" role="status"></div>
 
 <script type="module">
-  import { mount, tierOf, ACC, SADDLES, POSES, PAINTS, PLATES, STICKERS, stickerIcon, PREMIUM } from "./assets/shed3d.js?v=prem6";
+  import { mount, tierOf, ACC, SADDLES, POSES, PAINTS, PLATES, STICKERS, stickerIcon, PREMIUM, patternIcon } from "./assets/shed3d.js?v=fix1";
   const IG = "dailyderby_horse", IGP = "https://www.instagram.com/" + IG + "/";
   const $ = (s, r = document) => r.querySelector(s);
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -502,14 +502,8 @@
     return `<div class="sw">${p.options.slice(0, 4).map((o, i) => one(o, i)).join("")}</div>` + (extra.length ? `<details class="more" open><summary>+${extra.length} more ${part === 3 ? "patterns" : "colours"} ${ownSet(h.handle).has("palette") ? "✓" : "🔒 palette pass"}</summary><div class="sw">${extra.map((o, i) => one(o, i + 4)).join("")}</div></details>` : "");
   }
   let silkNow = [255, 77, 109];
-  function patBg(i) {
-    const s = rgb(silkNow), d = rgb(silkNow.map(v => Math.round(v * .62)));
-    if (i === 0) return `background:${s}`;
-    if (i === 1) return `background:linear-gradient(${s} 0 38%,#faf4e4 38% 58%,${s} 58%)`;
-    if (i === 2) return `background:radial-gradient(circle at 50% 45%,#faf4e4 0 22%,transparent 23%),${s}`;
-    if (i === 3) return `background:conic-gradient(${d} 25%,${s} 0 50%,${d} 0 75%,${s} 0) 0 0/12px 12px`;
-    return `background:repeating-linear-gradient(${(i * 37) % 180}deg,${s} 0 5px,#faf4e4 5px 8px)`;
-  }
+  // pattern tiles: the real 16x16 silks pixels in the horse's current silks colour, same as the saddle cloth
+  function patBg(i) { return `background:url(${patternIcon(silkNow, i)}) center/100% 100%;image-rendering:pixelated`; }
   function statusLine(code, h) {
     const o = OWNER[code];
     if (o && o === norm(h.handle)) return `<span class="orig">✦ Original</span>: this look is <b>yours</b>. Nobody else gets the mark.`;
