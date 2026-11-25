@@ -88,6 +88,20 @@
   .sec.deco{margin-top:22px;padding-top:14px;border-top:2px dashed var(--line)}
   .sec.deco h3{color:var(--gold);font-size:13px}
   .sw6{grid-template-columns:repeat(6,1fr);gap:6px}
+  .lk::after{content:"🔒";position:absolute;top:2px;right:3px;font-size:10px;filter:drop-shadow(0 1px 1px #000)}
+  .chips button.lk,.stk button.lk{position:relative}
+  .chips button.lk{padding-right:22px}
+  .chips button.lk::after{top:50%;transform:translateY(-50%);right:6px}
+  details.more{margin-top:8px}
+  details.more summary{cursor:pointer;font-size:12px;font-weight:700;color:var(--gold);list-style:none;padding:4px 0}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more .sw{margin-top:6px}
+  .paywall{margin-top:16px;border:2px solid #8a6510;background:#2a1d08;border-radius:6px;padding:12px}
+  .paywall h4{margin:0 0 6px;color:var(--gold);font-size:14px}
+  .paywall p{margin:0 0 8px;font-size:12px;color:#d8c7a8}
+  .paywall .pw{display:flex;flex-wrap:wrap;gap:6px}
+  .paywall button{font:700 12px/1 inherit;padding:9px 10px;border-radius:4px;border:1px solid #ff3d6e;background:#ff3d6e;color:#fff;cursor:pointer}
+  .paywall button.best{background:#f5c242;border-color:#f5c242;color:#2a1d05}
   .sw6 button{height:44px}
   .sw6 button span{font-size:9px}
   .sw button.pl{display:flex;align-items:center;justify-content:center;border-width:3px}
@@ -209,7 +223,7 @@
 <div id="toast" role="status"></div>
 
 <script type="module">
-  import { mount, tierOf, ACC, SADDLES, POSES, PAINTS, PLATES, STICKERS, stickerIcon, PREMIUM } from "./assets/shed3d.js?v=prem3";
+  import { mount, tierOf, ACC, SADDLES, POSES, PAINTS, PLATES, STICKERS, stickerIcon, PREMIUM } from "./assets/shed3d.js?v=prem4";
   const IG = "dailyderby_horse", IGP = "https://www.instagram.com/" + IG + "/";
   const $ = (s, r = document) => r.querySelector(s);
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -223,7 +237,8 @@
   const store = { get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} } };
 
   const [D, L] = await Promise.all([getJSON("data/derby.json"), getJSON("data/looks.json").catch(() => null)]);
-  const LOOKS = L && L.parts;
+  const PALX = await getJSON("data/palette.json").catch(() => null), PKEYS = ["coat", "mane", "silks", "pattern"];
+  const LOOKS = L && L.parts.map((p, i) => ({ ...p, options: p.options.concat((PALX && PALX.parts[PKEYS[i]]) || []) }));
   const horses = (D.horses || []).filter(h => h.status !== "removed");
   // stall order = date followed (horses[].rank, 1 = first follower), same as the stable map on index.html
   const STALLS = horses.filter(h => h.rank).sort((a, b) => a.rank - b.rank);
@@ -244,7 +259,31 @@
   const SHOP = D.shop || {};
   let SAPI = (SHOP.api || "").replace(/\/$/, "") || null;
   if (P.get("shopapi") && /^(localhost|127\.0\.0\.1)$/.test(location.hostname)) SAPI = P.get("shopapi");
-  let OWN = {}, STOCK = {}, TRY = {}, OFF = {};
+  let OWN = {}, STOCK = {}, TRY = {}, OFF = {}, STYLES = {};
+  const GRAND = SHOP.grandfathered || {};   // stall extras saved before 25 Nov stay free for these horses
+  const PARTS = ["unlock-saddle", "unlock-acc", "unlock-paint", "unlock-plate", "unlock-stickers"];
+  function ownSet(h) { const o = new Set(ownedOf(h).map(x => x.id)); if (o.has("unlock-all")) PARTS.forEach(i => o.add(i)); return o; }
+  function needsOf(st, h) {
+    const g = shedDecode(GRAND[norm(h)]), out = [];
+    if (st.idx.some(n => n > 4)) out.push("palette");
+    if (![0, 1].includes(st.saddle) && !(g && g.saddle === st.saddle)) out.push("unlock-saddle");
+    if (st.acc.some(a => !(g && g.acc.includes(a)))) out.push("unlock-acc");
+    if (st.wall && !(g && g.wall === st.wall)) out.push("unlock-paint");
+    if (st.plate && !(g && g.plate === st.plate)) out.push("unlock-plate");
+    if (st.stickers.some(t => !(g && g.stickers.includes(t)))) out.push("unlock-stickers");
+    return out;
+  }
+  function lockedOpt(h, kind, v) {
+    const o = ownSet(h.handle), g = shedDecode(GRAND[norm(h.handle)]);
+    if (kind === "colour") return v > 4 && !o.has("palette");
+    if (kind === "saddle") return ![0, 1].includes(v) && !o.has("unlock-saddle") && !(g && g.saddle === v);
+    if (kind === "acc") return !o.has("unlock-acc") && !(g && g.acc.includes(v));
+    if (kind === "wall") return v !== 0 && !o.has("unlock-paint") && !(g && g.wall === v);
+    if (kind === "plate") return v !== 0 && !o.has("unlock-plate") && !(g && g.plate === v);
+    if (kind === "sticker") return !o.has("unlock-stickers") && !(g && g.stickers.includes(v));
+    return false;
+  }
+  const lk = (h, kind, v) => lockedOpt(h, kind, v) ? "lk" : "";
   let KEYS = store.get("dd-keys", {});   // keys for horses this device paid for: change paid items without commenting
   if (P.get("setkey") && P.get("h")) { KEYS[norm(P.get("h"))] = P.get("setkey"); store.set("dd-keys", KEYS); history.replaceState(null, "", location.pathname + "?h=" + encodeURIComponent(P.get("h"))); }
   const SHOW_TEST = P.has("test") || /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
@@ -279,13 +318,17 @@
   function stateOf(k) {
     const h = STALLS[k - 1]; if (!h) return null;
     // the saved stall (from the owner's comment) for everyone; this device's unsaved tries on top
-    const pub = shedDecode(h.shed) || {};
+    const paid = STYLES[norm(h.handle)] || null;
+    const pub = paid ? { saddle: paid.saddle, acc: paid.acc, wall: paid.wall, plate: paid.plate, stickers: paid.stickers } : (shedDecode(h.shed) || {});
     let d = draftOf(h.handle) || {};
-    if (h.shed && d.look && d.look === officialLook(h) && shedEncode({ saddle: 1, ...pub, ...d }) === String(h.shed).toUpperCase()) {
+    const dIdx = d.idx || (d.look ? [...d.look].map(Number) : null);
+    if (!paid && h.shed && dIdx && dIdx.join("") === officialLook(h) && shedEncode({ saddle: 1, ...pub, ...d }) === String(h.shed).toUpperCase()) {
       delete DRAFT[norm(h.handle)]; store.set("dd-shed", DRAFT); d = {};   // the comment landed: the draft is now public
     }
-    const x = { saddle: 1, acc: [], wall: 0, plate: 0, stickers: [], ...pub, ...d };
-    return { premium: premiumOf(h.handle), handle: h.handle, name: h.name || "", look: d.look || officialLook(h), saddle: x.saddle, acc: x.acc, wall: x.wall, plate: x.plate, stickers: x.stickers, original: !!h.original, saved: !!h.shed, h };
+    const idx = (d.idx || (d.look ? [...d.look].map(Number) : null)) || (paid ? paid.idx.slice() : [...officialLook(h)].map(Number));
+    const dec = {}; ["saddle", "acc", "wall", "plate", "stickers"].forEach(f => { if (d[f] !== undefined) dec[f] = d[f]; });
+    const x = { saddle: 1, acc: [], wall: 0, plate: 0, stickers: [], ...pub, ...dec };
+    return { idx, paid: !!paid, premium: premiumOf(h.handle), handle: h.handle, name: (paid && paid.name) || h.name || "", look: idx.every(n => n <= 4) ? idx.join("") : null, saddle: x.saddle, acc: x.acc, wall: x.wall, plate: x.plate, stickers: x.stickers, original: !!h.original, saved: !!h.shed, h };
   }
 
   // ------- reel mode: 1080x1920 move-in film -------
@@ -446,15 +489,17 @@
   const rgb = c => `rgb(${c.join(",")})`;
   const STICON = Object.fromEntries(STICKERS.map(t => [t.id, stickerIcon(t.id)]));
   const TIERS = { g: "★ Gold founder", s: "★ Silver", b: "Bronze" };
-  function swatches(part, sel, fn) {
+  function swatches(part, sel, h) {
     const p = LOOKS[part];
-    return `<div class="sw">${p.options.map((o, i) => {
+    const one = (o, i) => {
       let bg;
       if (part === 0) bg = `background:linear-gradient(135deg,${rgb(o.rgb[0])} 0 33%,${rgb(o.rgb[1])} 33% 66%,${rgb(o.rgb[2])} 66%)`;
       else if (part === 3) bg = patBg(i);
       else bg = `background:${rgb(o.rgb[0])}`;
-      return `<button type="button" data-part="${part}" data-i="${i + 1}" aria-pressed="${sel === i + 1}" style="${bg}" aria-label="${esc(p.name)}: ${esc(o.name)}"><span>${esc(o.name)}</span></button>`;
-    }).join("")}</div>`;
+      return `<button type="button" class="${lk(h, "colour", i + 1)}" data-part="${part}" data-i="${i + 1}" aria-pressed="${sel === i + 1}" style="${bg}" aria-label="${esc(p.name)}: ${esc(o.name)}"><span>${esc(o.name)}</span></button>`;
+    };
+    const extra = p.options.slice(4);
+    return `<div class="sw">${p.options.slice(0, 4).map((o, i) => one(o, i)).join("")}</div>` + (extra.length ? `<details class="more"${sel > 4 ? " open" : ""}><summary>+${extra.length} more ${part === 3 ? "patterns" : "colours"} ${ownSet(h.handle).has("palette") ? "✓" : "🔒 palette pass"}</summary><div class="sw">${extra.map((o, i) => one(o, i + 4)).join("")}</div></details>` : "");
   }
   let silkNow = [255, 77, 109];
   function patBg(i) {
@@ -462,7 +507,8 @@
     if (i === 0) return `background:${s}`;
     if (i === 1) return `background:linear-gradient(${s} 0 38%,#faf4e4 38% 58%,${s} 58%)`;
     if (i === 2) return `background:radial-gradient(circle at 50% 45%,#faf4e4 0 22%,transparent 23%),${s}`;
-    return `background:conic-gradient(${d} 25%,${s} 0 50%,${d} 0 75%,${s} 0) 0 0/12px 12px`;
+    if (i === 3) return `background:conic-gradient(${d} 25%,${s} 0 50%,${d} 0 75%,${s} 0) 0 0/12px 12px`;
+    return `background:repeating-linear-gradient(${(i * 37) % 180}deg,${s} 0 5px,#faf4e4 5px 8px)`;
   }
   function statusLine(code, h) {
     const o = OWNER[code];
@@ -485,8 +531,9 @@
       layoutInset(); return;
     }
     const h = st.h, mine = ME === norm(h.handle), keep = pb.scrollTop;
-    silkNow = LOOKS[2].options[+st.look[2] - 1].rgb[0];
+    silkNow = LOOKS[2].options[st.idx[2] - 1].rgb[0];
     const code = st.look, edited = !!draftOf(h.handle);
+    const own = ownSet(h.handle), miss = needsOf(st, h.handle).filter(n => !own.has(n)), keyHere = KEYS[norm(h.handle)];
     const medals = (h.medals || []).length;
     pb.innerHTML = `<div class="who">
         ${h.name ? `<h2>${esc(h.name.toUpperCase())}</h2>` : ""}
@@ -496,28 +543,29 @@
       </div>
       <div class="full">
         <div class="sec"><h3>Pose <em>${esc(POSES.find(x => x.id === api.poseOf(k)).name)}</em></h3><div class="chips" id="pose">${POSES.map(x => `<button type="button" data-p="${x.id}" aria-pressed="${api.poseOf(k) === x.id}">${esc(x.name)}</button>`).join("")}</div></div>
-        <div class="sec"><h3>Coat <em>${esc(LOOKS[0].options[+code[0] - 1].name)}</em></h3>${swatches(0, +code[0])}</div>
-        <div class="sec"><h3>Mane &amp; tail <em>${esc(LOOKS[1].options[+code[1] - 1].name)}</em></h3>${swatches(1, +code[1])}</div>
-        <div class="sec"><h3>Silks <em>${esc(LOOKS[2].options[+code[2] - 1].name)}</em></h3>${swatches(2, +code[2])}</div>
-        <div class="sec"><h3>Pattern <em>${esc(LOOKS[3].options[+code[3] - 1].name)}</em></h3>${swatches(3, +code[3])}</div>
-        <div class="sec"><h3>Saddle <em>${esc(SADDLES[st.saddle])}</em></h3><div class="chips" id="sad">${SADDLES.map((s, i) => `<button type="button" data-s="${i}" aria-pressed="${st.saddle === i}">${esc(s)}</button>`).join("")}</div></div>
-        <div class="sec"><h3>Accessories</h3><div class="chips" id="acc">${ACC.map(a => `<button type="button" data-a="${a.id}" aria-pressed="${st.acc.includes(a.id)}">${esc(a.name)}</button>`).join("")}</div></div>
+        <div class="sec"><h3>Coat <em>${esc(LOOKS[0].options[st.idx[0] - 1].name)}</em></h3>${swatches(0, st.idx[0], h)}</div>
+        <div class="sec"><h3>Mane &amp; tail <em>${esc(LOOKS[1].options[st.idx[1] - 1].name)}</em></h3>${swatches(1, st.idx[1], h)}</div>
+        <div class="sec"><h3>Silks <em>${esc(LOOKS[2].options[st.idx[2] - 1].name)}</em></h3>${swatches(2, st.idx[2], h)}</div>
+        <div class="sec"><h3>Pattern <em>${esc(LOOKS[3].options[st.idx[3] - 1].name)}</em></h3>${swatches(3, st.idx[3], h)}</div>
+        <div class="sec"><h3>Saddle <em>${esc(SADDLES[st.saddle])}</em></h3><div class="chips" id="sad">${SADDLES.map((s, i) => `<button type="button" class="${lk(h, "saddle", i)}" data-s="${i}" aria-pressed="${st.saddle === i}">${esc(s)}</button>`).join("")}</div></div>
+        <div class="sec"><h3>Accessories</h3><div class="chips" id="acc">${ACC.map(a => `<button type="button" class="${lk(h, "acc", a.id)}" data-a="${a.id}" aria-pressed="${st.acc.includes(a.id)}">${esc(a.name)}</button>`).join("")}</div></div>
+        ${passSec(h)}
         ${premiumSec(h)}
-        <div class="sec deco"><h3>Your stall <em>free</em></h3></div>
-        <div class="sec"><h3>Wall paint <em>${esc(PAINTS[st.wall].name)}</em></h3><div class="sw sw6">${PAINTS.map((p, i) => `<button type="button" data-wall="${i}" aria-pressed="${st.wall === i}" style="background:${p.base ? `repeating-linear-gradient(90deg,${p.base} 0 10px,rgba(0,0,0,.25) 10px 11px)` : "repeating-linear-gradient(90deg,#7a5434 0 10px,#4b3020 10px 11px)"}" aria-label="Wall paint: ${esc(p.name)}"><span>${esc(p.name)}</span></button>`).join("")}</div></div>
-        <div class="sec"><h3>Nameplate <em>${esc(PLATES[st.plate].name)}</em></h3><div class="sw">${PLATES.map((p, i) => `<button type="button" data-plate="${i}" aria-pressed="${st.plate === i}" class="pl" style="background:${p.in};border-color:${p.bg};color:${p.ink}" aria-label="Nameplate: ${esc(p.name)}"><b>@</b><span style="color:${p.ink};text-shadow:none">${esc(p.name)}</span></button>`).join("")}</div></div>
-        <div class="sec"><h3>Stickers <em>${st.stickers.length}/8</em></h3><div class="stk">${STICKERS.map(t => `<button type="button" data-st="${t.id}" aria-pressed="${st.stickers.includes(t.id)}" title="${esc(t.name)}"><img src="${STICON[t.id]}" alt="" width="32" height="32"><span>${esc(t.name)}</span></button>`).join("")}</div></div>
-        <div class="code"><div class="c">HORSE ${code}+${shedEncode(st)}</div><p>${statusLine(code, h)}</p>
-          <p>${edited ? `<b>Not saved yet.</b> Save it and everyone sees your stall within about an hour.` : st.saved ? `This is the stall everyone sees.` : `Save it so everyone sees your horse and stall like this.`}</p></div>
+        <div class="sec deco"><h3>Your stall <em>${GRAND[norm(h.handle)] ? "early-bird extras kept free" : "🔒 extras from US$2"}</em></h3></div>
+        <div class="sec"><h3>Wall paint <em>${esc(PAINTS[st.wall].name)}</em></h3><div class="sw sw6">${PAINTS.map((p, i) => `<button type="button" class="${lk(h, "wall", i)}" data-wall="${i}" aria-pressed="${st.wall === i}" style="background:${p.base ? `repeating-linear-gradient(90deg,${p.base} 0 10px,rgba(0,0,0,.25) 10px 11px)` : "repeating-linear-gradient(90deg,#7a5434 0 10px,#4b3020 10px 11px)"}" aria-label="Wall paint: ${esc(p.name)}"><span>${esc(p.name)}</span></button>`).join("")}</div></div>
+        <div class="sec"><h3>Nameplate <em>${esc(PLATES[st.plate].name)}</em></h3><div class="sw">${PLATES.map((p, i) => `<button type="button" data-plate="${i}" aria-pressed="${st.plate === i}" class="pl ${lk(h, "plate", i)}" style="background:${p.in};border-color:${p.bg};color:${p.ink}" aria-label="Nameplate: ${esc(p.name)}"><b>@</b><span style="color:${p.ink};text-shadow:none">${esc(p.name)}</span></button>`).join("")}</div></div>
+        <div class="sec"><h3>Stickers <em>${st.stickers.length}/8</em></h3><div class="stk">${STICKERS.map(t => `<button type="button" class="${lk(h, "sticker", t.id)}" data-st="${t.id}" aria-pressed="${st.stickers.includes(t.id)}" title="${esc(t.name)}"><img src="${STICON[t.id]}" alt="" width="32" height="32"><span>${esc(t.name)}</span></button>`).join("")}</div></div>
+        ${miss.length ? paywall(h, miss) : keyHere && (st.paid || own.size) ? `<div class="code"><div class="c">SAVE · NO COMMENT</div><p>${edited ? "<b>Not saved yet.</b> " : ""}This device can save @${esc(h.handle)}'s horse straight away.</p></div>` : `<div class="code"><div class="c">HORSE ${code}+${shedEncode(st)}</div><p>${statusLine(code, h)}</p>
+          <p>${edited ? `<b>Not saved yet.</b> Save it and everyone sees your stall within about an hour.` : st.saved ? `This is the stall everyone sees.` : `Save it so everyone sees your horse and stall like this.`}</p></div>`}
         <div class="acts">
-          <button class="btn btn-neon" type="button" id="claim">Save my stall · free</button>
+          ${miss.length ? "" : keyHere && (st.paid || own.size) ? `<button class="btn btn-neon" type="button" id="saveKey"${edited ? "" : " disabled style='opacity:.5'"}>Save my horse · no comment needed</button>` : `<button class="btn btn-neon" type="button" id="claim">Save my stall · free</button>`}
           <div class="btn-row"><button class="btn" type="button" id="rand">🎲 Surprise me</button><button class="btn" type="button" id="reset"${edited ? "" : " disabled style='opacity:.5'"}>Reset</button></div>
           ${mine ? "" : `<button class="btn" type="button" id="isme">This is me: set as my stall</button>`}
         </div>
-        <p class="fine">Everything here is free. Saving = comment the code on the latest reel from your own account (that's how we know it's you); the first to claim a look gets ✦ Original. Custom horses run +5–10% faster, and anyone can customise. Premium extras are looks only: they never change speed or results. <a href="terms.html" style="color:inherit">Terms</a></p>
+        <p class="fine">The first 4 colours of each part, a Leather saddle, natural walls and the classic plate are free. More colours and extras unlock with a pass, saved straight away with no comment. Saving free choices = comment the code on the latest reel from your own account (that's how we know it's you); the first to claim a look gets ✦ Original. Custom horses run +5–10% faster, and anyone can customise. Premium extras are looks only: they never change speed or results. <a href="terms.html" style="color:inherit">Terms</a></p>
       </div>`;
     pb.querySelectorAll(".sw button").forEach(b => b.onclick = () => {
-      const c = [...code]; c[+b.dataset.part] = b.dataset.i; setDraft(h, { look: c.join("") });
+      if (!b.dataset.part) return; const c = st.idx.slice(); c[+b.dataset.part] = +b.dataset.i; setDraft(h, { idx: c });
     });
     pb.querySelectorAll("#pose button").forEach(b => b.onclick = () => { api.pose(cur, b.dataset.p); render(); });
     pb.querySelectorAll("[data-wall]").forEach(b => b.onclick = () => setDraft(h, { wall: +b.dataset.wall }));
@@ -528,11 +576,12 @@
       const s = new Set(st.acc); s.has(b.dataset.a) ? s.delete(b.dataset.a) : s.add(b.dataset.a); setDraft(h, { acc: [...s] });
     });
     $("#rand").onclick = () => setDraft(h, {
-      look: Array.from({ length: 4 }, () => 1 + Math.floor(Math.random() * 4)).join(""),
+      idx: Array.from({ length: 4 }, () => 1 + Math.floor(Math.random() * 4)),
       saddle: Math.floor(Math.random() * 4), acc: ACC.filter(() => Math.random() < 0.35).map(a => a.id)
     });
     $("#reset").onclick = () => { delete DRAFT[norm(h.handle)]; store.set("dd-shed", DRAFT); api.refresh(cur, true); render(); };
-    $("#claim").onclick = async () => {
+    if ($("#saveKey")) $("#saveKey").onclick = () => saveStyleNow(h, k);
+    if ($("#claim")) $("#claim").onclick = async () => {
       const msg = `HORSE ${code}+${shedEncode(st)}${h.name ? " " + h.name : ""}`;
       let ok = false; try { await navigator.clipboard.writeText(msg); ok = true; } catch {}
       toast(ok ? `Copied “${msg}”. Paste it as a comment on the latest reel.` : `Comment “${msg}” on the latest reel.`);
@@ -560,6 +609,31 @@
     layoutInset();
   }
   const money = c => "US$" + (c / 100).toFixed(c % 100 ? 2 : 0);
+  const PASS_IDS = ["unlock-all", "palette", ...PARTS];
+  function passSec(h) {
+    const drops = PASS_IDS.map(id => (SHOP.drops || []).find(d => d.id === id && d.status !== "hidden")).filter(Boolean);
+    if (!drops.length) return "";
+    const o = ownSet(h.handle);
+    return `<div class="sec prem"><h3>Unlock passes <em>for @${esc(h.handle)}</em></h3>${drops.map(d => `<div class="pi${o.has(d.id) ? " mine" : ""}"><div class="ic">${d.id === "unlock-all" ? "🗝️" : d.id === "palette" ? "🎨" : "🔓"}</div><div><b>${esc(d.name)}</b><small>${esc(d.blurb || "")} · ${money(d.price)}</small></div><div class="pa">${o.has(d.id) ? `<span class="own">Unlocked</span>` : `<button type="button" class="buy" data-buy="${d.id}" ${SAPI ? "" : "disabled"}>Buy</button>`}</div></div>`).join("")}</div>`;
+  }
+  const NEED_NAME = { palette: "Palette pass", "unlock-saddle": "Saddles", "unlock-acc": "Accessories", "unlock-paint": "Wall paint", "unlock-plate": "Nameplates", "unlock-stickers": "Stickers" };
+  function paywall(h, miss) {
+    const price = id => { const d = (SHOP.drops || []).find(x => x.id === id); return d ? money(d.price) : ""; };
+    const stall = miss.filter(m => m !== "palette");
+    return `<div class="paywall"><h4>🔒 Unlock to save this look</h4><p>Trying on is free. To save it on @${esc(h.handle)}'s horse, unlock what you picked. It's saved straight away, no comment needed.</p><div class="pw">
+      ${miss.map(m => `<button type="button" data-buy="${m}">${NEED_NAME[m]} · ${price(m)}</button>`).join("")}
+      ${stall.length > 1 ? `<button type="button" class="best" data-buy="unlock-all">Everything pass · ${price("unlock-all")}</button>` : ""}
+    </div><p style="margin:8px 0 0">Or press Reset to go back to the free options.</p></div>`;
+  }
+  async function saveStyleNow(h, k, quiet) {
+    const key = norm(h.handle), st = stateOf(k);
+    if (!KEYS[key]) { toast("This device didn't buy for @" + h.handle + "."); return; }
+    try {
+      const j = await fetch(SAPI + "/style", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ handle: key, key: KEYS[key], style: { idx: st.idx, saddle: st.saddle, acc: st.acc, wall: st.wall, plate: st.plate, stickers: st.stickers, name: st.name } }) }).then(r => r.json());
+      if (j.ok) { STYLES[key] = j.style; delete DRAFT[key]; store.set("dd-shed", DRAFT); api.refresh(k, true); render(); if (!quiet) toast("Saved! Everyone sees your horse like this now."); }
+      else toast(j.error || "Couldn't save.");
+    } catch { toast("Couldn't reach the shop."); }
+  }
   function premiumSec(h) {
     const drops = (SHOP.drops || []).filter(d => PREM[d.id] && d.status !== "hidden");
     if (!drops.length) return "";
@@ -580,7 +654,7 @@
     if (!SAPI) return;
     try {
       const j = await fetch(SAPI + "/shop", { cache: "no-store" }).then(r => r.json());
-      OWN = j.skins || {}; OFF = j.off || {};
+      OWN = j.skins || {}; OFF = j.off || {}; STYLES = j.styles || {};
       STOCK = Object.fromEntries((j.drops || []).map(d => [d.id, d]));
       if (api.refreshAll) api.refreshAll();
       render();
@@ -602,7 +676,7 @@
     for (let i = 0; i < 12; i++) {
       try {
         const o = await fetch(SAPI + "/order?session=" + encodeURIComponent(id), { cache: "no-store" }).then(r => r.json());
-        if (o.status === "paid") { if (o.key && o.handle) { KEYS[o.handle] = o.key; store.set("dd-keys", KEYS); } TRY = {}; await loadShop(); openSheet(true); toast(`🎉 ${o.name} #${o.n} of ${o.limit} is saved on @${o.handle}'s horse.`); return; }
+        if (o.status === "paid") { if (o.key && o.handle) { KEYS[o.handle] = o.key; store.set("dd-keys", KEYS); } TRY = {}; await loadShop(); if (draftOf(o.handle)) await saveStyleNow(STALLS[stallOf[o.handle] - 1], stallOf[o.handle], true); openSheet(true); toast(`🎉 ${o.name} #${o.n} of ${o.limit} is saved on @${o.handle}'s horse.`); return; }
         if (o.status === "refunded") { toast(`${o.name} sold out just before your payment, so you've been refunded in full.`); return; }
       } catch {}
       await new Promise(r => setTimeout(r, 2000));
@@ -611,7 +685,8 @@
   }
   function setDraft(h, part) {
     const key = norm(h.handle), base = stateOf(stallOf[key]);
-    DRAFT[key] = { look: base.look, saddle: base.saddle, acc: base.acc, ...DRAFT[key], ...part };
+    DRAFT[key] = { idx: base.idx, saddle: base.saddle, acc: base.acc, wall: base.wall, plate: base.plate, stickers: base.stickers, ...DRAFT[key], ...part };
+    delete DRAFT[key].look;
     store.set("dd-shed", DRAFT);
     api.refresh(stallOf[key], true); render();
   }
