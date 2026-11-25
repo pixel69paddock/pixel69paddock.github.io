@@ -223,7 +223,7 @@
 <div id="toast" role="status"></div>
 
 <script type="module">
-  import { mount, tierOf, ACC, SADDLES, POSES, PAINTS, PLATES, STICKERS, stickerIcon, PREMIUM } from "./assets/shed3d.js?v=prem5";
+  import { mount, tierOf, ACC, SADDLES, POSES, PAINTS, PLATES, STICKERS, stickerIcon, PREMIUM } from "./assets/shed3d.js?v=prem6";
   const IG = "dailyderby_horse", IGP = "https://www.instagram.com/" + IG + "/";
   const $ = (s, r = document) => r.querySelector(s);
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -533,7 +533,7 @@
     const h = st.h, mine = ME === norm(h.handle), keep = pb.scrollTop;
     silkNow = LOOKS[2].options[st.idx[2] - 1].rgb[0];
     const code = st.look, edited = !!draftOf(h.handle);
-    const own = ownSet(h.handle), miss = needsOf(st, h.handle).filter(n => !own.has(n)), keyHere = KEYS[norm(h.handle)];
+    const own = ownSet(h.handle), miss = needsOf(st, h.handle).filter(n => !own.has(n)), keyHere = ownedOf(h.handle).length > 0;
     const medals = (h.medals || []).length;
     pb.innerHTML = `<div class="who">
         ${h.name ? `<h2>${esc(h.name.toUpperCase())}</h2>` : ""}
@@ -627,7 +627,7 @@
   }
   async function saveStyleNow(h, k, quiet) {
     const key = norm(h.handle), st = stateOf(k);
-    if (!KEYS[key]) { toast("This device didn't buy for @" + h.handle + "."); return; }
+    if (!ownedOf(h.handle).length) { toast("@" + h.handle + " has no paid items yet."); return; }
     try {
       const j = await fetch(SAPI + "/style", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ handle: key, key: KEYS[key], style: { idx: st.idx, saddle: st.saddle, acc: st.acc, wall: st.wall, plate: st.plate, stickers: st.stickers, name: st.name } }) }).then(r => r.json());
       if (j.ok) { STYLES[key] = j.style; delete DRAFT[key]; store.set("dd-shed", DRAFT); api.refresh(k, true); render(); if (!quiet) toast("Saved! Everyone sees your horse like this now."); }
@@ -645,7 +645,7 @@
         const out = d.status === "closed" || left <= 0;
         return `<div class="pi${o ? " mine" : ""}"><div class="ic">${p.icon}</div>
           <div><b>${esc(d.name)}</b><small>${p.kind === "coat" ? "Coat" : p.kind === "stall" ? "Stall" : "Effect"} · ${out ? "sold out" : `${left} of ${d.limit} left`} · ${money(d.price)}</small></div>
-          <div class="pa">${o ? (KEYS[norm(h.handle)] ? `<button type="button" data-wear="${d.id}" aria-pressed="${!(OFF[norm(h.handle)] || []).includes(d.id)}">${(OFF[norm(h.handle)] || []).includes(d.id) ? "Put on" : "Wearing ✓"}</button><span class="own">#${o.n}</span>` : `<span class="own">Owned #${o.n}</span>`)
+          <div class="pa">${o ? (true ? `<button type="button" data-wear="${d.id}" aria-pressed="${!(OFF[norm(h.handle)] || []).includes(d.id)}">${(OFF[norm(h.handle)] || []).includes(d.id) ? "Put on" : "Wearing ✓"}</button><span class="own">#${o.n}</span>` : `<span class="own">Owned #${o.n}</span>`)
             : `<button type="button" data-try="${d.id}" aria-pressed="${t === d.id}">${t === d.id ? "Take off" : "Try on"}</button><button type="button" class="buy" data-buy="${d.id}" ${SAPI && !out ? "" : "disabled"}>${out ? "Sold out" : SAPI ? "Buy" : "Soon"}</button>`}</div></div>`;
       }).join("")}
       <p class="fine" style="margin-top:8px">Try anything on for free. Buy it and it's saved on @${esc(h.handle)}'s horse straight away, numbered, no comment needed. Apple Pay, Google Pay or card; prices in US$, paid in your own currency.</p></div>`;

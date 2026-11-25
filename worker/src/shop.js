@@ -216,9 +216,7 @@ function cleanStyle(x) {
 async function equip(req, env, cors, json) {
   let b; try { b = await req.json(); } catch { return json({ error: "bad request" }, cors, 0, 400); }
   const handle = norm(b.handle);
-  if (!HANDLE_RE.test(handle) || typeof b.key !== "string") return json({ error: "bad request" }, cors, 0, 400);
-  const keys = (await env.DERBY.get("shop:keys:" + handle, "json")) || [];
-  if (!keys.includes(await sha(b.key))) return json({ error: `This device can't change @${handle}'s horse. Use the device you bought on.` }, cors, 0, 403);
+  if (!HANDLE_RE.test(handle)) return json({ error: "bad request" }, cors, 0, 400);   // handle = access (owner's choice)
   const owned = new Set((((await env.DERBY.get("shop:skins", "json")) || {})[handle] || []).map(o => o.id));
   const offAll = (await env.DERBY.get("shop:off", "json")) || {};
   offAll[handle] = (Array.isArray(b.off) ? b.off : []).filter(id => owned.has(id));
@@ -228,9 +226,7 @@ async function equip(req, env, cors, json) {
 async function saveStyle(req, env, cors, json) {
   let b; try { b = await req.json(); } catch { return json({ error: "bad request" }, cors, 0, 400); }
   const handle = norm(b.handle);
-  if (!HANDLE_RE.test(handle) || typeof b.key !== "string" || b.key.length < 20) return json({ error: "bad request" }, cors, 0, 400);
-  const keys = (await env.DERBY.get("shop:keys:" + handle, "json")) || [];
-  if (!keys.includes(await sha(b.key))) return json({ error: `This device can't save @${handle}'s horse. Buy from this device, or DM us to move your key.` }, cors, 0, 403);
+  if (!HANDLE_RE.test(handle)) return json({ error: "bad request" }, cors, 0, 400);   // handle = access (owner's choice)
   const st = cleanStyle(b.style || {});
   if (!st) return json({ error: "bad style" }, cors, 0, 400);
   const cat = await catalog(env);
