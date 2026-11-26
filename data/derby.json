@@ -7,6 +7,19 @@
     "date": "2026-11-26",
     "status": "open",
     "entrants": [
+      "secretariatjustify",
+      "peyton_elle30",
+      "that06gmcsierra",
+      "julbla29",
+      "farrah_elixson",
+      "spyzee01",
+      "cayayayxx",
+      "bella.welds",
+      "madi_barrelracing",
+      "ruby_equi_xx",
+      "noelle_36283",
+      "emilia_roy09",
+      "straykids4life61",
       "niqyleaky",
       "zymerearmfield",
       "katie._.fuller",
@@ -42149,6 +42162,111 @@
       "races": 0,
       "medals": [],
       "via": "comment"
+    },
+    {
+      "handle": "straykids4life61",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "rank": 2236,
+      "badge": "silver"
+    },
+    {
+      "handle": "emilia_roy09",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "rank": 2237,
+      "badge": "silver"
+    },
+    {
+      "handle": "noelle_36283",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "rank": 2238,
+      "badge": "silver",
+      "name": "Lupa"
+    },
+    {
+      "handle": "ruby_equi_xx",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "rank": 2239,
+      "badge": "silver"
+    },
+    {
+      "handle": "madi_barrelracing",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "rank": 2240,
+      "badge": "silver"
+    },
+    {
+      "handle": "bella.welds",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "rank": 2241,
+      "badge": "silver"
+    },
+    {
+      "handle": "cayayayxx",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "rank": 2242,
+      "badge": "silver"
+    },
+    {
+      "handle": "spyzee01",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "rank": 2243,
+      "badge": "silver"
+    },
+    {
+      "handle": "farrah_elixson",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "rank": 2244,
+      "badge": "silver"
+    },
+    {
+      "handle": "julbla29",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "rank": 2245,
+      "badge": "silver"
+    },
+    {
+      "handle": "that06gmcsierra",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "rank": 2246,
+      "badge": "silver"
+    },
+    {
+      "handle": "peyton_elle30",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "rank": 2247,
+      "badge": "silver"
+    },
+    {
+      "handle": "secretariatjustify",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "rank": 2248,
+      "badge": "silver"
     }
   ],
   "sponsorSpots": [
@@ -42303,7 +42421,7 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-25T23:09:03Z",
+  "lastSync": "2026-11-26T04:11:17Z",
   "claims": [
     {
       "handle": "star.xjuls",
@@ -46636,6 +46754,10 @@
     "quinnbrummette": {
       "day": 6,
       "reel": "DgHvMispbq5"
+    },
+    "spyzee01": {
+      "day": 6,
+      "reel": "DgJexEsp3Ck"
     }
   },
   "sponsorInfo": {
