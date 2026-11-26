@@ -76,6 +76,7 @@ async function checkout(req, env, cors, json) {
     f["line_items[0][price_data][product_data][name]"] = "Tip for Daily Derby";
     f["line_items[0][price_data][product_data][description]"] = "Thank you for keeping the races running.";
     f["metadata[amount]"] = String(amount);
+    f["payment_intent_data[description]"] = handle ? `@${handle} · Tip` : "Tip";
   } else if (b.kind === "skin") {
     const d = (cat.drops || []).find(x => x.id === b.id);
     if (!d || d.status !== "open") return json({ error: "That drop isn't on sale." }, cors, 0, 400);
@@ -89,6 +90,7 @@ async function checkout(req, env, cors, json) {
     f["line_items[0][price_data][product_data][description]"] = d.unlimited ? `Unlocks for @${handle}'s horse for good. Cosmetic only: it never changes race results.` : `Limited to ${d.limit}. Cosmetic only: it never changes race results.`;
     f["metadata[item]"] = d.id;
     f["payment_intent_data[metadata][item]"] = d.id;
+    f["payment_intent_data[description]"] = `@${handle} · ${d.name}`;   // shows in the Stripe payments list
     f["custom_text[submit][message]"] = `Saved on @${handle}'s horse as soon as you pay. No comment needed.`;
   } else {
     return json({ error: "bad request" }, cors, 0, 400);
