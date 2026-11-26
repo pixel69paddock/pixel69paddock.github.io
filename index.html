@@ -831,10 +831,19 @@
     svg.setAttribute("shape-rendering", "crispEdges");
     svg.innerHTML = out;
   }
+  // Each look is drawn once (221 pixel rects) and cached as an image; every sprite on the page is then 2 nodes,
+  // not 222. With 2,700+ horses the old way built ~775k nodes and froze phones (2026-11-26).
+  const SPR = new Map();
   const spriteTag = (look, w = 34) => {
-    const s = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    s.setAttribute("viewBox", "0 0 17 13"); s.setAttribute("width", w); s.setAttribute("height", Math.round(w * 13 / 17));
-    s.setAttribute("aria-hidden", "true"); sprite(s, look); return s.outerHTML;
+    const k = String(look) + (LOOKS ? "" : "~");
+    let u = SPR.get(k);
+    if (!u) {
+      const s = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      sprite(s, look);
+      u = "data:image/svg+xml," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 13" shape-rendering="crispEdges">${s.innerHTML}</svg>`);
+      SPR.set(k, u);
+    }
+    return `<svg viewBox="0 0 17 13" width="${w}" height="${Math.round(w * 13 / 17)}" aria-hidden="true"><image href="${u}" width="17" height="13"/></svg>`;
   };
   // A look the visitor claimed and tapped Done on: shown on their device right away, until the sync confirms it.
   const savedHorse = () => { try { return JSON.parse(localStorage.getItem("dd-horse") || "{}"); } catch { return {}; } };
@@ -1363,12 +1372,19 @@
             <label class="qsearch" style="margin:10px 0"><span>@</span><input type="search" class="res-q" placeholder="find a horse in this race" autocapitalize="none" spellcheck="false" aria-label="Search this race's results"></label>
             <div class="table-wrap"><table>
             <thead><tr><th>Finish</th><th>Horse</th><th class="num">Odds</th><th class="num pts">Pts</th></tr></thead>
-            <tbody>${r.results.slice().sort((a, b) => (a.place || 1e9) - (b.place || 1e9)).map(x => { const hh = horses.find(y => norm(y.handle) === norm(x.handle)) || { handle: x.handle }; return `<tr data-h="${esc(norm(x.handle) + " " + horseName(hh).toLowerCase())}"><td>${placeCell(x)}</td><td>${whoCell(hh, 24)}</td><td class="num">${x.odds != null ? x.odds + "%" : "—"}</td><td class="num pts">${racePts(x)}</td></tr>`; }).join("")}</tbody>
+            <tbody data-day="${r.day}"></tbody>
           </table></div></details>` : ""}
         </div>
         ${r.reel ? `<a class="btn btn-ghost go" href="${esc(r.reel)}" target="_blank" rel="noopener">Watch</a>` : ""}
       </div>`;
     }).join("");
+    // full results are built only when a race's "Full results" is opened (thousands of rows per race)
+    const HM = {}; horses.forEach(y => HM[norm(y.handle)] = y);
+    document.querySelectorAll(".full-res").forEach(det => det.addEventListener("toggle", () => {
+      const tb = det.querySelector("tbody"); if (!det.open || tb.dataset.done) return; tb.dataset.done = 1;
+      const r = races.find(x => String(x.day) === tb.dataset.day);
+      tb.innerHTML = r.results.slice().sort((a, b) => (a.place || 1e9) - (b.place || 1e9)).map(x => { const hh = HM[norm(x.handle)] || { handle: x.handle }; return `<tr data-h="${esc(norm(x.handle) + " " + horseName(hh).toLowerCase())}"><td>${placeCell(x)}</td><td>${whoCell(hh, 24)}</td><td class="num">${x.odds != null ? x.odds + "%" : "—"}</td><td class="num pts">${racePts(x)}</td></tr>`; }).join("");
+    }));
     document.querySelectorAll(".res-q").forEach(inp => inp.addEventListener("input", () => {
       const q = norm(inp.value);
       inp.closest(".full-res").querySelectorAll("tbody tr").forEach(tr => tr.hidden = !!q && !tr.dataset.h.includes(q));
