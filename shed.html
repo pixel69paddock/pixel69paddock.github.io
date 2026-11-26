@@ -152,7 +152,8 @@
     #panel.peek .pb .full{display:none}
     #panel.peek .peek-cta{display:flex}
     #panel.peek .pb{padding-bottom:14px}
-    .ph{cursor:pointer}
+    .ph{cursor:pointer;touch-action:none}
+    #panel.peek{touch-action:none}
     .ph::before{content:"";position:absolute;left:50%;top:4px;width:44px;height:4px;margin-left:-22px;border-radius:4px;background:#00000088}
     .hud{bottom:calc(var(--sheet) + 12px)}
     .hud .hint{display:none}
@@ -476,6 +477,31 @@
   const panel = $("#panel"), pb = $("#pb"), wide = matchMedia("(min-width:900px)");
   let sheetOpen = false;
   function openSheet(on) { sheetOpen = on; panel.classList.toggle("peek", !on); document.body.classList.toggle("sheet-open", on && !wide.matches); $("#grab").textContent = on ? "▼" : "▲"; layoutInset(); }
+  // phones: drag the sheet up to open the styling, down to close it (taps still toggle). When it's only peeking,
+  // the whole card can be dragged; when open, the header bar is the handle so the options still scroll.
+  let drag = null, dragged = false;
+  panel.addEventListener("pointerdown", e => {
+    if (wide.matches || (sheetOpen && !e.target.closest("#ph"))) return;
+    drag = { y: e.clientY, id: e.pointerId, dy: 0 }; dragged = false;
+  });
+  panel.addEventListener("pointermove", e => {
+    if (!drag || e.pointerId !== drag.id) return;
+    drag.dy = e.clientY - drag.y;
+    if (!dragged && Math.abs(drag.dy) < 8) return;
+    if (!dragged) { dragged = true; try { panel.setPointerCapture(drag.id); } catch {} panel.style.transition = "none"; }
+    const d = sheetOpen ? Math.max(0, drag.dy) : Math.min(0, drag.dy) * 0.35;   // follow the finger (rubber-band upward)
+    panel.style.transform = `translateY(${d}px)`;
+    e.preventDefault();
+  });
+  const endDrag = () => {
+    if (!drag) return; const dy = drag.dy; drag = null;
+    panel.style.transition = ""; panel.style.transform = "";
+    if (!dragged) return;
+    if (!sheetOpen && dy < -30) openSheet(true); else if (sheetOpen && dy > 50) openSheet(false);
+    setTimeout(() => { dragged = false; }, 0);
+  };
+  panel.addEventListener("pointerup", endDrag); panel.addEventListener("pointercancel", endDrag);
+  panel.addEventListener("click", e => { if (dragged) { e.stopPropagation(); e.preventDefault(); } }, true);   // a drag isn't a tap
   $("#ph").addEventListener("click", e => { if (!wide.matches) openSheet(!sheetOpen); });
   function layoutInset() {
     requestAnimationFrame(() => {
