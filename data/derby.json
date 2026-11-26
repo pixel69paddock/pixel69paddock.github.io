@@ -1,12 +1,25 @@
 {
   "updated": "2026-11-27",
   "account": "dailyderby_horse",
-  "latestReel": "https://www.instagram.com/reel/DgM1MMUJOla/",
+  "latestReel": "https://www.instagram.com/reel/DgM6N2MpfMm/",
   "nextRace": {
     "day": 8,
     "date": "2026-11-27",
     "status": "open",
     "entrants": [
+      "cottonh94",
+      "meepmeep_awooowo",
+      "ymlix_1xy",
+      "kalihazelwood",
+      "alexandria501911",
+      "grace.inglish",
+      "tildecramonx",
+      "j_r0510",
+      "emilee_cs",
+      "adakatie16",
+      "lillyanna_202039",
+      "rastislava_parizova",
+      "alwaleedabdulk",
       "danicaxsmith",
       "doherty3841",
       "kwpn_nemo_en_dani",
@@ -2658,7 +2671,10 @@
       "wa11abee_wannabe",
       "well_well_well086",
       "winnersnever_quit",
-      "x0.bloop_doop.0x"
+      "x0.bloop_doop.0x",
+      "aarron_thompson",
+      "jamie_lk07",
+      "riley411294"
     ],
     "track": "To be announced in the Day 7 reel"
   },
@@ -41067,8 +41083,10 @@
       "medals": [],
       "badge": "gold",
       "rank": 757,
-      "look": "2324",
-      "name": "Odette"
+      "look": "1324",
+      "name": "Odette",
+      "original": true,
+      "shed": "0001"
     },
     {
       "handle": "paytoncasper8",
@@ -55817,6 +55835,131 @@
       "medals": [],
       "rank": 2249,
       "badge": "silver"
+    },
+    {
+      "handle": "alwaleedabdulk",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "rank": 2250,
+      "badge": "silver"
+    },
+    {
+      "handle": "rastislava_parizova",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "rank": 2251,
+      "badge": "silver"
+    },
+    {
+      "handle": "lillyanna_202039",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "rank": 2252,
+      "badge": "silver"
+    },
+    {
+      "handle": "adakatie16",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "rank": 2253,
+      "badge": "silver"
+    },
+    {
+      "handle": "emilee_cs",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "rank": 2254,
+      "badge": "silver"
+    },
+    {
+      "handle": "j_r0510",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "rank": 2255,
+      "badge": "silver"
+    },
+    {
+      "handle": "tildecramonx",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "rank": 2256,
+      "badge": "silver"
+    },
+    {
+      "handle": "grace.inglish",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "rank": 2257,
+      "badge": "silver"
+    },
+    {
+      "handle": "alexandria501911",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "rank": 2258,
+      "badge": "silver"
+    },
+    {
+      "handle": "kalihazelwood",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "rank": 2259,
+      "badge": "silver"
+    },
+    {
+      "handle": "ymlix_1xy",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "rank": 2260,
+      "badge": "silver"
+    },
+    {
+      "handle": "meepmeep_awooowo",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "rank": 2261,
+      "badge": "silver"
+    },
+    {
+      "handle": "cottonh94",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "rank": 2262,
+      "badge": "silver"
+    },
+    {
+      "handle": "aarron_thompson",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "via": "like"
+    },
+    {
+      "handle": "jamie_lk07",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "via": "like"
+    },
+    {
+      "handle": "riley411294",
+      "joined": "2026-11-26",
+      "races": 0,
+      "medals": [],
+      "via": "like"
     }
   ],
   "sponsorSpots": [
@@ -55971,8 +56114,16 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-26T18:10:15Z",
+  "lastSync": "2026-11-26T23:10:14Z",
   "claims": [
+    {
+      "handle": "sophia_9112001",
+      "look": "1324",
+      "at": "2026-11-26T22:02:10Z",
+      "reel": "https://www.instagram.com/p/DgM1MMUJOla/",
+      "status": "locked",
+      "original": true
+    },
     {
       "handle": "lillyr__prvst",
       "look": "2123",
@@ -55985,8 +56136,7 @@
       "look": "3311",
       "at": "2026-11-26T09:58:45Z",
       "reel": "https://www.instagram.com/p/DgM1MMUJOla/",
-      "status": "locked",
-      "original": true
+      "status": "locked"
     },
     {
       "handle": "star.xjuls",
@@ -56206,6 +56356,7 @@
       "at": "2026-11-24T16:43:34Z",
       "reel": "https://www.instagram.com/p/DgHvMispbq5/",
       "status": "locked",
+      "original": true,
       "name": "for me"
     },
     {
@@ -56379,6 +56530,388 @@
       "status": "locked",
       "original": true,
       "name": "Kaikai"
+    },
+    {
+      "handle": "1wbyi",
+      "look": "2143",
+      "at": "2026-11-24T03:09:35Z",
+      "reel": "https://www.instagram.com/p/DgB079spXvZ/",
+      "status": "locked",
+      "original": true,
+      "name": "Raven"
+    },
+    {
+      "handle": "vvsmadz",
+      "look": "1321",
+      "at": "2026-11-24T02:49:37Z",
+      "reel": "https://www.instagram.com/p/DgGiCCkpn6_/",
+      "status": "locked",
+      "original": true,
+      "name": "maki"
+    },
+    {
+      "handle": "imliterallymclovin_5oh9",
+      "look": "2321",
+      "at": "2026-11-24T02:40:29Z",
+      "reel": "https://www.instagram.com/p/DgGiCCkpn6_/",
+      "status": "locked",
+      "original": true,
+      "name": "Jellybean"
+    },
+    {
+      "handle": "t0kioh0te1",
+      "look": "2331",
+      "at": "2026-11-24T02:36:52Z",
+      "reel": "https://www.instagram.com/p/DgGiCCkpn6_/",
+      "status": "locked",
+      "original": true,
+      "name": "Pudding"
+    },
+    {
+      "handle": "madisonburckhardt25",
+      "look": "4224",
+      "at": "2026-11-24T00:22:30Z",
+      "reel": "https://www.instagram.com/p/DgEj46qJi0L/",
+      "status": "locked",
+      "original": true,
+      "name": "Sparkle Farts"
+    },
+    {
+      "handle": "izzie_eq13",
+      "look": "1142",
+      "at": "2026-11-24T00:18:28Z",
+      "reel": "https://www.instagram.com/p/DgEj46qJi0L/",
+      "status": "locked",
+      "original": true,
+      "name": "Hank"
+    },
+    {
+      "handle": "_.celenas._",
+      "look": "3343",
+      "at": "2026-11-23T23:46:13Z",
+      "reel": "https://www.instagram.com/p/DgEj46qJi0L/",
+      "status": "locked",
+      "original": true,
+      "name": "Tvxedo"
+    },
+    {
+      "handle": "dalb_0710",
+      "look": "1134",
+      "at": "2026-11-23T22:44:27Z",
+      "reel": "https://www.instagram.com/p/DgEj46qJi0L/",
+      "status": "locked",
+      "original": true,
+      "name": "Dream"
+    },
+    {
+      "handle": "holly_eq_my_cob",
+      "look": "1113",
+      "at": "2026-11-23T21:44:47Z",
+      "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
+      "status": "locked",
+      "original": true,
+      "name": "ALFIEEE"
+    },
+    {
+      "handle": "emrose_vaults",
+      "look": "3324",
+      "at": "2026-11-23T20:33:09Z",
+      "reel": "https://www.instagram.com/p/DgEj46qJi0L/",
+      "status": "locked",
+      "name": "Atlas"
+    },
+    {
+      "handle": "2pawlliss_",
+      "look": "4433",
+      "at": "2026-11-23T19:13:18Z",
+      "reel": "https://www.instagram.com/p/DgEj46qJi0L/",
+      "status": "locked",
+      "original": true,
+      "name": "silence suzuka"
+    },
+    {
+      "handle": "cc7x007",
+      "look": "3221",
+      "at": "2026-11-23T17:41:58Z",
+      "reel": "https://www.instagram.com/p/DgEj46qJi0L/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "xkit.barrancexx",
+      "look": "1141",
+      "at": "2026-11-23T16:31:38Z",
+      "reel": "https://www.instagram.com/p/DgB079spXvZ/",
+      "status": "locked",
+      "original": true,
+      "name": "Rubymy loan"
+    },
+    {
+      "handle": "hostickova.b",
+      "look": "2213",
+      "at": "2026-11-23T15:58:18Z",
+      "reel": "https://www.instagram.com/p/DgEj46qJi0L/",
+      "status": "locked",
+      "original": true,
+      "name": "Chroust"
+    },
+    {
+      "handle": "ta_klarkq",
+      "look": "1144",
+      "at": "2026-11-23T15:44:56Z",
+      "reel": "https://www.instagram.com/p/DgEj46qJi0L/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "thildejuhler",
+      "look": "4211",
+      "at": "2026-11-23T14:54:23Z",
+      "reel": "https://www.instagram.com/p/DgB079spXvZ/",
+      "status": "locked",
+      "original": true,
+      "name": "Pøls"
+    },
+    {
+      "handle": "iblamerodrix",
+      "look": "2311",
+      "at": "2026-11-23T12:40:23Z",
+      "reel": "https://www.instagram.com/p/DgEj46qJi0L/",
+      "status": "locked",
+      "original": true,
+      "name": "Darkstorm"
+    },
+    {
+      "handle": "_zezulackq_",
+      "look": "3124",
+      "at": "2026-11-23T05:22:41Z",
+      "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
+      "status": "locked",
+      "original": true,
+      "name": "Grace"
+    },
+    {
+      "handle": "ocean__hooves",
+      "look": "4421",
+      "at": "2026-11-23T05:02:58Z",
+      "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
+      "status": "locked",
+      "original": true,
+      "name": "Rhett"
+    },
+    {
+      "handle": "josie_barrett1",
+      "look": "1121",
+      "at": "2026-11-23T05:02:34Z",
+      "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
+      "status": "locked",
+      "original": true,
+      "name": "Scooter"
+    },
+    {
+      "handle": "ave._1120",
+      "look": "4432",
+      "at": "2026-11-23T02:50:48Z",
+      "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
+      "status": "locked",
+      "original": true,
+      "name": "midnight"
+    },
+    {
+      "handle": "breannasquires71",
+      "look": "1222",
+      "at": "2026-11-23T02:01:23Z",
+      "reel": "https://www.instagram.com/p/DgB079spXvZ/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "antonella.armino",
+      "look": "1211",
+      "at": "2026-11-23T00:45:51Z",
+      "reel": "https://www.instagram.com/p/DgB079spXvZ/",
+      "status": "locked",
+      "original": true,
+      "name": "Cupcake"
+    },
+    {
+      "handle": "blaize_priv_200",
+      "look": "2144",
+      "at": "2026-11-22T22:03:25Z",
+      "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
+      "status": "locked",
+      "name": "Cora posey"
+    },
+    {
+      "handle": "sav.disimone",
+      "look": "2114",
+      "at": "2026-11-22T21:17:26Z",
+      "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
+      "status": "locked",
+      "original": true,
+      "name": "Platinum"
+    },
+    {
+      "handle": "its_zzzuh",
+      "look": "2222",
+      "at": "2026-11-22T18:47:38Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "knszil",
+      "look": "4324",
+      "at": "2026-11-22T16:54:00Z",
+      "reel": "https://www.instagram.com/p/DgB079spXvZ/",
+      "status": "locked",
+      "original": true,
+      "name": "asteroid abolisher"
+    },
+    {
+      "handle": "defnot_clover",
+      "look": "3432",
+      "at": "2026-11-22T15:21:55Z",
+      "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
+      "status": "locked",
+      "original": true,
+      "name": "COOKIE"
+    },
+    {
+      "handle": "lewis148804",
+      "look": "3333",
+      "at": "2026-11-22T14:39:57Z",
+      "reel": "https://www.instagram.com/p/DgB079spXvZ/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "ssamiyahhhh._",
+      "look": "2144",
+      "at": "2026-11-22T14:19:02Z",
+      "reel": "https://www.instagram.com/p/DgCpWRkJ0J5/",
+      "status": "locked",
+      "original": true,
+      "name": "Stormy"
+    },
+    {
+      "handle": "gs7ejey",
+      "look": "3324",
+      "at": "2026-11-22T08:47:40Z",
+      "reel": "https://www.instagram.com/p/DgB079spXvZ/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "this._girl_is_on._.fire",
+      "look": "4441",
+      "at": "2026-11-22T04:21:48Z",
+      "reel": "https://www.instagram.com/p/DgB079spXvZ/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "word_to_bob",
+      "look": "3214",
+      "at": "2026-11-22T04:03:52Z",
+      "reel": "https://www.instagram.com/p/DgAcGG5JKhP/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "a.b_breezey",
+      "look": "2341",
+      "at": "2026-11-22T00:04:56Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "_gl88k",
+      "look": "1214",
+      "at": "2026-11-21T14:38:32Z",
+      "reel": "https://www.instagram.com/p/DgAcGG5JKhP/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "aolaa_w",
+      "look": "2324",
+      "at": "2026-11-21T09:25:10Z",
+      "reel": "https://www.instagram.com/p/Df_u417pzfe/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "caelanmorton431",
+      "look": "2441",
+      "at": "2026-11-21T08:22:10Z",
+      "reel": "https://www.instagram.com/p/Df-_4FZppBC/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "krinc_prason",
+      "look": "2244",
+      "at": "2026-11-20T16:35:45Z",
+      "reel": "https://www.instagram.com/p/Df40W_ip_FW/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "snocin",
+      "look": "1224",
+      "at": "2026-11-20T16:01:00Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "waiting"
+    },
+    {
+      "handle": "eyad.ahmed265",
+      "look": "3342",
+      "at": "2026-11-20T15:49:56Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "diaz_monkey_3",
+      "look": "1333",
+      "at": "2026-11-20T15:40:08Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "devon.hernandez.106",
+      "look": "1111",
+      "at": "2026-11-20T15:37:09Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "tavianhaddox",
+      "look": "3331",
+      "at": "2026-11-20T15:11:54Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "e.superskyi",
+      "look": "2343",
+      "at": "2026-11-20T15:06:29Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked",
+      "original": true
+    },
+    {
+      "handle": "logpackersfan2710",
+      "look": "2344",
+      "at": "2026-11-20T14:19:11Z",
+      "reel": "https://www.instagram.com/p/Df9vLPdp69u/",
+      "status": "locked",
+      "original": true
     }
   ],
   "season": {
@@ -56591,6 +57124,7 @@
     "2332": "coscowater",
     "4434": "jordyn_2013_doviak",
     "3322": "emalynbriggs",
+    "1324": "sophia_9112001",
     "2433": "idk1863eg",
     "2423": "leo____chi2010",
     "2214": "everleighkoval",
@@ -57702,8 +58236,8 @@
       "reel": "DgCpWRkJ0J5"
     },
     "antonella.armino": {
-      "day": 4,
-      "reel": "DgB079spXvZ"
+      "day": 7,
+      "reel": "DgM1MMUJOla"
     },
     "optical_illu.son_": {
       "day": 4,
@@ -58014,8 +58548,8 @@
       "reel": "DgEj46qJi0L"
     },
     "0htood_les": {
-      "day": 5,
-      "reel": "DgEj46qJi0L"
+      "day": 7,
+      "reel": "DgM1MMUJOla"
     },
     "shannon264240": {
       "day": 5,
@@ -58626,8 +59160,8 @@
       "reel": "DgGiCCkpn6_"
     },
     "sophia_9112001": {
-      "day": 6,
-      "reel": "DgGiCCkpn6_"
+      "day": 7,
+      "reel": "DgM1MMUJOla"
     },
     "star.xjuls": {
       "day": 7,
@@ -60150,6 +60684,58 @@
       "reel": "DgM1MMUJOla"
     },
     "el_pequeno_gatito": {
+      "day": 7,
+      "reel": "DgM1MMUJOla"
+    },
+    "ellaisntsmella": {
+      "day": 7,
+      "reel": "DgM6N2MpfMm"
+    },
+    "aarron_thompson": {
+      "day": 7,
+      "reel": "DgM6N2MpfMm"
+    },
+    "anthrony_g": {
+      "day": 7,
+      "reel": "DgM6N2MpfMm"
+    },
+    "riley411294": {
+      "day": 7,
+      "reel": "DgM6N2MpfMm"
+    },
+    "thehomeless_uma": {
+      "day": 7,
+      "reel": "DgM6N2MpfMm"
+    },
+    "veri.zuidgeest": {
+      "day": 7,
+      "reel": "DgM6N2MpfMm"
+    },
+    "jamie_lk07": {
+      "day": 7,
+      "reel": "DgM6N2MpfMm"
+    },
+    "cabobcabom": {
+      "day": 7,
+      "reel": "DgM6N2MpfMm"
+    },
+    "clare48095": {
+      "day": 7,
+      "reel": "DgM1MMUJOla"
+    },
+    "ez.bull.terrier.arts": {
+      "day": 7,
+      "reel": "DgM1MMUJOla"
+    },
+    "grace.inglish": {
+      "day": 7,
+      "reel": "DgM1MMUJOla"
+    },
+    "meepmeep_awooowo": {
+      "day": 7,
+      "reel": "DgM1MMUJOla"
+    },
+    "alineesntoss_": {
       "day": 7,
       "reel": "DgM1MMUJOla"
     }
