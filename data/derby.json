@@ -1,12 +1,37 @@
 {
   "updated": "2026-11-27",
   "account": "dailyderby_horse",
-  "latestReel": "https://www.instagram.com/reel/DgM6N2MpfMm/",
+  "latestReel": "https://www.instagram.com/reel/DgOhtAep6Bn/",
   "nextRace": {
     "day": 8,
     "date": "2026-11-27",
     "status": "open",
     "entrants": [
+      "209.hi_",
+      "andrea_idk19",
+      "gymethan08",
+      "jbjhkjk",
+      "bonkerssbananas",
+      "braxtonkasson",
+      "michael_stone5226",
+      "roxboogers",
+      "h.e.nist",
+      "adam837277",
+      "nate_rosner",
+      "nacho_menja",
+      "hakari17418",
+      "chamoy.v1",
+      "im2fast4uu",
+      "mike.tmp",
+      "tranqui743",
+      "willgraham46774",
+      "rwhit6",
+      "nbv_2_cool",
+      "awk_james0",
+      "kbbabc",
+      "corleycav",
+      "ericdg08",
+      "hadleylawrence9",
       "cottonh94",
       "meepmeep_awooowo",
       "ymlix_1xy",
@@ -2549,7 +2574,6 @@
       "anna.bali_",
       "arieries_art",
       "arrow_4720",
-      "awk_james0",
       "bbk.luca",
       "bl4z7booto",
       "brildgz",
@@ -2674,7 +2698,26 @@
       "x0.bloop_doop.0x",
       "aarron_thompson",
       "jamie_lk07",
-      "riley411294"
+      "riley411294",
+      "327_robert_",
+      "ag._.mikey",
+      "azar3ll",
+      "bigmemelijah",
+      "collin_muldoon",
+      "drewh0813",
+      "fanciestshark26",
+      "geicoiguana",
+      "greyson_vandersloot",
+      "idk_isaiah_676",
+      "isaiahs_255",
+      "jacoboaltaccagaain",
+      "joelvargas555",
+      "llife_of_a_cllown_",
+      "natsuki_catz",
+      "oppiuok",
+      "rickyisyourdad25",
+      "riffway2thurl",
+      "ruben2tuf"
     ],
     "track": "To be announced in the Day 7 reel"
   },
@@ -50522,7 +50565,8 @@
       "joined": "2026-11-24",
       "races": 2,
       "medals": [],
-      "via": "comment"
+      "rank": 2267,
+      "badge": "silver"
     },
     {
       "handle": "bbk.luca",
@@ -55023,7 +55067,9 @@
       "races": 1,
       "medals": [],
       "rank": 2180,
-      "badge": "silver"
+      "badge": "silver",
+      "look": "2144",
+      "shed": "0001"
     },
     {
       "handle": "k.esztii_elitjee",
@@ -55960,6 +56006,331 @@
       "races": 0,
       "medals": [],
       "via": "like"
+    },
+    {
+      "handle": "hadleylawrence9",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "rank": 2263,
+      "badge": "silver"
+    },
+    {
+      "handle": "ericdg08",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "rank": 2264,
+      "badge": "silver"
+    },
+    {
+      "handle": "corleycav",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "rank": 2265,
+      "badge": "silver"
+    },
+    {
+      "handle": "kbbabc",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "rank": 2266,
+      "badge": "silver"
+    },
+    {
+      "handle": "nbv_2_cool",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "rank": 2268,
+      "badge": "silver"
+    },
+    {
+      "handle": "rwhit6",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "rank": 2269,
+      "badge": "silver"
+    },
+    {
+      "handle": "willgraham46774",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "rank": 2270,
+      "badge": "silver"
+    },
+    {
+      "handle": "tranqui743",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "rank": 2271,
+      "badge": "silver"
+    },
+    {
+      "handle": "mike.tmp",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "rank": 2272,
+      "badge": "silver"
+    },
+    {
+      "handle": "im2fast4uu",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "rank": 2273,
+      "badge": "silver"
+    },
+    {
+      "handle": "chamoy.v1",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "rank": 2274,
+      "badge": "silver"
+    },
+    {
+      "handle": "hakari17418",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "rank": 2275,
+      "badge": "silver"
+    },
+    {
+      "handle": "nacho_menja",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "rank": 2276,
+      "badge": "silver"
+    },
+    {
+      "handle": "nate_rosner",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "rank": 2277,
+      "badge": "silver"
+    },
+    {
+      "handle": "adam837277",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "rank": 2278,
+      "badge": "silver"
+    },
+    {
+      "handle": "h.e.nist",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "rank": 2279,
+      "badge": "silver"
+    },
+    {
+      "handle": "roxboogers",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "rank": 2280,
+      "badge": "silver"
+    },
+    {
+      "handle": "michael_stone5226",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "rank": 2281,
+      "badge": "silver"
+    },
+    {
+      "handle": "braxtonkasson",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "rank": 2282,
+      "badge": "silver"
+    },
+    {
+      "handle": "bonkerssbananas",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "rank": 2283,
+      "badge": "silver"
+    },
+    {
+      "handle": "jbjhkjk",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "rank": 2284,
+      "badge": "silver"
+    },
+    {
+      "handle": "gymethan08",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "rank": 2285,
+      "badge": "silver"
+    },
+    {
+      "handle": "andrea_idk19",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "rank": 2286,
+      "badge": "silver"
+    },
+    {
+      "handle": "209.hi_",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "rank": 2287,
+      "badge": "silver"
+    },
+    {
+      "handle": "327_robert_",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "via": "like"
+    },
+    {
+      "handle": "ag._.mikey",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "via": "like"
+    },
+    {
+      "handle": "azar3ll",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "via": "like"
+    },
+    {
+      "handle": "bigmemelijah",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "via": "like"
+    },
+    {
+      "handle": "collin_muldoon",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "via": "like"
+    },
+    {
+      "handle": "drewh0813",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "via": "like"
+    },
+    {
+      "handle": "fanciestshark26",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "via": "like"
+    },
+    {
+      "handle": "geicoiguana",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "via": "like"
+    },
+    {
+      "handle": "greyson_vandersloot",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "via": "like"
+    },
+    {
+      "handle": "idk_isaiah_676",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "via": "like"
+    },
+    {
+      "handle": "isaiahs_255",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "via": "like"
+    },
+    {
+      "handle": "jacoboaltaccagaain",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "via": "like"
+    },
+    {
+      "handle": "joelvargas555",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "via": "like"
+    },
+    {
+      "handle": "llife_of_a_cllown_",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "via": "like"
+    },
+    {
+      "handle": "natsuki_catz",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "via": "like"
+    },
+    {
+      "handle": "oppiuok",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "via": "like"
+    },
+    {
+      "handle": "rickyisyourdad25",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "via": "like"
+    },
+    {
+      "handle": "riffway2thurl",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "via": "like"
+    },
+    {
+      "handle": "ruben2tuf",
+      "joined": "2026-11-27",
+      "races": 0,
+      "medals": [],
+      "via": "like"
     }
   ],
   "sponsorSpots": [
@@ -56114,8 +56485,15 @@
     }
   ],
   "syncEveryMin": 60,
-  "lastSync": "2026-11-26T23:10:14Z",
+  "lastSync": "2026-11-27T04:13:49Z",
   "claims": [
+    {
+      "handle": "captain_muncher_21319",
+      "look": "2144",
+      "at": "2026-11-27T03:24:19Z",
+      "reel": "https://www.instagram.com/p/DgOhtAep6Bn/",
+      "status": "locked"
+    },
     {
       "handle": "sophia_9112001",
       "look": "1324",
@@ -59132,8 +59510,8 @@
       "reel": "DgB079spXvZ"
     },
     "_ahorsenamedcoldair": {
-      "day": 6,
-      "reel": "DgGiCCkpn6_"
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
     },
     "maddieee_3031": {
       "day": 6,
@@ -59304,8 +59682,8 @@
       "reel": "DgEj46qJi0L"
     },
     "sixtine_loves_ginto": {
-      "day": 5,
-      "reel": "DgEj46qJi0L"
+      "day": 7,
+      "reel": "DgM1MMUJOla"
     },
     "idk1863eg": {
       "day": 5,
@@ -60738,6 +61116,142 @@
     "alineesntoss_": {
       "day": 7,
       "reel": "DgM1MMUJOla"
+    },
+    "jacoboaltaccagaain": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "rickyisyourdad25": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "ag._.mikey": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "drewh0813": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "that06gmcsierra": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "haylee._.eq": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "greyson_vandersloot": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "boldbolder_": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "fanciestshark26": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "209.hi_": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "azar3ll": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "llife_of_a_cllown_": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "adam837277": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "roxboogers": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "oppiuok": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "idk_isaiah_676": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "riffway2thurl": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "nbv_2_cool": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "bigmemelijah": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "327_robert_": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "isaiahs_255": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "natsuki_catz": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "willgraham46774": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "rwhit6": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "mike.tmp": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "geicoiguana": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "collin_muldoon": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "nate_rosner": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "ruben2tuf": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "ethan.yurick34": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "bonkerssbananas": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "joelvargas555": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "braxtonkasson": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
+    },
+    "h.e.nist": {
+      "day": 7,
+      "reel": "DgOhtAep6Bn"
     }
   },
   "sponsorInfo": {
