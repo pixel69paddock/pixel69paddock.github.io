@@ -667,7 +667,7 @@
       <p class="kicker" id="seasonKicker">Rankings</p>
       <h2 class="px">The standings</h2>
       <p class="season-line" id="seasonLine" hidden></p>
-      <p class="sub">Every race scores: <b>20</b> points for a win, 15 for 2nd, 12 for 3rd, then 10, 9, 8, 7, 6, 5 and 4 down to 10th. Every other finisher gets 2, and a banana DNF still gets 1. Ties go to more wins.</p>
+      <p class="sub">Every race scores: <b>20</b> points for a win, 17 for 2nd, 15 for 3rd, 12 for 4th–10th, 10 for top 25, 8 for top 50, 6 for top 100, 4 for top 250, 3 for top 500. Every other finisher gets 2, and a DNF still gets 1. Ties go to more wins.</p>
       <div class="board-bar">
       <div class="tabs" role="tablist">
         <button class="tab" role="tab" aria-selected="true" data-sort="points">Points</button>
@@ -865,9 +865,10 @@
   const toast = msg => { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove("show"), 3200); };
   const fmtDate = d => new Date(d + "T12:00:00").toLocaleDateString(undefined, { day: "numeric", month: "short" });
 
-  // Points (owner, 2026-11-21): 1st-10th score 20,15,12,10,9,8,7,6,5,4; other finishers 2; DNF 1
-  const PTS = [20, 15, 12, 10, 9, 8, 7, 6, 5, 4];
-  const racePts = r => r.dnf ? 1 : !r.place ? 0 : (PTS[r.place - 1] ?? 2);
+  // Points (owner, 2026-11-29, applied from Day 1): 1st 20, 2nd 17, 3rd 15, 4-10th 12, 11-25th 10, 26-50th 8,
+  // 51-100th 6, 101-250th 4, 251-500th 3, other finishers 2, DNF 1
+  const TIERS = [[1, 20], [2, 17], [3, 15], [10, 12], [25, 10], [50, 8], [100, 6], [250, 4], [500, 3]];
+  const racePts = r => r.dnf ? 1 : !r.place ? 0 : ((TIERS.find(([lim]) => r.place <= lim) || [0, 2])[1]);
   const ord = n => n + (n % 100 >= 11 && n % 100 <= 13 ? "th" : ["th", "st", "nd", "rd"][n % 10] || "th");
   const placeLabel = x => x.dnf ? "DNF" + (x.out ? " (" + x.out + ")" : "") : x.place ? ord(x.place) + (x.crashed ? " (crashed)" : "") : "—";
   const placeCell = x => x.place && x.place <= 3 ? `<span class="m ${"gsb"[x.place - 1]}"></span>${ord(x.place)}` : esc(placeLabel(x));
