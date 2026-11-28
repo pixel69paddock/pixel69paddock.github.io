@@ -1312,9 +1312,7 @@
     };
     let boardLimit = 50;
     function board(mode) {
-      const house = D.unranked || [], ranked = horses.filter(h => !house.includes(norm(h.handle))).map(h => ({ h, ...stats(h) })).sort(sorters[mode]);
-      horses.filter(h => house.includes(norm(h.handle))).forEach((h, k) => ranked.splice(Math.min(ranked.length, 199 + k * 7), 0, { h, ...stats(h) }));
-      const all = ranked.map((r, i) => ({ ...r, rank: i + 1 }));
+      const all = horses.map(h => ({ h, ...stats(h) })).sort(sorters[mode]).map((r, i) => ({ ...r, rank: i + 1 }));
       const q = norm($("#boardSearch").value);
       const meH = norm(savedHorse().handle || "");
       const rows = q ? all.filter(r => norm(r.h.handle).includes(q) || horseName(r.h).toLowerCase().includes(q)) : all.slice(0, boardLimit);
