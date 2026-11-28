@@ -86787,7 +86787,42 @@
         "at": "2026-11-24T19:02:35Z"
       }
     },
-    "7": {}
+    "7": {},
+    "8": {
+      "kadin_sensei78": {
+        "picks": [
+          "kadin_sensei78",
+          "logpackersfan2710",
+          "fei._.ka"
+        ],
+        "at": "2026-11-26T10:52:01Z"
+      },
+      "glaceonz18": {
+        "picks": [
+          "glaceonz18",
+          "yanniss_wk",
+          "aolaa_w"
+        ],
+        "at": "2026-11-26T11:58:38Z"
+      },
+      "knszil": {
+        "picks": [
+          "knszil",
+          "e.superskyi"
+        ],
+        "at": "2026-11-26T12:13:22Z"
+      }
+    },
+    "9": {
+      "glaceonz18": {
+        "picks": [
+          "glaceonz18",
+          "yanniss_wk",
+          "aolaa_w"
+        ],
+        "at": "2026-11-27T11:31:18Z"
+      }
+    }
   },
   "shop": {
     "api": "https://dailyderby-claims.chris0209lee.workers.dev",
